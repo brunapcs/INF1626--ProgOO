@@ -4,6 +4,7 @@ import java.awt.event.*;
 import java.io.*;
 import javax.imageio.*;
 
+
 public class Tabuleiro  extends JPanel {
 	private Image i=null;
 	private Tabuleiro p=this;
@@ -16,6 +17,14 @@ public class Tabuleiro  extends JPanel {
 		   System.out.println(e.getMessage());
 		   System.exit(1);
 		}		
+		
+		setBounds(0, 0, 800, 800 );
+		
+		Pin p = new Pin(); 
+		add(p); 
+		revalidate(); 
+		repaint(); 
+		
 	}
 	
 	public void paintComponent(Graphics g) {
