@@ -1,19 +1,23 @@
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import javax.imageio.*;
-
+import Acoes.*;
 
 public class info_Panel extends JPanel {
 
 	public info_Panel(){
-		this.setBounds(1000, 0, 200 , 200);
+		
+		JButton add_player = new JButton ("adcionar player");
 		JButton rolar_dados = new JButton("rolar dado");
 		add(rolar_dados); 
-		revalidate(); 
-		repaint();
+		add(add_player); 
+		
+		rolar_dados.addActionListener(new RolarDados());
+		
 	}
 	
 }

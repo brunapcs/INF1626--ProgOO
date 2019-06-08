@@ -2,32 +2,51 @@ import java.awt.*;
 import javax.swing.*;
  
 public class Menu extends JFrame {
-	   public final int LARG_DEFAULT=600;
-	   public final int ALT_DEFAULT=600;
-	   Tabuleiro tab = new Tabuleiro(); 
-	   info_Panel info = new info_Panel(); 
+	   public final int LARG_DEFAULT=1000;
+	   public final int ALT_DEFAULT=800;
+	   
+	   private FlowLayout layout;      
+
+	   private Container container;    
+	    
 	   
 	   public Menu() {
-		   setTitle("Banco Imobiliário");
+
+	   }
+	   
+	   public Menu(String name) { 
+		   setTitle(name);
+		   setDefaultCloseOperation(EXIT_ON_CLOSE);
 		   
-		   Toolkit tk=Toolkit.getDefaultToolkit();
-		   Dimension screenSize=tk.getScreenSize();
-		    
-		   setBounds(0,0,LARG_DEFAULT,ALT_DEFAULT);
-		   setSize(screenSize.width , screenSize.height);
+		   setLayout(new FlowLayout());
+	       
+		   setTab();
+	       setInfo();
 		   
-		   setDefaultCloseOperation(EXIT_ON_CLOSE);  
-		   
-		   add(tab);
-		   add(info); 
-		   
+		   setLocation(100, 0);
+	       setSize(1200, 800); 
 		   setVisible(true);
-		
 	   }
 	   
 	   
+	   private void setTab()
+	    {
+	        JPanel jp = new Tabuleiro(); 
+	        jp.setPreferredSize(new Dimension(800,800));
+	        getContentPane().add(jp);
+	    }
+	    
+	    private void setInfo()
+	    {
+	        JPanel jp =  new info_Panel();
+	        jp.setPreferredSize(new Dimension(200, 600));
+	        jp.setBorder(BorderFactory.createTitledBorder("Controles"));
+	        getContentPane().add(jp);
+	    }
+	
+	   
 	   public static void main(String args[]) {
-		   Menu p=new Menu();
+		   Menu p=new Menu("Banco Imobiliário");
 	   }
 	}
 

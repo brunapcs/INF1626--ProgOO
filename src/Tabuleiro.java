@@ -1,15 +1,16 @@
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.image.*;
 import java.io.*;
-import javax.imageio.*;
-
+import javax.swing.*;
+import javax.imageio.ImageIO;
+ 
 
 public class Tabuleiro  extends JPanel {
-	private Image i=null;
-	private Tabuleiro p=this;
+	private BufferedImage i=null;
+	private JLabel label = null; 
 	
 	public Tabuleiro() {
+ 
 		try {
 		   i=ImageIO.read(new File("images/tabuleiro.png"));
 		}
@@ -18,18 +19,8 @@ public class Tabuleiro  extends JPanel {
 		   System.exit(1);
 		}		
 		
-		setBounds(0, 0, 800, 800 );
+		label = new JLabel(new ImageIcon(i));
+		add (label); 
 		
-		Pin p = new Pin(); 
-		add(p); 
-		revalidate(); 
-		repaint(); 
-		
-	}
-	
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		Graphics2D gd2=(Graphics2D) g;
-		gd2.drawImage (i,0,0,null);
 	}
 }
