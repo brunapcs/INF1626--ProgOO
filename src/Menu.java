@@ -6,9 +6,11 @@ public class Menu extends JFrame {
 	   public final int ALT_DEFAULT=800;
 	   
 	   private FlowLayout layout;      
-
 	   private Container container;    
 	    
+	   public static Tabuleiro tab_p = null; 
+	   public static info_Panel info_p =  null; 
+	   public static Menu menu =  null;
 	   
 	   public Menu() {
 
@@ -26,35 +28,41 @@ public class Menu extends JFrame {
 		   setLocation(100, 0);
 	       setSize(1200, 800); 
 		   setVisible(true);
+		   setResizable(false); 
+		   
 	   }
 	   
 	   
 	   private void setTab()
 	    {
-	        JPanel jp = new Tabuleiro(); 
-	        jp.setPreferredSize(new Dimension(800,800));
-	        getContentPane().add(jp);
+		   	tab_p = new Tabuleiro(); 
+	        tab_p.setPreferredSize(new Dimension(800,800));
+	        getContentPane().add(tab_p);
 	    }
 	    
 	    private void setInfo()
 	    {
-	        JPanel jp =  new info_Panel();
-	        jp.setPreferredSize(new Dimension(200, 600));
-	        jp.setBorder(BorderFactory.createTitledBorder("Controles"));
-	        getContentPane().add(jp);
+	    	info_p = new info_Panel(); 
+	        info_p.setPreferredSize(new Dimension(200, 600));
+	        info_p.setBorder(BorderFactory.createTitledBorder("Controles"));
+	        getContentPane().add(info_p);
 	    }
 	
-	   
+	    public static Tabuleiro getTab() { 
+			   return tab_p; 
+		   }
+		   
+	    public static info_Panel getInfoP(){
+			   return info_p;
+		   }
+		   
+	    public static Menu getMenu() { 
+	    	return menu; 
+	    }
+	    
 	   public static void main(String args[]) {
-		   Menu p=new Menu("Banco Imobiliário");
+		   menu = new Menu("Banco Imobiliário");
 	   }
 	}
 
 
-
-/* ***
-int sl=screenSize.width;
-int sa=screenSize.height;
-int x=sl/2-LARG_DEFAULT/2;
-int y=sa/2-ALT_DEFAULT/2;	  
-*** */ 

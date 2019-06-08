@@ -19,8 +19,23 @@ public class Tabuleiro  extends JPanel {
 		   System.exit(1);
 		}		
 		
-		label = new JLabel(new ImageIcon(i));
-		add (label); 
+		setLayout(null); 
+		repaint();
 		
+	}
+	
+	
+	public void addPin() { 
+		add (new Pin()); 
+		Pin.position += 26;
+		System.out.print("add player"); 
+		repaint(); 	
+	}
+	
+	@Override
+	  protected void paintComponent(Graphics g) {
+
+	    super.paintComponent(g);
+	        g.drawImage(i, 0, 0, null);
 	}
 }

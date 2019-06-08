@@ -17,6 +17,13 @@ public class info_Panel extends JPanel {
 		add(add_player); 
 		
 		rolar_dados.addActionListener(new RolarDados());
+		add_player.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) {
+		      Menu.getTab().addPin();
+		      Menu.getMenu().setVisible(true);
+			}
+		     });
+		
 		
 	}
 	
