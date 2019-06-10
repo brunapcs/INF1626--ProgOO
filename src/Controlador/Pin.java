@@ -1,6 +1,5 @@
+package Controlador;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
 import java.io.*;
 import javax.imageio.*;
 import java.awt.image.BufferedImage; 
@@ -8,7 +7,9 @@ import java.awt.image.BufferedImage;
 public class Pin extends JLabel {
 	private BufferedImage i=null;
 	static int player_num = 0;  
-	static public int position = 0; 
+	static public int position = 500; 
+	
+	private int pin_position = 0; 
 	
 	public Pin() {		
 		if(player_num <6) { 
@@ -27,7 +28,16 @@ public class Pin extends JLabel {
 		
 		ImageIcon image = new ImageIcon(i); 
 		this.setIcon(image); 
-		setBounds(500+position,500, 25 , 38 ); 
+		setBounds(position,500, 25 , 38); 
 	
+	}
+	
+	public void moveTo(int pos) { 
+		pin_position = pos; 
+		
+	}
+	
+	public int getPosition() { 
+		return pin_position; 
 	}
 }

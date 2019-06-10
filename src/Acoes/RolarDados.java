@@ -1,5 +1,6 @@
 package Acoes;
 
+import Controlador.*; 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -13,19 +14,22 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+
+
 public class RolarDados extends JLabel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
+		
 		JFrame Frame1 = new JFrame();
         JPanel panel1 = new JPanel();     
 		BufferedImage i1 = null, i2 = null;
 		Random num1 = new Random();
-		int dado1 = num1.nextInt(6) + 1;
-		int dado2 = num1.nextInt(6) + 1;
-		System.out.println("Primeiro dado:"+ dado1 + "	" + "Segundo dado:" + dado2 );
-		if((dado1 > 0 && dado1 < 7) && (dado2 > 0 && dado2 < 7)) {
+		int d1 = num1.nextInt(6) + 1;
+		int d2 = num1.nextInt(6) + 1;
+		System.out.println("Primeiro dado:"+ d1 + "	" + "Segundo dado:" + d2 );
+		if((d1 > 0 && d1 < 7) && (d2 > 0 && d2 < 7)) {
 			try {
-				i1 = ImageIO.read(new File("images/dados/die_face_" + Integer.toString(dado1) + ".png"));
-				i2 = ImageIO.read(new File("images/dados/die_face_" + Integer.toString(dado2) + ".png"));
+				i1 = ImageIO.read(new File("images/dados/die_face_" + Integer.toString(d1) + ".png"));
+				i2 = ImageIO.read(new File("images/dados/die_face_" + Integer.toString(d2) + ".png"));
 			}
 			catch(IOException ex){
 				   System.out.println(ex.getMessage());
@@ -40,5 +44,7 @@ public class RolarDados extends JLabel implements ActionListener{
         Frame1.add(panel1);
         Frame1.pack();
         Frame1.setVisible(true);
+        
+		Controler.rodada( d1,  d2); 
 	}
 }
