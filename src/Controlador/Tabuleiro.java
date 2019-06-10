@@ -34,7 +34,7 @@ public class Tabuleiro  extends JPanel {
 			pinos.add(p); 
 			add(p); 
 			repaint(); 
-			Pin.position += 26;
+			Pin.padding += 10;
 			return pinos.size(); 
 		} 
 	}

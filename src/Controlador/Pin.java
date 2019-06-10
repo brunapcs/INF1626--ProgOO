@@ -3,13 +3,17 @@ import javax.swing.*;
 import java.io.*;
 import javax.imageio.*;
 import java.awt.image.BufferedImage; 
+import java.util.Random;
 
 public class Pin extends JLabel {
 	private BufferedImage i=null;
 	static int player_num = 0;  
-	static public int position = 500; 
+	static public int padding = 5; 
+	private Coordenadas cord = new Coordenadas(); 
+	private int pin_position = 0;
 	
-	private int pin_position = 0; 
+	private Random num1 = new Random();
+	private int offset = num1.nextInt(10) + 1;
 	
 	public Pin() {		
 		if(player_num <6) { 
@@ -23,17 +27,18 @@ public class Pin extends JLabel {
 			player_num++; 	
 		} 
 		else { 
-			System.out.print("Todos os jogadores j� escolheram pinos");
+			System.out.print("Todos os jogadores ja escolheram pinos");
 		}
 		
 		ImageIcon image = new ImageIcon(i); 
 		this.setIcon(image); 
-		setBounds(position,500, 25 , 38); 
+		setBounds(600+padding, 600+padding, 25 , 35); 
 	
 	}
 	
 	public void moveTo(int pos) { 
 		pin_position = pos; 
+		setBounds(cord.x[pos]+offset, cord.y[pos]-offset, 25 , 35); 
 		
 	}
 	
