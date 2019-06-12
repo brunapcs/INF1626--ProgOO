@@ -30,7 +30,7 @@ public class RolarDados extends JLabel implements ActionListener{
 		Random num1 = new Random();
 		int d1 = num1.nextInt(6) + 1;
 		int d2 = num1.nextInt(6) + 1;
-		System.out.println("Primeiro dado:"+ d1 + "	" + "Segundo dado:" + d2 );
+		
 		if((d1 > 0 && d1 < 7) && (d2 > 0 && d2 < 7)) {
 			try {
 				i1 = ImageIO.read(new File("images/dados/die_face_" + Integer.toString(d1) + ".png"));
@@ -46,7 +46,7 @@ public class RolarDados extends JLabel implements ActionListener{
 	
 		label1.setIcon(new ImageIcon(dado1));
 		label2.setIcon(new ImageIcon(dado2));
-		t.revalidate(); t.repaint();
+
      
 		Controler.rodada( d1,  d2); 
 	}

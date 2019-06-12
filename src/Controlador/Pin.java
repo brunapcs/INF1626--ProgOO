@@ -41,6 +41,7 @@ public class Pin extends JLabel {
 		setBounds(cord.x[pos]+offset, cord.y[pos]-offset, 25 , 35); 
 		
 	}
+
 	public int getNumTurn(Pin p) {
 		return p.numberTurn;
 	}

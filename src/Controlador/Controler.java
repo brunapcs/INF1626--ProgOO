@@ -11,6 +11,7 @@ public class Controler {
 	public static MenuInicial menuIni = null;
 	public static Jogo jogo ; 
 	public static int player_turn = -1; 
+	public static int player_on = 0; 
 	private static int numTurn = 0;
 	// public static Deck deck = new Deck();
 	
@@ -45,6 +46,9 @@ public class Controler {
 		return botoes; 
 	}
 	
+	public static int getPlayerOn() { 
+		return player_on; 
+	}
 
 	public static void rodada(int d1, int d2) {
 		player_turn++; 
@@ -52,6 +56,11 @@ public class Controler {
 			player_turn = 0; 
 		}
 		Pin p = tab_p.getPin(player_turn); 
+		player_on = tab_p.getPinArrayIndex(p); 
+		
+		botoes.showPlayerOn(player_on);
+		
+		System.out.print(Integer.toString(player_on));
 		int soma = d1 + d2; 
 		int pos = (p.getPosition() + soma) % 40 ; 
 		p.moveTo(pos); 
@@ -65,6 +74,9 @@ public class Controler {
 				player_turn++;
 				numTurn = 0;
 			}
+		}
+		else { 
+			numTurn = 0;
 		}
 	}
 	

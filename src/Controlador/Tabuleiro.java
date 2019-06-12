@@ -43,6 +43,9 @@ public class Tabuleiro  extends JPanel {
 		return pinos.get(indice); 
 	}
 	
+	public int getPinArrayIndex( Pin p) { 
+		return pinos.indexOf(p); 
+	}
 	
 	public int getPlayersNum() { 
 		return pinos.size(); 
