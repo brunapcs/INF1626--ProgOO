@@ -11,7 +11,7 @@ public class Pin extends JLabel {
 	static public int padding = 5; 
 	private Coordenadas cord = new Coordenadas(); 
 	private int pin_position = 0;
-	
+	public static int numberTurn = 0;
 	private Random num1 = new Random();
 	private int offset = num1.nextInt(10) + 1;
 	
@@ -41,7 +41,9 @@ public class Pin extends JLabel {
 		setBounds(cord.x[pos]+offset, cord.y[pos]-offset, 25 , 35); 
 		
 	}
-	
+	public int getNumTurn(Pin p) {
+		return p.numberTurn;
+	}
 	public int getPosition() { 
 		return pin_position; 
 	}
