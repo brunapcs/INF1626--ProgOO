@@ -8,9 +8,11 @@ import java.awt.image.BufferedImage;
 
 public class Tabuleiro  extends JPanel {
 	private BufferedImage i=null;
-	public ArrayList<Pin> pinos = new ArrayList<Pin>();
+	public static ArrayList<Jogador>jogadores = new ArrayList<Jogador>(); 
+	private int num;
 	
-	public Tabuleiro() {
+	public Tabuleiro(){
+		num = 0;
 		try {
 		   i=ImageIO.read(new File("images/tabuleiro.png"));
 		}
@@ -18,44 +20,31 @@ public class Tabuleiro  extends JPanel {
 		   System.out.println(e.getMessage());
 		   System.exit(1);
 		}		
-	
-		setLayout(null); 
+		setBounds(0,0,700,700); 
+		setVisible(true); 
 		repaint(); 
-		
 	}
 	
-	public int addPin() { 
-		if (pinos.size() >= 6 ) { 
-			System.out.print("Nao pode mais add jogador"); 
-			return 6; 
-		}
-		else {
-			Pin p = new Pin(); 
-			pinos.add(p); 
-			add(p); 
-			repaint(); 
-			Pin.padding += 10;
-			return pinos.size(); 
-		} 
+	public void addJogador() { 
+		jogadores.add(new Jogador(num)); 
+		num++;
 	}
 	
-	public Pin getPin(int indice) { 
-		return pinos.get(indice); 
+	public int getNumJogadores() {
+		return num;
 	}
-	
-	public int getPinArrayIndex( Pin p) { 
-		return pinos.indexOf(p); 
+	public Jogador getJogador(int index) {
+		return jogadores.get(index);
 	}
-	
-	public int getPlayersNum() { 
-		return pinos.size(); 
-	}
-	
 	@Override
 	  protected void paintComponent(Graphics g) {
-
 	    super.paintComponent(g);
-	        g.drawImage(i, 0, 0, null);
+	    	Graphics2D g2d = (Graphics2D) g;
+	        g2d.drawImage(i, 0, 0, null);
+	        for( int j=0; j < num; j++) { 
+	        	Jogador jog = jogadores.get(j); 
+	        	g2d.drawImage(jog.getJogadorImage(), jog.getPosX()+jog.getOffset(), jog.getPosY()+jog.getOffset(), null); 
+	        }
 	}
 	
 }

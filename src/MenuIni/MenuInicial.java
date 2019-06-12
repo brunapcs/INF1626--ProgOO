@@ -9,9 +9,7 @@ import javax.imageio.*;
 
 public class MenuInicial extends JFrame {
 		
-	
 		public MenuInicial(){ 
-			
 			
 			MenuIniPanel panel = new MenuIniPanel(); 
 			getContentPane().add(panel); 

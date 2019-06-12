@@ -1,6 +1,7 @@
 package Controlador;
 
 
+import Acoes.RolarDados;
 import MenuIni.*;
 
 
@@ -8,11 +9,14 @@ public class Controler {
 
     private static Tabuleiro tab_p = new Tabuleiro(); 
 	private static Botoes botoes =  new Botoes(); 
+	public static RolarDados dados = new RolarDados(); 
 	public static MenuInicial menuIni = null;
-	public static Jogo jogo ; 
+	public static Jogo jogo = null; 
+	
 	public static int player_turn = -1; 
 	public static int player_on = 0; 
 	private static int numTurn = 0;
+	
 	// public static Deck deck = new Deck();
 	
 	Controler(){ 
@@ -24,9 +28,6 @@ public class Controler {
 	    menuIni = new MenuInicial(); 
 	 }	
 	
-	public static void novoJovo() { 
-		jogo = new Jogo(); 
-	}
 	
 	public static void setMenuIniVisible(boolean b) { 
 		menuIni.setVisible(b); 
@@ -36,6 +37,13 @@ public class Controler {
 		jogo.repaint(); 
 		jogo.setVisible(b);
 		
+	}
+	
+	public static Jogo getJogo() { 
+		return jogo; 
+	}
+	public static RolarDados getDados() { 
+		return dados; 
 	}
 	
 	public static Tabuleiro getTab_p() { 
@@ -52,18 +60,18 @@ public class Controler {
 
 	public static void rodada(int d1, int d2) {
 		player_turn++; 
-		if( player_turn > tab_p.getPlayersNum() - 1) { 
+		if( player_turn > tab_p.getNumJogadores() - 1) { 
 			player_turn = 0; 
 		}
-		Pin p = tab_p.getPin(player_turn); 
-		player_on = tab_p.getPinArrayIndex(p); 
+		Jogador player_on = tab_p.getJogador(player_turn); 
+		 
 		
-		botoes.showPlayerOn(player_on);
+		botoes.showPlayerOn(player_turn);
 		
-		System.out.print(Integer.toString(player_on));
+		System.out.print(Integer.toString(player_turn));
 		int soma = d1 + d2; 
-		int pos = (p.getPosition() + soma) % 40 ; 
-		p.moveTo(pos); 
+		int pos = (player_on.getPosition() + soma) % 40 ; 
+		player_on.moveTo(pos); 
 		tab_p.repaint(); 
 		tab_p.setVisible(true);	
 	

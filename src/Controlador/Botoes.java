@@ -1,5 +1,7 @@
 package Controlador;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -15,7 +17,14 @@ public class Botoes extends JPanel {
 		add(player_turn); 
 		player_turn.setText("Jogador da rodada:" + Integer.toString(Controler.getPlayerOn()));
 	
-		rolar_dados.addActionListener(new RolarDados());
+		rolar_dados.addActionListener(new ActionListener(){ 
+			public void actionPerformed(ActionEvent e) { 
+				Controler.getDados().sortearDados(); 
+			}
+		}); 
+		
+		setBounds(700,0, 200,200);
+		setVisible(true);
 	}
 	
 	public void showPlayerOn(int i) { 
@@ -40,10 +49,7 @@ public class Botoes extends JPanel {
 		case 5: 
 			 jogador = "cinza"; 
 			 break; 
-		
 		}
-		
 		player_turn.setText("Jogador da rodada:" + jogador);
 	}
-	
 }
