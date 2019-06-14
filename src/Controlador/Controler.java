@@ -12,9 +12,9 @@ public class Controler {
 	public static RolarDados dados = new RolarDados(); 
 	public static MenuInicial menuIni = null;
 	public static Jogo jogo = null; 
+
 	
-	public static int player_turn = -1; 
-	public static int player_on = 0; 
+	public static int player_on = -1; 
 	private static int numTurn = 0;
 	
 	// public static Deck deck = new Deck();
@@ -53,33 +53,36 @@ public class Controler {
 	public static Botoes getBotoes_p() { 
 		return botoes; 
 	}
-	
+
 	public static int getPlayerOn() { 
 		return player_on; 
 	}
 
 	public static void rodada(int d1, int d2) {
-		player_turn++; 
-		if( player_turn > tab_p.getNumJogadores() - 1) { 
-			player_turn = 0; 
-		}
-		Jogador player_on = tab_p.getJogador(player_turn); 
-		 
-		
-		botoes.showPlayerOn(player_turn);
-		
-		System.out.print(Integer.toString(player_turn));
 		int soma = d1 + d2; 
-		int pos = (player_on.getPosition() + soma) % 40 ; 
-		player_on.moveTo(pos); 
+		player_on++; 
+		
+		if( player_on > tab_p.getNumJogadores() - 1) { 
+			player_on = 0; 
+		}
+		
+		Jogador jogador_on = tab_p.getJogador(player_on); 
+		botoes.showPlayerOn(player_on);
+		dados.setCorDado(player_on);
+		
+		
+	//	System.out.print(Integer.toString(player_on));
+		
+		jogador_on.moveTo((jogador_on.getPosition() + soma) % 40); 
+	
 		tab_p.repaint(); 
 		tab_p.setVisible(true);	
 	
 		if(d1 == d2) {
-			player_turn--;
+			player_on--;
 			numTurn++;
 			if(numTurn == 3) {
-				player_turn++;
+				player_on++;
 				numTurn = 0;
 			}
 		}

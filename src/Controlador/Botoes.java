@@ -27,9 +27,9 @@ public class Botoes extends JPanel {
 		setVisible(true);
 	}
 	
+	
 	public void showPlayerOn(int i) { 
 		String jogador = ""; 
-		
 		switch(i){
 		case 0: 
 			jogador = "vermelho"; 

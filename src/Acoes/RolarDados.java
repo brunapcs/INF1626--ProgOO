@@ -30,6 +30,7 @@ public class RolarDados extends JPanel{
 	}
 	
 	public void sortearDados() {  
+		int r = 0, g=0, b=0; 
 		Random num1 = new Random();
 		int d1 = num1.nextInt(6) + 1;
 		int d2 = num1.nextInt(6) + 1;
@@ -44,12 +45,44 @@ public class RolarDados extends JPanel{
 				   System.exit(1);
 			}
 		}
-		
 		setBounds(150,150, 310, 150);
-		setBackground(new Color(0,0,0,0));
+		setBackground(new Color(r,g,b,255));
 		repaint(); 
 		setVisible(true);
-		Controler.rodada( d1,  d2); 
+		Controler.rodada(d1,d2); 
+	}
+	
+	public void setCorDado(int player) { 
+		int r =0, g=0, b =0; 
+		
+		switch(player){ 
+			case 0: 
+				r = 255;
+				break; 
+			case 1: 
+				b = 255;
+				break ;
+			case 2: 
+				r = 227; 
+				g = 117; 
+				break; 
+			case 3: 
+				r = 255; 
+				g = 255; 
+				break;
+			case 4: 
+				r = 162; 
+				b = 255; 
+				break; 
+			case 5: 
+				r = 167;
+				g = 167; 
+				b = 167; 
+				break; 
+		}
+		setBackground(new Color(r,g,b,255));
+		repaint(); 
+		setVisible(true);
 	}
 	
 	@Override
