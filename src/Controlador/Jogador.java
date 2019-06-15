@@ -14,8 +14,10 @@ import java.util.Random;
 public class Jogador {
 	public BufferedImage i=null;
 	private int pin_position = 0;
-	Coordenadas cord = new Coordenadas(); 
+	private int saldo = 2458; 
+	private boolean prisao = false; 
 	
+	Coordenadas cord = new Coordenadas(); 
 	Random num = new Random(); 
 	private int offset = num.nextInt(15) +1; 
 	
@@ -29,12 +31,25 @@ public class Jogador {
 			}
 	}
 	
+	
 	public BufferedImage getJogadorImage() { 
 		return i; 
 	}
 	
 	public void moveTo(int pos) { 
 		pin_position = pos; 
+	}
+	
+	public void setPrisao(boolean p) { 
+		prisao = p; 
+	}
+	
+	public int getSaldo() { 
+		return saldo; 
+	}
+	
+	public void setSaldo(int a) { 
+		saldo+=  a; 
 	}
 	
 	public int getPosition() {
@@ -50,6 +65,11 @@ public class Jogador {
 	}
 	public int getOffset() {
 		return offset;
+	}
+
+
+	public boolean getPrisao() {
+		return prisao;
 	}
 	
 }

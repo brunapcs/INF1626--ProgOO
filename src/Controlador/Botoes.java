@@ -9,19 +9,23 @@ import Acoes.*;
 
 public class Botoes extends JPanel {
 	JLabel player_turn = new JLabel();
+	JButton compar = new JButton("Comprar"); 
+	JButton vender = new JButton ("Vender"); 
+	JButton passar = new JButton("Passar"); 
 	
 	public Botoes(){
 		JButton rolar_dados = new JButton("rolar dado");
 		add(rolar_dados); 
 	
 		add(player_turn); 
-		player_turn.setText("Jogador da rodada:" + Integer.toString(Controler.getPlayerOn()));
+		player_turn.setText("Jogador da rodada: vermelho" );
 	
 		rolar_dados.addActionListener(new ActionListener(){ 
 			public void actionPerformed(ActionEvent e) { 
 				Controler.getDados().sortearDados(); 
 			}
 		}); 
+		
 		
 		setBounds(700,0, 200,200);
 		setVisible(true);

@@ -13,9 +13,12 @@ public class Controler {
 	public static MenuInicial menuIni = null;
 	public static Jogo jogo = null; 
 
+	public static int numTurn = 0; 
+	public static int player_on = 0; 
+
 	
-	public static int player_on = -1; 
-	private static int numTurn = 0;
+	public static int d1Ant = 1; 
+	public static int d2Ant = 0; 
 	
 	// public static Deck deck = new Deck();
 	
@@ -59,36 +62,47 @@ public class Controler {
 	}
 
 	public static void rodada(int d1, int d2) {
-		int soma = d1 + d2; 
-		player_on++; 
 		
-		if( player_on > tab_p.getNumJogadores() - 1) { 
-			player_on = 0; 
+		if(d1Ant != d2Ant){
+			player_on++;
+			if( player_on > tab_p.getNumJogadores() - 1){ 
+				player_on = 0; 
+			}
+			numTurn = 0; 
+		}
+		else{ 
+			numTurn++; 
 		}
 		
-		Jogador jogador_on = tab_p.getJogador(player_on); 
-		botoes.showPlayerOn(player_on);
-		dados.setCorDado(player_on);
+		Jogador jogador_on = tab_p.getJogador(player_on);
+		
+		if(numTurn == 3) { 
+			//verificar se o jogador possui a carta "saida livre da prisao"
+			//caso possua, nada ocorre, se nao possuir, prisao eh setado como true
+			jogador_on.setPrisao(true); 
+		}
 		
 		
-	//	System.out.print(Integer.toString(player_on));
-		
-		jogador_on.moveTo((jogador_on.getPosition() + soma) % 40); 
-	
-		tab_p.repaint(); 
-		tab_p.setVisible(true);	
-	
-		if(d1 == d2) {
-			player_on--;
-			numTurn++;
-			if(numTurn == 3) {
-				player_on++;
-				numTurn = 0;
-			}
+		if(jogador_on.getPrisao() == false){	
+			botoes.showPlayerOn(player_on);
+			dados.setCorDado(player_on);
+			jogador_on.moveTo((jogador_on.getPosition() + (d1+d2)) % 40); 
 		}
 		else { 
-			numTurn = 0;
+			if (d1 == d2) { 
+				jogador_on.setPrisao(false);
+			}
+			
 		}
+		
+		tab_p.repaint(); 
+		tab_p.setVisible(true);	
+		
+		d1Ant = d1; 
+		d2Ant = d2; 
+	
 	}
+	
+	
 	
 }
