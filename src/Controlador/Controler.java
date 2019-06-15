@@ -2,7 +2,15 @@ package Controlador;
 
 
 import Acoes.RolarDados;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.ArrayList;
+
+import org.json.JSONObject;
+
 import MenuIni.*;
+import Cartas.*; 
 
 
 public class Controler {
@@ -12,21 +20,44 @@ public class Controler {
 	public static RolarDados dados = new RolarDados(); 
 	public static MenuInicial menuIni = null;
 	public static Jogo jogo = null; 
-
+	public static ArrayList<Cartas>cartas = new ArrayList<Cartas>(); 
+	public static ArrayList<Cartas>sorteReves = new ArrayList<Cartas>(); 
 	public static int numTurn = 0; 
-	public static int player_on = 0; 
-
-	
+	public static int player_on = -1; 
 	public static int d1Ant = 1; 
 	public static int d2Ant = 0; 
-	
-	// public static Deck deck = new Deck();
+	public static int banco = 50000; 
 	
 	Controler(){ 
 		
 	}
+
     
-	public static void main(String args[]) {
+	public static void main(String args[]) throws FileNotFoundException {
+	
+		JSONObject father = new JSONObject(new FileReader("infoJogo/Terrenos.json"));
+		JSONObject casas = new JSONObject(new FileReader("infoJogo/Casas.json")); 
+		JSONObject companhias = new JSONObject(new FileReader("infoJogo/Companhias.json")); 
+		JSONObject sorteRev = new JSONObject(new FileReader("infoJogo/SorteReves.json")); 
+		
+		String tipo = father.getString("tipo"); 
+		
+		for(int i = 0; i<58; i++ ) { 
+			if(tipo == "companhia") { 
+				Companhias c = new Companhias(father, companhias); 
+				cartas.add(c);
+			}
+			else if(tipo == "terreno") { 
+				Casas c = new Casas(father, casas ); 
+				cartas.add(c); 
+			}
+			else { 
+				SorteReves c = new SorteReves(father, sorteRev); 
+				sorteReves.add(c); 
+			}
+			
+		}
+		
 		jogo = new Jogo(); 
 	    menuIni = new MenuInicial(); 
 	 }	
@@ -82,12 +113,15 @@ public class Controler {
 			jogador_on.setPrisao(true); 
 		}
 		
-		
+		//jogada normal, jogador nao esta preso 
 		if(jogador_on.getPrisao() == false){	
 			botoes.showPlayerOn(player_on);
 			dados.setCorDado(player_on);
 			jogador_on.moveTo((jogador_on.getPosition() + (d1+d2)) % 40); 
+		
+			
 		}
+		//jogada caso o jogador esta preso 
 		else { 
 			if (d1 == d2) { 
 				jogador_on.setPrisao(false);

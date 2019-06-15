@@ -1,5 +1,6 @@
 package Controlador;
 import javax.swing.*;
+import Cartas.*; 
 import java.io.*;
 import javax.imageio.*;
 
@@ -12,14 +13,16 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Jogador {
-	public BufferedImage i=null;
+	private BufferedImage i=null;
 	private int pin_position = 0;
 	private int saldo = 2458; 
 	private boolean prisao = false; 
-	
-	Coordenadas cord = new Coordenadas(); 
-	Random num = new Random(); 
+	private Coordenadas cord = new Coordenadas(); 
+	private Random num = new Random();
 	private int offset = num.nextInt(15) +1; 
+	
+	private ArrayList<Cartas> propriedades = new ArrayList<Cartas>();  
+	private ArrayList<SorteReves> sorteReves = new ArrayList<SorteReves>();  
 	
 	public Jogador(int num) {		
 			try {
@@ -31,6 +34,22 @@ public class Jogador {
 			}
 	}
 	
+	public void addPropriedade(Cartas p){ 
+		String tipo = p.getTipo(); 
+		if (tipo == "terreno") { 
+			propriedades.add((Casas)p); 
+		}
+		else if (tipo == "companhia") { 
+			propriedades.add((Companhias)p); 
+		}
+		else {
+			System.out.println("Nao pode comprar esse lote"); 
+		}
+	}
+	
+	public boolean removerPropriedade(Cartas p) { 
+		return propriedades.remove(p); 
+	}
 	
 	public BufferedImage getJogadorImage() { 
 		return i; 
@@ -66,7 +85,6 @@ public class Jogador {
 	public int getOffset() {
 		return offset;
 	}
-
 
 	public boolean getPrisao() {
 		return prisao;

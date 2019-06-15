@@ -14,7 +14,8 @@ public class MenuInicial extends JFrame {
 			MenuIniPanel panel = new MenuIniPanel(); 
 			getContentPane().add(panel); 
 			
-			setSize(1000,1000); 
+			setSize(500,300); 
+			setLocation(400,200); 
 			setVisible(true); 
 		} 
 		
