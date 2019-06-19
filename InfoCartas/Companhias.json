@@ -1,0 +1,45 @@
+[
+	{
+		"name": "Companhia Ferroviaria",
+		"tipo": "companhia",
+		"posicao": 6,
+		"multiplicador": 50,
+		"hipoteca": 100
+	},
+	{
+		"name": "Companhia de Viacao",
+		"tipo": "companhia",
+		"posicao": 8,
+		"multiplicador": 50,
+		"hipoteca": 100
+	},
+	{
+		"name": "Companhia de Taxi",
+		"tipo": "companhia",
+		"posicao": 16,
+		"multiplicador": 40,
+		"hipoteca": 75
+	},
+	{
+		"name" : "Companhia de Navegacao",
+		"tipo": "companhia",
+		"posicao": 26,
+		"multiplicador": 40,
+		"hipoteca": 75
+	},
+	{
+		"name": "Companhia de Aviacao",
+		"tipo": "companhia",
+		"posicao": 33,
+		"multiplicador": 50,
+		"hipoteca": 100
+	},
+	{
+		"name": "Companhia de Taxi Aereo",
+		"tipo": "companhia",
+		"posicao": 36,
+		"multiplicador": 50,
+		"hipoteca": 100
+	}
+	
+]
