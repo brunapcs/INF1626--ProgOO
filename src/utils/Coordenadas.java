@@ -1,4 +1,4 @@
-package Controlador;
+package utils;
 
 public class Coordenadas {
 	
