@@ -3,11 +3,8 @@ package Cartas;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.imageio.ImageIO;
 
-import regras.Jogador;
 
 public class CartaCompanhia extends Cartas{
 	private int multiplicador; 
@@ -30,14 +27,13 @@ public class CartaCompanhia extends Cartas{
 			}
 		pos = p; 
 	
-		cartas.add(pos, this); 
+		cartas.set(pos, this); 
 	}
 	
 	public static void inicializaCompanhias() { 
 			CartaCompanhia c ; 
 			c = new CartaCompanhia("1", 100 , 50, 6 );
 			//inicializa todas as cartas de companhia hardcoded 
-		
 	}
 	
 	public int getMultiplicador() {
@@ -64,11 +60,11 @@ public class CartaCompanhia extends Cartas{
 		this.nome = nome;
 	}
 
-	public BufferedImage getI() {
+	public BufferedImage getImage() {
 		return i;
 	}
 
-	public void setI(BufferedImage i) {
+	public void setImage(BufferedImage i) {
 		this.i = i;
 	}
 }

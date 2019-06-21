@@ -32,14 +32,17 @@ public class CartaTerreno extends Cartas{
 			   System.out.println(e1.getMessage());
 			   System.exit(1);
 		}
-		cartas.add(pos, this); 
+		cartas.set(pos, this); 
 	}
 
 	public static void inicializaTerreno() { 
-		CartaTerreno c = new CartaTerreno("Leblon", 50,50,50, 6,30,90,270,400,500 , 1); 
+		CartaTerreno c ; 
+		c = new CartaTerreno("Leblon", 50,50,50, 6,30,90,270,400,500 , 1); 
 		//inicializar todas as cartas hardcoded aqui 
-		
 	 
+	}
+	public BufferedImage getImage() { 
+		return i; 
 	}
 	
 	public int getCasa() {

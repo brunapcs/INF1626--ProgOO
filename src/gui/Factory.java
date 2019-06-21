@@ -5,9 +5,7 @@ import utils.*;
 import java.util.ArrayList;
 import java.util.Queue;
 
-import Cartas.CartaCompanhia;
-import Cartas.CartaTerreno;
-import Cartas.SorteReves; 
+import Cartas.*;
 
 
 public class Factory {
@@ -17,7 +15,8 @@ public class Factory {
 		Fachada fa = Fachada.getFachada(); 
 		PNBotoes bot = PNBotoes.getPNBotoes(); 
 		PNTabuleiro tab = PNTabuleiro.getPNTabuleiro(); 
-		
+		ArrayList<Cartas> cartas = Cartas.getCartas();
+		Queue<SorteReves> deck = Cartas.getSorteReves(); 
 	}
 	
 	public static Factory startFactory() { 
