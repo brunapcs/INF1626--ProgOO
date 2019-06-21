@@ -12,12 +12,15 @@ public class CartaCompanhia extends Cartas{
 	private String nome = new String(); 
 	private BufferedImage i ; 
 	private int pos; 
+	private int valorCompra;
 	
-	private CartaCompanhia(String n, int hip, int mult, int p ) { 
+	private CartaCompanhia(String n, int hip, int mult, int p, int vc ) { 
 		super(); 
 		nome = n; 
 		hipoteca = hip; 
 		multiplicador = mult; 
+		valorCompra = vc;
+		
 		try {
 			   i=ImageIO.read(new File("images/companhias/company" + n + ".png"));
 			}
@@ -31,9 +34,12 @@ public class CartaCompanhia extends Cartas{
 	}
 	
 	public static void inicializaCompanhias() { 
-			CartaCompanhia c ; 
-			c = new CartaCompanhia("1", 100 , 50, 6 );
-			//inicializa todas as cartas de companhia hardcoded 
+			new CartaCompanhia("1", 100 , 50, 5, 200);
+			new CartaCompanhia("2", 100 , 50, 7, 200);
+			new CartaCompanhia("3", 75, 40, 15, 150);
+			new CartaCompanhia("4", 75, 40, 25, 150);
+			new CartaCompanhia("5", 100 , 50, 32, 200);
+			new CartaCompanhia("6", 100 , 50, 35, 200);
 	}
 	
 	public int getMultiplicador() {
@@ -63,7 +69,10 @@ public class CartaCompanhia extends Cartas{
 	public BufferedImage getImage() {
 		return i;
 	}
-
+	
+	public int getValorCompra() {
+		return valorCompra;
+	}
 	public void setImage(BufferedImage i) {
 		this.i = i;
 	}
