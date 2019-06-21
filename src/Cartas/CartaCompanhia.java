@@ -1,4 +1,4 @@
-package utils;
+package Cartas;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -9,15 +9,15 @@ import javax.imageio.ImageIO;
 
 import regras.Jogador;
 
-public class CartaCompanhia {
-	private static ArrayList<CartaCompanhia> companhias = new ArrayList<>(); 
+public class CartaCompanhia extends Cartas{
 	private int multiplicador; 
 	private int hipoteca; 
 	private String nome = new String(); 
 	private BufferedImage i ; 
+	private int pos; 
 	
-	private CartaCompanhia(String n, int hip, int mult) { 
-		
+	private CartaCompanhia(String n, int hip, int mult, int p ) { 
+		super(); 
 		nome = n; 
 		hipoteca = hip; 
 		multiplicador = mult; 
@@ -28,19 +28,16 @@ public class CartaCompanhia {
 			   System.out.println(e.getMessage());
 			   System.exit(1);
 			}
-		
+		pos = p; 
 	
-		companhias.add(this); 
+		cartas.add(pos, this); 
 	}
 	
-	public static ArrayList<CartaCompanhia> getCompanhias() { 
-		if(companhias.size()< 1 ) {
+	public static void inicializaCompanhias() { 
 			CartaCompanhia c ; 
-			c = new CartaCompanhia("1", 100 , 50 );
+			c = new CartaCompanhia("1", 100 , 50, 6 );
 			//inicializa todas as cartas de companhia hardcoded 
-			
-		}
-		return companhias;
+		
 	}
 	
 	public int getMultiplicador() {

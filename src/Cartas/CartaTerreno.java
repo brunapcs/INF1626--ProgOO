@@ -1,4 +1,4 @@
-package utils;
+package Cartas;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -9,8 +9,7 @@ import java.util.Vector;
 
 import javax.imageio.ImageIO;
 
-public class CartaTerreno{
-	private static ArrayList<CartaTerreno> terrenos = new ArrayList<>(); 
+public class CartaTerreno extends Cartas{
 	private int casa; 
 	private int hotel; 
 	private int hipoteca; 
@@ -19,6 +18,7 @@ public class CartaTerreno{
 	private int pos; 
 	
 	private CartaTerreno(String n ,int cas, int hot, int hip ,int a, int b , int c , int d, int e, int f , int p){ 
+		super(); 
 		casa = cas; 
 		hotel = hot; 
 		hipoteca = hip; 
@@ -32,15 +32,14 @@ public class CartaTerreno{
 			   System.out.println(e1.getMessage());
 			   System.exit(1);
 		}
-		terrenos.add(this); 
+		cartas.add(pos, this); 
 	}
 
-	public static ArrayList<CartaTerreno> getTerrenos() { 
-		if (terrenos.size()< 1 ) {
-			CartaTerreno c = new CartaTerreno("Leblon", 50,50,50, 6,30,90,270,400,500 , 1); 
-			//inicializar todas as cartas hardcoded aqui 
-		}
-		return terrenos; 
+	public static void inicializaTerreno() { 
+		CartaTerreno c = new CartaTerreno("Leblon", 50,50,50, 6,30,90,270,400,500 , 1); 
+		//inicializar todas as cartas hardcoded aqui 
+		
+	 
 	}
 	
 	public int getCasa() {

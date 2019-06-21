@@ -3,7 +3,11 @@ package gui;
 import regras.*; 
 import utils.*;
 import java.util.ArrayList;
-import java.util.Queue; 
+import java.util.Queue;
+
+import Cartas.CartaCompanhia;
+import Cartas.CartaTerreno;
+import Cartas.SorteReves; 
 
 
 public class Factory {
@@ -13,9 +17,7 @@ public class Factory {
 		Fachada fa = Fachada.getFachada(); 
 		PNBotoes bot = PNBotoes.getPNBotoes(); 
 		PNTabuleiro tab = PNTabuleiro.getPNTabuleiro(); 
-		ArrayList<CartaTerreno> ter = CartaTerreno.getTerrenos(); 
-		ArrayList<CartaCompanhia> com = CartaCompanhia.getCompanhias(); 
-		Queue<SorteReves> sorteRev =  SorteReves.getSorteReves(); 
+		
 	}
 	
 	public static Factory startFactory() { 
