@@ -8,7 +8,7 @@ public class Cartas {
 	
 	 static ArrayList<Cartas> cartas = null ; 
 	 static Queue<SorteReves>deck = null; 
-	
+	 String tipo; 
 	 Cartas() { 	 
 	 }
 	 
@@ -33,6 +33,10 @@ public class Cartas {
 			 SorteReves.inicializaSorteReves(); 
 		 }
 		 return deck; 
+	 }
+	 
+	 public String getTipo() { 
+		 return tipo; 
 	 }
 
 }

@@ -32,9 +32,10 @@ public class CartaTerreno extends Cartas{
 			   System.out.println(e1.getMessage());
 			   System.exit(1);
 		}
+		tipo = "terreno"; 
 		cartas.set(pos, this); 
 	}
-
+	
 	public static void inicializaTerreno() { 
 		CartaTerreno c ; 
 		c = new CartaTerreno("Leblon", 50,50,50, 6,30,90,270,400,500 , 1); 

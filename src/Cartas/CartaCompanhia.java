@@ -26,7 +26,7 @@ public class CartaCompanhia extends Cartas{
 			   System.exit(1);
 			}
 		pos = p; 
-	
+		tipo = "companhia"; 
 		cartas.set(pos, this); 
 	}
 	
