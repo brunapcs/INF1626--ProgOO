@@ -70,11 +70,15 @@ public class FRJogo extends JFrame{
 			Dimension screenSize=tk.getScreenSize();
 			
 			JMenuBar menu = new JMenuBar();
-			JMenu salvamento = new JMenu("Salvar jogo");
-	        menu.add(salvamento);
-	        salvamento.addActionListener(new ActionListener() {
+			JMenu Opcoes = new JMenu("Opcoes");
+	        menu.add(Opcoes);
+	        JMenuItem salvar = new JMenuItem("Salvar Jogo");
+	        
+	        Opcoes.add(salvar); 
+	        
+	        salvar.addActionListener(new ActionListener() {
 	        	public void actionPerformed(ActionEvent e) {
-	        		
+	        		saveGame(); 
 	        	}
 	        });
 	        setJMenuBar(menu);
@@ -86,13 +90,20 @@ public class FRJogo extends JFrame{
 			setDefaultCloseOperation(EXIT_ON_CLOSE);	
 	   }
 	   
-	  private void saveGame(File f) throws IOException {
-		  FileOutputStream fileStream = new FileOutputStream(f);   
-	      ObjectOutputStream objectStream = new ObjectOutputStream(fileStream);
-	      
-	      objectStream.writeObject(MenuInicial.Monopoly);
-	      objectStream.close();
-	      fileStream.close();
+	  private void saveGame(){ 
+		  
+		  try{    
+	           FileWriter fw=new FileWriter("testout.txt");    
+	           fac.getJogoInfo(); 
+	           fw.write(fac.getJogoInfo());    
+	           fw.close();    
+	          }
+		  catch(Exception e)
+		  {
+	        	  System.out.println(e);
+	      }    
+	          System.out.println("Success...");    
+			
 	  }
 	  
 	  public static void main(String args[]) {

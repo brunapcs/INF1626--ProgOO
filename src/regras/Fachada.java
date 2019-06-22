@@ -68,4 +68,9 @@ public class Fachada {
 	public void comprarTerreno() {
 		ctrl.comprarTerreno(); 
 	}
+	
+	public String getJogoInfo() { 
+		return ctrl.salvarJogo(); 
+	}
+	
 }

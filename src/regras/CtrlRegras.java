@@ -278,4 +278,13 @@ class CtrlRegras implements Observable {
 		return null;
 	}
 
+	public String salvarJogo() {
+		String jogo = new String(); 
+		
+		jogo += "numPlayers= " + Integer.toString(numPlayers) + "\n"; 
+		jogo += "player_on= " + Integer.toString(player_on)+ "\n"; 
+		
+		return jogo;
+	}
+
 }

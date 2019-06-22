@@ -1,0 +1,2 @@
+numPlayers=4
+player_on=2

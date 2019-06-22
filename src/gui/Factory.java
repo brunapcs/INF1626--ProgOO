@@ -3,7 +3,11 @@ package gui;
 import regras.*; 
 import utils.*;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,6 +23,7 @@ public class Factory {
 	private PNTabuleiro tab; 
 	private PNBotoes bot;
 	private int numJogadores ;
+	private Fachada fa; 
 	
 	//Inicializa Novo Jogo
 	public static Factory startFactory(int num) { 
@@ -36,7 +41,7 @@ public class Factory {
 		ArrayList<Cartas> cartas = Cartas.getCartas();
 		Queue<SorteReves> deck = Cartas.getSorteReves();
 		
-		Fachada fa = Fachada.getFachada(); 
+		fa = Fachada.getFachada(); 
 	}
 	
 	private void inicializaJogadores(){ 
@@ -51,8 +56,46 @@ public class Factory {
 	
 	//Inicializa Jogo Antigo
 	private Factory(File loadJogo) { 
-		//faz a leitura do arquivo e instancia cada parada de acordo com as informacoes q precisam 
-		//tab -> numero de jogadores, posicao de cada jogador, dinheiro, propriedades, prisao, 
+		BufferedReader reader;
+		try{
+			reader = new BufferedReader(new FileReader(loadJogo));
+			String jogo = "";
+			try 
+			{
+			    StringBuilder sb = new StringBuilder();
+			    String line = reader.readLine();
+			    while (line != null) 
+			    {
+			        sb.append(line);
+			        sb.append("\n");
+			        line = reader.readLine();
+			    }
+			    jogo = sb.toString();
+			} 
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+			} 
+			finally 
+			{
+			    try {
+					reader.close();
+			    }
+			    catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			System.out.print(jogo);
+			
+		}
+		catch (FileNotFoundException e1) 
+		{
+			e1.printStackTrace();
+		}
+		
+		
+		
 	}
 	
 	public static Factory startFactory(File loadJogo) { 
@@ -60,6 +103,11 @@ public class Factory {
 			fac = new Factory(loadJogo); 
 		}
 		return fac; 
+	}
+	
+	//
+	public String getJogoInfo() { 
+		return fa.getJogoInfo(); 
 	}
 	
 	public JPanel getTab() { 
