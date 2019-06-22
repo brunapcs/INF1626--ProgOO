@@ -27,15 +27,31 @@ public class Jogador {
   
 	
 	public Jogador(int num) {		
-		try {
-		   i=ImageIO.read(new File("images/pinos/pin" + Integer.toString(num) + ".png"));
-		}
-		catch(IOException e){
-		   System.out.println(e.getMessage());
-		   System.exit(1);
-		}
+		loadImage(num); 
 		setCor(num); 
 		arrayPos = num; 
+	}
+	
+	public Jogador(int num, int din, boolean preso, int pos, int turnPrisao, boolean lib, ArrayList<Cartas> props) { 
+		loadImage(num); 
+		setCor(num); 
+		saldo = din; 
+		prisao = preso; 
+		pin_position = pos; 
+		numTurnPrisao = turnPrisao; 
+		liberdade = lib; 
+		arrayPos = num; 
+		propriedades = props;
+	}
+	
+	void loadImage(int num) { 
+		try {
+			   i=ImageIO.read(new File("images/pinos/pin" + Integer.toString(num) + ".png"));
+			}
+			catch(IOException e){
+			   System.out.println(e.getMessage());
+			   System.exit(1);
+			}
 	}
 	
 	private void setCor(int i) { 

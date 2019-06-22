@@ -14,6 +14,7 @@ public class Dados{
 	private  int[] Dnum = new int[2] ; 
 	private static Dados d = null; 
 	private static Color background = null; 
+	private boolean ready = false; 
 	
 	private Dados() { 
 		try {
@@ -34,6 +35,7 @@ public class Dados{
 	}
 	
 	public void sortearDados() {  
+		d.ready = true; 
 	
 		Random num1 = new Random();
 		
@@ -99,6 +101,13 @@ public class Dados{
 			background = new Color(r,g,b,255);
 	}
 	
+	public void setReady(boolean b) { 
+		ready = b; 
+	}
+	
+	public boolean getReady() { 
+		return ready; 
+	}
 }
 	
 
