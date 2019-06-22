@@ -102,136 +102,136 @@ public class PNTabuleiro extends JPanel implements Observer, MouseListener{
 			JLabel label = new JLabel(new ImageIcon("images/territorios/Leblon.png"));
 			panel.add(label);	
 		}
-		if((x <= 490 && x >= 430) && (y >= 600 && y <= 700)){
+		else if ((x <= 490 && x >= 430) && (y >= 600 && y <= 700)){
 			JLabel label = new JLabel(new ImageIcon("images/territorios/Av. Presidente Vargas.png"));
 			panel.add(label);	
 		}
 		
-		if((x <= 432 && x >= 375) && (y >= 600 && y <= 700)){
+		else if((x <= 432 && x >= 375) && (y >= 600 && y <= 700)){
 			JLabel label = new JLabel(new ImageIcon("images/territorios/Av. Nossa S. de Copacabana.png"));
 			panel.add(label);	
 		}
 		
-		if((x <= 374 && x >= 320) && (y >= 600 && y <= 700)){
+		else if((x <= 374 && x >= 320) && (y >= 600 && y <= 700)){
 			JLabel label = new JLabel(new ImageIcon("images/companhias/company1.png"));
 			panel.add(label);	
 		}
 		
-		if((x <= 319 && x >= 264) && (y >= 600 && y <= 700)){
+		else if((x <= 319 && x >= 264) && (y >= 600 && y <= 700)){
 			JLabel label = new JLabel(new ImageIcon("images/territorios/Av. Brigadero Faria Lima.png"));
 			panel.add(label);	
 		}
 		
-		if((x <= 263 && x >= 208) && (y >= 600 && y <= 700)){
+		else if((x <= 263 && x >= 208) && (y >= 600 && y <= 700)){
 			JLabel label = new JLabel(new ImageIcon("images/companhias/company2.png"));
 			panel.add(label);	
 		}
 		
-		if((x <= 207 && x >= 152) && (y >= 600 && y <= 700)){
+		else if((x <= 207 && x >= 152) && (y >= 600 && y <= 700)){
 			JLabel label = new JLabel(new ImageIcon("images/territorios/Av. Reboucas.png"));
 			panel.add(label);	
 		}
 		
-		if((x <= 151 && x >= 100) && (y >= 600 && y <= 700)){
+		else if((x <= 151 && x >= 100) && (y >= 600 && y <= 700)){
 			JLabel label = new JLabel(new ImageIcon("images/territorios/Av. 9 de Julho.png"));
 			panel.add(label);	
 		}
 		
-		if((x <= 100 && x >= 0) && (y >= 545 && y <= 600)){
+		else if((x <= 100 && x >= 0) && (y >= 545 && y <= 600)){
 			JLabel label = new JLabel(new ImageIcon("images/territorios/Av. Europa.png"));
 			panel.add(label);	
 		}
 		
-		if((x <= 100 && x >= 0) && (y >= 433 && y <= 488)){
+		else if((x <= 100 && x >= 0) && (y >= 433 && y <= 488)){
 			JLabel label = new JLabel(new ImageIcon("images/territorios/Rua Augusta.png"));
 			panel.add(label);	
 		}
-		if((x <= 100 && x >= 0) && (y >= 377 && y <= 432)){
+		else if((x <= 100 && x >= 0) && (y >= 377 && y <= 432)){
 			JLabel label = new JLabel(new ImageIcon("images/territorios/Av. Pacaembu.png"));
 			panel.add(label);	
 		}
 		
-		if((x <= 100 && x >= 0) && (y >= 321 && y <= 376)){
+		else if((x <= 100 && x >= 0) && (y >= 321 && y <= 376)){
 			JLabel label = new JLabel(new ImageIcon("images/companhias/company3.png"));
 			panel.add(label);	
 		}
 		
-		if((x <= 100 && x >= 0) && (y >= 211 && y <= 266)){
+		else if((x <= 100 && x >= 0) && (y >= 211 && y <= 266)){
 			JLabel label = new JLabel(new ImageIcon("images/territorios/Interlagos.png"));
 			panel.add(label);	
 		}
 		
-		if((x <= 100 && x >= 0) && (y >= 101 && y <= 156)){
+		else if((x <= 100 && x >= 0) && (y >= 101 && y <= 156)){
 			JLabel label = new JLabel(new ImageIcon("images/territorios/Morumbi.png"));
 			panel.add(label);	
 		}
 		
-		if((x <= 155 && x >= 100) && (y >= 0 && y <= 100)){
+		else if((x <= 155 && x >= 100) && (y >= 0 && y <= 100)){
 			JLabel label = new JLabel(new ImageIcon("images/territorios/Flamengo.png"));
 			panel.add(label);	
 		}
 		
-		if((x <= 265 && x >= 210) && (y >= 0 && y <= 100)){
+		else if((x <= 265 && x >= 210) && (y >= 0 && y <= 100)){
 			JLabel label = new JLabel(new ImageIcon("images/territorios/Botafogo.png"));
 			panel.add(label);	
 		}
 		
-		if((x <= 375 && x >= 320) && (y >= 0 && y <= 100)){
+		else if((x <= 375 && x >= 320) && (y >= 0 && y <= 100)){
 			JLabel label = new JLabel(new ImageIcon("images/companhias/company4.png"));
 			panel.add(label);	
 		}
 		
-		if((x <= 430 && x >= 375) && (y >= 0 && y <= 100)){
+		else if((x <= 430 && x >= 375) && (y >= 0 && y <= 100)){
 			JLabel label = new JLabel(new ImageIcon("images/territorios/Av. Brasil.png"));
 			panel.add(label);	
 		}
 		
-		if((x <= 540 && x >= 485) && (y >= 0 && y <= 100)){
+		else if((x <= 540 && x >= 485) && (y >= 0 && y <= 100)){
 			JLabel label = new JLabel(new ImageIcon("images/territorios/Av. Paulista.png"));
 			panel.add(label);	
 		}
 		
-		if((x <= 600 && x >= 540) && (y >= 0 && y <= 100)){
+		else if((x <= 600 && x >= 540) && (y >= 0 && y <= 100)){
 			JLabel label = new JLabel(new ImageIcon("images/territorios/Jardim Europa.png"));
 			panel.add(label);	
 		}
 		
-		if((x <= 700 && x >= 600) && (y >= 100 && y <= 155)){
+		else if((x <= 700 && x >= 600) && (y >= 100 && y <= 155)){
 			JLabel label = new JLabel(new ImageIcon("images/territorios/Copacabana.png"));
 			panel.add(label);	
 		}
 		
-		if((x <= 700 && x >= 600) && (y >= 155 && y <= 210)){
+		else if((x <= 700 && x >= 600) && (y >= 155 && y <= 210)){
 			JLabel label = new JLabel(new ImageIcon("images/companhias/company5.png"));
 			panel.add(label);	
 		}
 		
-		if((x <= 700 && x >= 600) && (y >= 210 && y <= 265)){
+		else if((x <= 700 && x >= 600) && (y >= 210 && y <= 265)){
 			JLabel label = new JLabel(new ImageIcon("images/territorios/Av. Vieira Souto.png"));
 			panel.add(label);	
 		}
 		
-		if((x <= 700 && x >= 600) && (y >= 265 && y <= 320)){
+		else if((x <= 700 && x >= 600) && (y >= 265 && y <= 320)){
 			JLabel label = new JLabel(new ImageIcon("images/territorios/Av. Atlantica.png"));
 			panel.add(label);	
 		}
 		
-		if((x <= 700 && x >= 600) && (y >= 320 && y <= 375)){
+		else if((x <= 700 && x >= 600) && (y >= 320 && y <= 375)){
 			JLabel label = new JLabel(new ImageIcon("images/companhias/company6.png"));
 			panel.add(label);	
 		}
 		
-		if((x <= 700 && x >= 600) && (y >= 375 && y <= 430)){
+		else if((x <= 700 && x >= 600) && (y >= 375 && y <= 430)){
 			JLabel label = new JLabel(new ImageIcon("images/territorios/Ipanema.png"));
 			panel.add(label);	
 		}
 		
-		if((x <= 700 && x >= 600) && (y >= 485 && y <= 540)){
+		else if((x <= 700 && x >= 600) && (y >= 485 && y <= 540)){
 			JLabel label = new JLabel(new ImageIcon("images/territorios/Jardim Paulista.png"));
 			panel.add(label);	
 		}
 		
-		if((x <= 700 && x >= 600) && (y >= 540 && y <= 600)){
+		else if((x <= 700 && x >= 600) && (y >= 540 && y <= 600)){
 			JLabel label = new JLabel(new ImageIcon("images/territorios/Brooklin.png"));
 			panel.add(label);	
 		}
