@@ -2,7 +2,8 @@ package regras;
 
 import java.util.*;
 
-
+import Cartas.Cartas;
+import Cartas.SorteReves;
 import gui.PNBotoes;
 import gui.PNTabuleiro;
 import utils.Dados;
@@ -16,10 +17,17 @@ class CtrlRegras implements Observable {
 	
 	private  int numTurn = 0; 
 	private  int player_on = -1; 
+	
 	private  int d1Ant = 1; 
 	private  int d2Ant = 0; 
 	private  int banco = 0; 
 	private  int numPlayers = 6; 
+	private int  position_on =0;
+	
+	private ArrayList<Cartas>cartas =  Cartas.getCartas(); 
+	private SorteReves sorte_on = null; 
+	private  Jogador jogador_on = null; 
+	private Cartas terreno_on = null; 
 	
 	public CtrlRegras() {
 		tab = PNTabuleiro.getPNTabuleiro();
@@ -39,8 +47,16 @@ class CtrlRegras implements Observable {
 		d.sortearDados();
 		tab.repaint();
 	}
+	
+	
+	public void addCarta(int terreno_on) {
+		
+		jogador_on.addProp(cartas.get(terreno_on)); 
+	}
 
 	public void rodada() {
+		bot.showDados(false);
+		
 		if(d1Ant != d2Ant){
 			player_on++;
 			if( player_on > numPlayers){ 
@@ -52,7 +68,8 @@ class CtrlRegras implements Observable {
 			numTurn++; 
 		}
 		
-		Jogador jogador_on = tab.getJogador(player_on);
+		jogador_on = tab.getJogador(player_on);
+		
 		
 		if(numTurn == 3) { 
 			//verificar se o jogador possui a carta "saida livre da prisao"
@@ -62,17 +79,33 @@ class CtrlRegras implements Observable {
 		
 		//jogada normal, jogador nao esta preso 
 		if(jogador_on.getPrisao() == false){	
-			bot.showPlayerOn(player_on);
-			bot.showPlayerStats(jogador_on.getSaldo()); 
+			position_on = (jogador_on.getPosition() + (d.getSoma())) % 40; 
+			terreno_on = cartas.get(position_on);
+			bot.showPlayerStats(jogador_on); 
 			d.setCorDado(player_on);
-			jogador_on.moveTo((jogador_on.getPosition() + (d.getSoma())) % 40); 
+			jogador_on.moveTo(position_on);
+			
+			//verifica se posicao eh uma esquina
+			/***
+			 * COD AQUI
+			 */
+		
+			if(terreno_on == null )
+			{ 	
+				sorte_on = Cartas.tiraSorteReves(); 
+				terreno_on = sorte_on; 
+			}
+			bot.showTerrenoStats(terreno_on);
+			bot.showEncerrarJog(true); 
 		}
+		
 		//jogada caso o jogador esta preso 
 		else { 
 			if (d.getDnum()[0] == d.getDnum()[1]) { 
 				jogador_on.setPrisao(false);
 			}	
 		}
+		
 		d1Ant = d.getDnum()[0]; 
 		d2Ant = d.getDnum()[1]; 
 	}

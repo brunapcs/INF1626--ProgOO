@@ -10,7 +10,6 @@ public class CartaCompanhia extends Cartas{
 	private int multiplicador; 
 	private int hipoteca; 
 	private String nome = new String(); 
-	private BufferedImage i ; 
 	private int pos; 
 	private int valorCompra;
 	
@@ -29,7 +28,7 @@ public class CartaCompanhia extends Cartas{
 			   System.exit(1);
 			}
 		pos = p; 
-		tipo = "companhia"; 
+		tipo = new String("companhia"); 
 		cartas.set(pos, this); 
 	}
 	
@@ -65,15 +64,9 @@ public class CartaCompanhia extends Cartas{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-	public BufferedImage getImage() {
-		return i;
-	}
 	
 	public int getValorCompra() {
 		return valorCompra;
 	}
-	public void setImage(BufferedImage i) {
-		this.i = i;
-	}
+	
 }

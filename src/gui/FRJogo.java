@@ -29,7 +29,7 @@ public class FRJogo extends JFrame{
 			tab.addJogadores(num); // retirar daqui depois 
 			
 			tab.setPreferredSize(new Dimension(700,700));	
-			bot.setPreferredSize(new Dimension(300,300));	
+			bot.setPreferredSize(new Dimension(400,700));	
 			bot.setBorder(BorderFactory.createTitledBorder("Controles"));
 			
 			getContentPane().add(tab);

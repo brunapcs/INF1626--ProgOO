@@ -1,5 +1,6 @@
 package Cartas;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -9,6 +10,9 @@ public class Cartas {
 	 static ArrayList<Cartas> cartas = null ; 
 	 static Queue<SorteReves>deck = null; 
 	 String tipo; 
+	 String proprietario; 
+	 BufferedImage i;
+	 
 	 Cartas() { 	 
 	 }
 	 
@@ -18,7 +22,7 @@ public class Cartas {
 			 
 			 //inicializa array list 
 			 for(int i = 0 ; i <40; i++)
-				 cartas.add(new Cartas()); 
+				 cartas.add(null); 
 			 
 			 //popula array list
 			 CartaCompanhia.inicializaCompanhias();
@@ -35,8 +39,32 @@ public class Cartas {
 		 return deck; 
 	 }
 	 
+	 public Cartas getCartaInPos(int i) { 
+		 return cartas.get(i); 
+	 }
+	 
+	 public static SorteReves tiraSorteReves() { 
+		 return deck.poll();
+	 }
+	 
+	 public static void insereSorteReves(SorteReves e) { 
+		 	deck.add(e);
+	 }
+	 
 	 public String getTipo() { 
 		 return tipo; 
 	 }
-
+	 
+	 public void setProprietario(String jogador) { 
+		 proprietario = new String(jogador);  
+	 }
+	 
+	 public String getProprietario() { 
+		 return proprietario; 
+	 }
+	
+	public BufferedImage getImage() {
+		return i;
+	}
+		
 }

@@ -3,6 +3,9 @@ package regras;
 import utils.Coordenadas;
 import java.io.*;
 import javax.imageio.*;
+
+import Cartas.Cartas;
+
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
@@ -16,6 +19,8 @@ public class Jogador {
 	private Coordenadas cord = new Coordenadas(); 
 	private Random num = new Random();
 	private int offset = num.nextInt(15) +1; 
+	private ArrayList<Cartas>propriedades; 
+	private String cor; 
   
 	
 	public Jogador(int num) {		
@@ -26,8 +31,36 @@ public class Jogador {
 		   System.out.println(e.getMessage());
 		   System.exit(1);
 		}
+		setCor(num); 
 	}
 	
+	private void setCor(int i) { 
+	
+		switch(i){
+			case 0: 
+				cor = new String("vermelho") ; 
+				break; 
+			case 1: 
+				cor = new String("azul"); 
+				break; 
+			case 2:
+				cor = new String("laranja"); 
+				break; 
+			case 3: 
+				cor = new String("amarelo"); 
+				break; 
+			case 4: 
+				cor = new String("roxo"); 
+				break; 
+			case 5: 
+				 cor = new String( "cinza"); 
+				 break; 
+			}
+	}
+	
+	public String getCor() { 
+		return cor; 
+	}
 	public BufferedImage getJogadorImage() { 
 		return i; 
 	}
@@ -66,4 +99,15 @@ public class Jogador {
 		return prisao;
 	}
 
+	public boolean verificaProp(Cartas terreno) { 
+		return propriedades.contains(terreno); 
+	}
+	
+	public void addProp(Cartas terreno_on) {
+		propriedades.add(terreno_on); 
+	}
+	public void remProp(Cartas terreno) { 
+		propriedades.remove(terreno); 
+	}
+	
 }

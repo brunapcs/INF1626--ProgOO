@@ -16,6 +16,7 @@ public class Fachada {
 		return f;	
 	}
 	
+	
 		
 	public void register(Observer o) {
 		ctrl.addObserver(o);

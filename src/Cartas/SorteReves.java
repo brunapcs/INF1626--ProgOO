@@ -11,15 +11,15 @@ import javax.imageio.ImageIO;
 import java.util.Collections;
 
 public class SorteReves extends Cartas{
-
-	
-	private BufferedImage i;
 	private int acao;  //se acao = 0 a carta eh uma carta de liberdade da prisao
-	private String tipo;
+	private String tipoAcao;
+	
+	
 	private SorteReves(int num, String tp, int a){ 
 		super(); 
 		acao = a;
-		tipo = tp;
+		tipoAcao = tp;
+		tipo = new String("SorteReves"); 
 		try {
 			   i=ImageIO.read(new File("images/sorteReves/chance" + Integer.toString(num) + ".png"));
 			}
@@ -65,11 +65,11 @@ public class SorteReves extends Cartas{
 			new SorteReves(30,"prejuizo", -50);
 	}
 
-	public BufferedImage getI() {
+	public BufferedImage getImage() {
 		return i;
 	}
 
-	public void setI(BufferedImage i) {
+	public void setImage(BufferedImage i) {
 		this.i = i;
 	}
 	
@@ -77,8 +77,8 @@ public class SorteReves extends Cartas{
 		return acao;
 	}
 	
-	public String getTipo() {
-		return tipo;
+	public String getTipoAcao() {
+		return tipoAcao;
 	}
 	
 	public void setAcao(int acao) {
