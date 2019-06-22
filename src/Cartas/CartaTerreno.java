@@ -18,6 +18,7 @@ public class CartaTerreno extends Cartas{
 	
 	private CartaTerreno(String n ,int cas, int hot, int hip ,int a, int b , int c , int d, int e, int f , int p, int custo){ 
 		super(); 
+		
 		preco = custo; 
 		casa = cas; 
 		hotel = hot; 
@@ -87,8 +88,5 @@ public class CartaTerreno extends Cartas{
 		this.hipoteca = hipoteca;
 	}	
 	
-	public int getPreco() { 
-		 return 0; 
-	}
 	
 }

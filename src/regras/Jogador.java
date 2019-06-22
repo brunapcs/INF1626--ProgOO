@@ -19,7 +19,7 @@ public class Jogador {
 	private Coordenadas cord = new Coordenadas(); 
 	private Random num = new Random();
 	private int offset = num.nextInt(15) +1; 
-	private ArrayList<Cartas>propriedades; 
+	private ArrayList<Cartas>propriedades = new ArrayList<Cartas>(); 
 	private String cor; 
 	private int arrayPos; 
 	private boolean liberdade =false ; 

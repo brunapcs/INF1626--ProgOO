@@ -78,12 +78,15 @@ class CtrlRegras implements Observable {
 	}
 	
 	public void comprarTerreno() {
+		bot.showComprarTerreno(false);
+		bot.showPreco("", false);
 		jogador_on.addProp(terreno_on);
 		jogador_on.debita(terreno_on.getPreco()); 
 		banco+= terreno_on.getPreco(); 
 		terreno_on.setProprietario(jogador_on.getCor()); 
 		bot.showTerrenoStats(terreno_on.getProprietario());
 		bot.showPlayerStats(jogador_on.getSaldo(), jogador_on.getCor()); 
+		jogadaComoProp(); 
 	}
 	
 	public void desativaBotoes() { 
@@ -93,7 +96,7 @@ class CtrlRegras implements Observable {
 		bot.showAdcCasa(false);
 		terreno_on = null; 
 		bot.setReady(false);
-		
+		bot.showProprietario(false); 
 	}
 	public void rodada() {
 		bot.showRolarDados(false);
@@ -108,6 +111,14 @@ class CtrlRegras implements Observable {
 		else { 
 			rodadaPrisao(); 
 		}
+	}
+	
+	public void jogadaComoProp() { 
+			//exibir os botoes que permitem ao jogador acrescentar casas etc ...
+	}
+	public void jogadaComoComprador() { 
+		bot.showComprarTerreno(true);
+		bot.showPreco(Integer.toString(terreno_on.getPreco()), true); 
 	}
 	public void rodadaNormal() {	
 			position_on = (jogador_on.getPosition() + (d.getSoma())) % 40; 
@@ -148,21 +159,20 @@ class CtrlRegras implements Observable {
 				bot.setCartaImage(terreno_on.getImage()); 
 				efetuaAcao(); 
 			}
+			
 			else 
 			{
 				String p = terreno_on.getProprietario(); 
-				
+				bot.showTerrenoStats(p); 
 				if (p.equals("-")) { //terreno nao tem proprietario 
-					bot.showComprarTerreno(true);
-					bot.showPreco(Integer.toString(terreno_on.getPreco()), true); 
+					jogadaComoComprador(); 
 				}
 				else {
 					if (p.equals(jogador_on.getCor())){ 
-						//exibir os botoes que permitem ao jogador acrescentar casas etc ...
-						int b;
+						jogadaComoProp(); 
 					}
 					else { 
-						int a;
+						bot.showComprarTerreno(false);
 					//	funcao ->  pagar();
 						//tem q pagar pro proprietario do terreno de acordo com as regras =
 						//tem q verificar o tipo do terreno e como o pagamento deve ser efetuado

@@ -82,9 +82,6 @@ public class PNBotoes extends JPanel implements Observer, ActionListener{
 		rodada.setText("Rodada: 0"); 
 		player_turn.setText("Jogador da vez: Vermelho" );
 		
-		
-	//	this.setPreferredSize(new Dimension(300,500));	
-		
 		rolar_dados.addActionListener(this);
 		encerrar_jogada.addActionListener(this);
 		comprar_terreno.addActionListener(this);
@@ -120,14 +117,20 @@ public class PNBotoes extends JPanel implements Observer, ActionListener{
 	public void showHipotecar(boolean v) { 
 		hipotecar.setVisible(v);
 	}
+	public void showProprietario(boolean v) { 
+		proprietario.setVisible(false);
+	}
 
 	public void showPlayerStats(int saldo, String cor) {
 		dinheiro.setText("Dinheiro: $ " + Integer.toString(saldo));
 		player_turn.setText("Jogador da rodada:" + cor );
+		dinheiro.setVisible(true);
+		player_turn.setVisible(true);
 	}
 	
 	public void showTerrenoStats(String prop ) { 
-		proprietario.setText("Proprietario" + prop); 
+		proprietario.setText("Proprietario: " + prop); 
+		proprietario.setVisible(true);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -154,7 +157,7 @@ public class PNBotoes extends JPanel implements Observer, ActionListener{
 		    super.paintComponent(g);
 		    	Graphics2D g2d = (Graphics2D) g;
 		    	if( ready == true) { 
-		    	g2d.drawImage(i, 0 , 400, 130, 200 , null);
+		    	g2d.drawImage(i, 0 , 450, 130, 200 , null);
 		    	}
 	}
 	@Override
