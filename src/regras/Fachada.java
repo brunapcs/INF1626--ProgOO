@@ -28,7 +28,9 @@ public class Fachada {
 	}
 	 
 	public void encerrarJogada() { 
+		ctrl.desativaBotoes();
 		ctrl.nextPlayer();
+		
 	}
 
 	public void comprarTerreno() {

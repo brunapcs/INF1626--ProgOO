@@ -39,18 +39,9 @@ class CtrlRegras implements Observable {
 		numPlayers = n; 
 	}
 	
-	public void repaintAll() { 
-		tab.repaint();
-	}
-	
 	public void rolarDados() { 
 		d.sortearDados();
 		tab.repaint();
-	}
-	
-	
-	public void addCarta(int terreno_on) {
-		jogador_on.addProp(cartas.get(terreno_on)); 
 	}
 
 	public void nextPlayer() { 
@@ -86,50 +77,108 @@ class CtrlRegras implements Observable {
 	
 	public void comprarTerreno() {
 		jogador_on.addProp(terreno_on);
-		jogador_on.movimentaSaldo(-(terreno_on.getPreco())); 
+		jogador_on.debita(terreno_on.getPreco()); 
+		banco+= terreno_on.getPreco(); 
 		terreno_on.setProprietario(jogador_on.getCor()); 
 		bot.showTerrenoStats(terreno_on.getProprietario());
 		bot.showPlayerStats(jogador_on.getSaldo(), jogador_on.getCor()); 
 	}
 	
-	public void rodada() {
-		bot.showDados(false);
+	public void desativaBotoes() { 
+		bot.showComprarTerreno(false);
+		bot.showPreco("", false);
+		bot.showHipotecar(false);
+		bot.showAdcCasa(false);
+		terreno_on = null; 
+		bot.setReady(false);
 		
-		if(jogador_on.getPrisao() == false){	
+	}
+	public void rodada() {
+		bot.showRolarDados(false);
+		bot.showEncerrarJog(true); 
+		d1Ant = d.getDnum()[0]; 
+		d2Ant = d.getDnum()[1]; 
+		desativaBotoes(); 
+		
+		if (jogador_on.getPrisao() == false) { 
+			rodadaNormal(); 
+		}
+		else { 
+			rodadaPrisao(); 
+		}
+	}
+	public void rodadaNormal() {	
 			position_on = (jogador_on.getPosition() + (d.getSoma())) % 40; 
-			terreno_on = cartas.get(position_on);
 			jogador_on.moveTo(position_on);
+			tab.repaint(); 
+			terreno_on = cartas.get(position_on);
 			
 			if(position_on == 10 || position_on == 30) { 
 				vaiPreso(); 
 			}
+			
 			else if(position_on == 0 || position_on == 20 ) {
-				terreno_on = null; 
-				bot.setReady(false); 
+				if(position_on == 0) { 
+					jogador_on.recebe(200); 
+					banco -= 200; 
+				}
+				bot.showPlayerStats(jogador_on.getSaldo(), jogador_on.getCor()); 
 			}
 				
-			else if(terreno_on == null )
+			else if(position_on == 24 || position_on == 18) { 
+				if(position_on == 24)  //checar se esse eh o valor do imposto de renda 
+				{
+					jogador_on.debita(200); 
+					banco+=200; 
+				}
+				else
+				{
+					jogador_on.recebe(200); 
+					banco-=200; 
+				}
+			}
+			
+			else if(terreno_on == null ) //sorteReves
 			{ 	
-				sorte_on = Cartas.tiraSorteReves(); 
+				sorte_on = Cartas.tiraSorteReves();
+				Cartas.insereSorteReves(((SorteReves)sorte_on)); 
 				terreno_on = sorte_on; 
+				bot.setCartaImage(terreno_on.getImage()); 
 				efetuaAcao(); 
 			}
-		
-			bot.setCartaImage(terreno_on.getImage()); 
-			bot.showTerrenoStats(terreno_on.getProprietario());
-			bot.showEncerrarJog(true); 
-		}
-		
-		//jogada caso o jogador esta preso 
-		else { 
-			if (d.getDnum()[0] == d.getDnum()[1]) { 
-				jogador_on.setPrisao(false);
-			}	
-		}
-		
-		d1Ant = d.getDnum()[0]; 
-		d2Ant = d.getDnum()[1]; 
+			else 
+			{
+				String p = terreno_on.getProprietario(); 
+				
+				if (p.equals("-")) { //terreno nao tem proprietario 
+					bot.showComprarTerreno(true);
+					bot.showPreco(Integer.toString(terreno_on.getPreco()), true); 
+				}
+				else {
+					if (p.equals(jogador_on.getCor())){ 
+						//exibir os botoes que permitem ao jogador acrescentar casas etc ...
+						int b;
+					}
+					else { 
+						int a;
+					//	funcao ->  pagar();
+						//tem q pagar pro proprietario do terreno de acordo com as regras =
+						//tem q verificar o tipo do terreno e como o pagamento deve ser efetuado
+					}
+				}
+				bot.setCartaImage(terreno_on.getImage());
+			}
 	}
+	
+
+	//falta completar (verificar se ja se passaram 4 rodadas) 
+	//caso ele saia da prisao tem q fazer todo o esquema da continuacao da jogada.... etc 
+	public void rodadaPrisao() { 
+		if (d.getDnum()[0] == d.getDnum()[1]) { 
+			jogador_on.setPrisao(false);
+		}	
+	}
+	
 	
 	public void vaiPreso() {
 		jogador_on.setPrisao(true);
@@ -137,6 +186,7 @@ class CtrlRegras implements Observable {
 		terreno_on = null; 
 		tab.repaint(); 
 	}
+	
 	public void efetuaAcao() {
 		String a = ((SorteReves)sorte_on).getTipo(); 
 		if(a.equals("prisao")) { 
@@ -154,7 +204,10 @@ class CtrlRegras implements Observable {
 			tab.repaint(); 
 		}
 		else { 
-			jogador_on.movimentaSaldo(((SorteReves)sorte_on).getAcao());
+			if(((SorteReves)sorte_on).getTipoAcao().equals("sorte"))
+				jogador_on.recebe(((SorteReves)sorte_on).getAcao()); 
+			else 
+				jogador_on.debita(((SorteReves)sorte_on).getAcao()); 
 			bot.showPlayerStats(jogador_on.getSaldo(), jogador_on.getCor()); 
 		}	
 	}

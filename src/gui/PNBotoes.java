@@ -69,7 +69,7 @@ public class PNBotoes extends JPanel implements Observer, ActionListener{
 		add(Box.createVerticalGlue());
 		add(status); 
 		add(Box.createHorizontalGlue());
-		
+		add(preco); 
 		add(comprar_terreno); 
 		add(adc_casa); 
 		add(hipotecar); 
@@ -96,7 +96,7 @@ public class PNBotoes extends JPanel implements Observer, ActionListener{
 		return botoes; 
 	}
 	
-	public void showDados(boolean v) { 
+	public void showRolarDados(boolean v) { 
 		rolar_dados.setVisible(v);
 	}
 	
@@ -147,6 +147,7 @@ public class PNBotoes extends JPanel implements Observer, ActionListener{
 	public void setCartaImage(BufferedImage carta) { 
 		i = carta; 
 		ready = true; 
+		repaint(); 
 	}
 
 	protected void paintComponent(Graphics g) {
@@ -165,6 +166,11 @@ public class PNBotoes extends JPanel implements Observer, ActionListener{
 		ready = b ; 
 		
 	}
+	public void showPreco(String p, boolean b) {
+		preco.setText("Preco:" + p);
+		preco.setVisible(b); 
+	}
+	
 	
 
 

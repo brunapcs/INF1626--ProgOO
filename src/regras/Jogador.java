@@ -113,8 +113,11 @@ public class Jogador {
 		propriedades.remove(terreno); 
 	}
 
-	public void movimentaSaldo(int preco) {
-		saldo += preco; 
+	public void debita(int p) { 
+		saldo -= p; 
+	}
+	public void recebe(int p) { 
+		saldo += p; 
 	}
 	
 	public void setLiberdade(boolean b) { 

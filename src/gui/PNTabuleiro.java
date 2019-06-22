@@ -57,7 +57,6 @@ public class PNTabuleiro extends JPanel implements Observer{
 		return jogadores.size();
 	}
 	
-
 	@Override
 	  protected void paintComponent(Graphics g) {
 	    super.paintComponent(g);
