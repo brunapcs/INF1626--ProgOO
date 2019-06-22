@@ -20,7 +20,7 @@ class CtrlRegras implements Observable {
 	
 	private  int d1Ant = 1; 
 	private  int d2Ant = 0; 
-	private  int banco = 0; 
+	private  int banco = 50000; 
 	private  int numPlayers; 
 	private int  position_on =0;
 	
@@ -190,21 +190,32 @@ class CtrlRegras implements Observable {
 			}
 	}
 	
-
-	//falta completar (verificar se ja se passaram 4 rodadas) 
-	//caso ele saia da prisao tem q fazer todo o esquema da continuacao da jogada.... etc 
-	public void rodadaPrisao() { 
-		if (d.getDnum()[0] == d.getDnum()[1]) { 
-			jogador_on.setPrisao(false);
-		}	
-	}
-	
-	
 	public void vaiPreso() {
 		jogador_on.setPrisao(true);
 		jogador_on.moveTo(10);
 		terreno_on = null; 
 		tab.repaint(); 
+	}
+	
+	
+	public void rodadaPrisao() { 
+		int i;
+		jogador_on = tab.getJogador(player_on);
+		if (d.getDnum()[0] == d.getDnum()[1]) { 
+			i = jogador_on.nullNumTurnPrisao();
+			jogador_on.setPrisao(false);
+			rodadaNormal();
+			
+		}	
+		else {
+			i = jogador_on.getNumTurnPrisao() + 1;
+		}
+		
+		if(i == 3) {
+			jogador_on.debita(50);  
+			banco += 50;
+			jogador_on.setPrisao(false);
+		}
 	}
 	
 	public void efetuaAcao() {

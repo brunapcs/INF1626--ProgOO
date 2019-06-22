@@ -23,6 +23,7 @@ public class Jogador {
 	private String cor; 
 	private int arrayPos; 
 	private boolean liberdade =false ; 
+	private int numTurnPrisao=0; 
   
 	
 	public Jogador(int num) {		
@@ -126,6 +127,14 @@ public class Jogador {
 
 	public boolean getLiberdade() {
 		return liberdade; 
+	}
+	
+	public int getNumTurnPrisao() {
+		return numTurnPrisao;
+	}
+	
+	public int nullNumTurnPrisao() {
+		return 0;
 	}
 
 	
