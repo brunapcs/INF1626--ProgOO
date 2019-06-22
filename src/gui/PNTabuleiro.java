@@ -34,7 +34,9 @@ public class PNTabuleiro extends JPanel implements Observer, MouseListener{
 		   System.out.println(e.getMessage());
 		   System.exit(1);
 		}
+		
 		addMouseListener(this);
+		
 	}
 	
 	public static PNTabuleiro getPNTabuleiro() { 
@@ -44,8 +46,12 @@ public class PNTabuleiro extends JPanel implements Observer, MouseListener{
 		return tab; 
 	}
 	
-	public void addJogador(Jogador j){ 
-				jogadores.add(j); 
+	public void addJogadores(int num){ 
+		if( jogadores.size() < 1  ){ 
+			for(int i = 0 ; i< num; i++) { 
+				jogadores.add(new Jogador(i)); 
+				}
+			}
 	}
 	
 	public Jogador getJogador(int index) {
@@ -67,12 +73,11 @@ public class PNTabuleiro extends JPanel implements Observer, MouseListener{
 	        	Jogador jog = jogadores.get(j); 
 	        	g2d.drawImage(jog.getJogadorImage(), jog.getPosX()+jog.getOffset(), jog.getPosY()+jog.getOffset(), null); 
 	        }
-	        if(d.getReady() == true ) { 
-		        g2d.setColor(d.getBackground());
-		        g2d.fillRect(105, 385, 350, 175);
-		        g2d.drawImage(d.getDimages()[0], 110, 400, 150,150, null);
-		        g2d.drawImage(d.getDimages()[1], 280, 400, 150,150, null);
-	        }
+	        
+	        g2d.setColor(d.getBackground());
+	        g2d.fillRect(105, 385, 350, 175);
+	        g2d.drawImage(d.getDimages()[0], 110, 400, 150,150, null);
+	        g2d.drawImage(d.getDimages()[1], 280, 400, 150,150, null);
 	
 	}
 
