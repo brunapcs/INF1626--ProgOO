@@ -56,8 +56,6 @@ public class PNBotoes extends JPanel implements Observer, ActionListener{
 		adc_hotel = new JButton("Adcionar Hotel"); 
 		encerrar_jogada = new JButton("Encerrar Jogada"); 
 		
-		rolar_dados.setVisible(false);
-		encerrar_jogada.setVisible(false);
 		comprar_terreno.setVisible(false); 
 		adc_casa.setVisible(false);
 		hipotecar.setVisible(false);

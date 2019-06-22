@@ -68,36 +68,41 @@ public class MenuInicial extends JFrame {
     	
     	j2.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
+			loop(2);
 			setVisible(false); 
-			Monopoly = FRJogo.NovoJogo(2);
+			Monopoly = new FRJogo(2); 
     		}
 		});
     	
     	j3.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
+			loop(3);
 			setVisible(false); 
-			Monopoly = FRJogo.NovoJogo(3);
+			Monopoly = new FRJogo(3); 
     		}
 		});
     	
     	j4.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
+			loop(4);
 			setVisible(false); 
-			Monopoly = FRJogo.NovoJogo(4);
+			Monopoly = new FRJogo(4); 
     		}
 		});
     	
     	j5.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
+			loop(5);
 			setVisible(false); 
-			Monopoly = FRJogo.NovoJogo(5);
+			Monopoly = new FRJogo(5); 
     		}
 		});
     	
     	j6.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
+			loop(6);
 			setVisible(false); 
-			Monopoly = FRJogo.NovoJogo(6); 
+			Monopoly = new FRJogo(6); 
     		}
 		});
     	
@@ -109,7 +114,6 @@ public class MenuInicial extends JFrame {
     		        File selectedFile = fileChooser.getSelectedFile();
     		        try {
 						java.awt.Desktop.getDesktop().open(selectedFile);
-						Monopoly = FRJogo.LoadJogo(selectedFile);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -118,6 +122,10 @@ public class MenuInicial extends JFrame {
     	});
     }
     
-    			
+    	void loop (int lim) {
+    		for(int j = 0; j < lim; j++) {
+    			PNTabuleiro.getPNTabuleiro().addJogadores(lim);
+    			}
+    	}  		
     	
 }
