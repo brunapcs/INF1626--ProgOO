@@ -115,11 +115,21 @@ class CtrlRegras implements Observable {
 	
 	public void jogadaComoProp() { 
 			//exibir os botoes que permitem ao jogador acrescentar casas etc ...
+		
+		
 	}
 	public void jogadaComoComprador() { 
 		bot.showComprarTerreno(true);
 		bot.showPreco(Integer.toString(terreno_on.getPreco()), true); 
 	}
+	
+	public void jogadaComoPagador() { 
+		//tem q pagar pro proprietario do terreno de acordo com as regras =
+		//tem q verificar o tipo do terreno e como o pagamento deve ser efetuado
+		
+		bot.showComprarTerreno(false);
+	}
+	
 	public void rodadaNormal() {	
 			position_on = (jogador_on.getPosition() + (d.getSoma())) % 40; 
 			jogador_on.moveTo(position_on);
@@ -164,7 +174,9 @@ class CtrlRegras implements Observable {
 			{
 				String p = terreno_on.getProprietario(); 
 				bot.showTerrenoStats(p); 
-				if (p.equals("-")) { //terreno nao tem proprietario 
+				bot.setCartaImage(terreno_on.getImage());
+				
+				if (p.equals("-")) {  
 					jogadaComoComprador(); 
 				}
 				else {
@@ -172,13 +184,9 @@ class CtrlRegras implements Observable {
 						jogadaComoProp(); 
 					}
 					else { 
-						bot.showComprarTerreno(false);
-					//	funcao ->  pagar();
-						//tem q pagar pro proprietario do terreno de acordo com as regras =
-						//tem q verificar o tipo do terreno e como o pagamento deve ser efetuado
+						jogadaComoPagador(); 
 					}
 				}
-				bot.setCartaImage(terreno_on.getImage());
 			}
 	}
 	
