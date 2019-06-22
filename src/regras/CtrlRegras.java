@@ -21,7 +21,7 @@ class CtrlRegras implements Observable {
 	private  int d1Ant = 1; 
 	private  int d2Ant = 0; 
 	private  int banco = 0; 
-	private  int numPlayers = 6; 
+	private  int numPlayers; 
 	private int  position_on =0;
 	
 	private ArrayList<Cartas>cartas =  Cartas.getCartas(); 
@@ -33,6 +33,7 @@ class CtrlRegras implements Observable {
 		tab = PNTabuleiro.getPNTabuleiro();
 		bot = PNBotoes.getPNBotoes(); 
 		d = Dados.getDados(); 
+		
 	}
 	
 	public void setNumPlayers(int n) { 
@@ -45,9 +46,10 @@ class CtrlRegras implements Observable {
 	}
 
 	public void nextPlayer() { 
+		setNumPlayers(tab.getSizeJogadores());
 		if(d1Ant != d2Ant){
 			player_on++;
-			if( player_on > numPlayers){ 
+			if(player_on == numPlayers){ 
 				player_on = 0; 
 			}
 			numTurn = 0; 
