@@ -25,6 +25,13 @@ public class Fachada {
 	public void rolarDados() {
 		ctrl.rolarDados();
 		ctrl.rodada(); 
-		
+	}
+	 
+	public void encerrarJogada() { 
+		ctrl.nextPlayer();
+	}
+
+	public void comprarTerreno() {
+		ctrl.comprarTerreno(); 
 	}
 }

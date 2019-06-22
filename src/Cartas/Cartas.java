@@ -10,8 +10,9 @@ public class Cartas {
 	 static ArrayList<Cartas> cartas = null ; 
 	 static Queue<SorteReves>deck = null; 
 	 String tipo; 
-	 String proprietario; 
+	 String proprietario = new String("-"); 
 	 BufferedImage i;
+	 int preco = 0; 
 	 
 	 Cartas() { 	 
 	 }
@@ -55,8 +56,8 @@ public class Cartas {
 		 return tipo; 
 	 }
 	 
-	 public void setProprietario(String jogador) { 
-		 proprietario = new String(jogador);  
+	 public void setProprietario(String cor_jogador) { 
+		 proprietario = new String(cor_jogador);  
 	 }
 	 
 	 public String getProprietario() { 
@@ -65,6 +66,10 @@ public class Cartas {
 	
 	public BufferedImage getImage() {
 		return i;
+	}
+	
+	public int getPreco() { 
+		return preco; 
 	}
 		
 }

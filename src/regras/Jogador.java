@@ -21,6 +21,8 @@ public class Jogador {
 	private int offset = num.nextInt(15) +1; 
 	private ArrayList<Cartas>propriedades; 
 	private String cor; 
+	private int arrayPos; 
+	private boolean liberdade =false ; 
   
 	
 	public Jogador(int num) {		
@@ -32,6 +34,7 @@ public class Jogador {
 		   System.exit(1);
 		}
 		setCor(num); 
+		arrayPos = num; 
 	}
 	
 	private void setCor(int i) { 
@@ -109,5 +112,18 @@ public class Jogador {
 	public void remProp(Cartas terreno) { 
 		propriedades.remove(terreno); 
 	}
+
+	public void movimentaSaldo(int preco) {
+		saldo += preco; 
+	}
+	
+	public void setLiberdade(boolean b) { 
+		liberdade = b; 
+	}
+
+	public boolean getLiberdade() {
+		return liberdade; 
+	}
+
 	
 }

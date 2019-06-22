@@ -35,7 +35,7 @@ public class FRJogo extends JFrame{
 			getContentPane().add(tab);
 			getContentPane().add(bot);
 			
-			pack(); 
+		
 			setTitle("Banco Imobiliario");
 			setVisible(true); 
 	   }  

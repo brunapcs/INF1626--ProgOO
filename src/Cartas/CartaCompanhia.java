@@ -11,14 +11,13 @@ public class CartaCompanhia extends Cartas{
 	private int hipoteca; 
 	private String nome = new String(); 
 	private int pos; 
-	private int valorCompra;
-	
+
 	private CartaCompanhia(String n, int hip, int mult, int p, int vc ) { 
 		super(); 
 		nome = n; 
 		hipoteca = hip; 
 		multiplicador = mult; 
-		valorCompra = vc;
+		preco = vc;
 		
 		try {
 			   i=ImageIO.read(new File("images/companhias/company" + n + ".png"));
@@ -63,10 +62,6 @@ public class CartaCompanhia extends Cartas{
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-	
-	public int getValorCompra() {
-		return valorCompra;
 	}
 	
 }

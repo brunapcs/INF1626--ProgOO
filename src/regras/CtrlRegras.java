@@ -50,13 +50,10 @@ class CtrlRegras implements Observable {
 	
 	
 	public void addCarta(int terreno_on) {
-		
 		jogador_on.addProp(cartas.get(terreno_on)); 
 	}
 
-	public void rodada() {
-		bot.showDados(false);
-		
+	public void nextPlayer() { 
 		if(d1Ant != d2Ant){
 			player_on++;
 			if( player_on > numPlayers){ 
@@ -70,32 +67,56 @@ class CtrlRegras implements Observable {
 		
 		jogador_on = tab.getJogador(player_on);
 		
-		
 		if(numTurn == 3) { 
-			//verificar se o jogador possui a carta "saida livre da prisao"
-			//caso possua, nada ocorre, se nao possuir, prisao eh setado como true
-			jogador_on.setPrisao(true); 
+			if(jogador_on.getLiberdade() == true ) { 
+				jogador_on.setLiberdade(false); 
+			}
+			else {
+				vaiPreso(); 
+				player_on++; 
+				if(player_on > numPlayers)
+					player_on = 0;
+				numTurn++; 
+			}
 		}
+		bot.showPlayerStats(jogador_on.getSaldo(), jogador_on.getCor());
+		d.setCorDado(player_on);
+		tab.repaint();
+	}
+	
+	public void comprarTerreno() {
+		jogador_on.addProp(terreno_on);
+		jogador_on.movimentaSaldo(-(terreno_on.getPreco())); 
+		terreno_on.setProprietario(jogador_on.getCor()); 
+		bot.showTerrenoStats(terreno_on.getProprietario());
+		bot.showPlayerStats(jogador_on.getSaldo(), jogador_on.getCor()); 
+	}
+	
+	public void rodada() {
+		bot.showDados(false);
 		
-		//jogada normal, jogador nao esta preso 
 		if(jogador_on.getPrisao() == false){	
 			position_on = (jogador_on.getPosition() + (d.getSoma())) % 40; 
 			terreno_on = cartas.get(position_on);
-			bot.showPlayerStats(jogador_on); 
-			d.setCorDado(player_on);
 			jogador_on.moveTo(position_on);
 			
-			//verifica se posicao eh uma esquina
-			/***
-			 * COD AQUI
-			 */
-		
-			if(terreno_on == null )
+			if(position_on == 10 || position_on == 30) { 
+				vaiPreso(); 
+			}
+			else if(position_on == 0 || position_on == 20 ) {
+				terreno_on = null; 
+				bot.setReady(false); 
+			}
+				
+			else if(terreno_on == null )
 			{ 	
 				sorte_on = Cartas.tiraSorteReves(); 
 				terreno_on = sorte_on; 
+				efetuaAcao(); 
 			}
-			bot.showTerrenoStats(terreno_on);
+		
+			bot.setCartaImage(terreno_on.getImage()); 
+			bot.showTerrenoStats(terreno_on.getProprietario());
 			bot.showEncerrarJog(true); 
 		}
 		
@@ -110,6 +131,34 @@ class CtrlRegras implements Observable {
 		d2Ant = d.getDnum()[1]; 
 	}
 	
+	public void vaiPreso() {
+		jogador_on.setPrisao(true);
+		jogador_on.moveTo(10);
+		terreno_on = null; 
+		tab.repaint(); 
+	}
+	public void efetuaAcao() {
+		String a = ((SorteReves)sorte_on).getTipo(); 
+		if(a.equals("prisao")) { 
+			if(jogador_on.getLiberdade() == false)
+				vaiPreso(); 
+			else 
+				jogador_on.setLiberdade(false);
+		}
+		else if(a.equals("liberdade")) { 
+			jogador_on.setLiberdade(true);
+		}
+		else if(a.equals("ponto de partida")) { 
+			jogador_on.moveTo(0);
+			position_on = 0;
+			tab.repaint(); 
+		}
+		else { 
+			jogador_on.movimentaSaldo(((SorteReves)sorte_on).getAcao());
+			bot.showPlayerStats(jogador_on.getSaldo(), jogador_on.getCor()); 
+		}	
+	}
+	
 	public void addObserver(Observer o) {
 		observers.add(o);
 	}
@@ -117,6 +166,7 @@ class CtrlRegras implements Observable {
 	public void removeObserver(Observer o) {
 		observers.remove(o);
 	}
+
 	
 	@Override
 	public Object get() {
@@ -124,7 +174,5 @@ class CtrlRegras implements Observable {
 		return null;
 	}
 
-	
-	
 	
 }
