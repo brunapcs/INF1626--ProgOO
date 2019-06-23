@@ -48,6 +48,13 @@ public class PNTabuleiro extends JPanel implements Observer, MouseListener{
 				jogadores.add(j); 
 	}
 	
+	public void remJogador(Jogador p) {
+		jogadores.remove(p); 
+	}
+	public ArrayList<Jogador> getJogadoresList(){ 
+		return jogadores; 
+	}
+	
 	public Jogador getJogador(int index) {
 		return jogadores.get(index);
 	}
@@ -258,7 +265,7 @@ public class PNTabuleiro extends JPanel implements Observer, MouseListener{
 		
 	}
 	
-	private JPanel desenhaCarta(String s) {
+	public JPanel desenhaCarta(String s) {
 		try {
 			aux = ImageIO.read(new File("images/" + s + ".png"));
 			} 
@@ -276,4 +283,6 @@ public class PNTabuleiro extends JPanel implements Observer, MouseListener{
 		};
 		return panel;
 	}
+
+	
 }

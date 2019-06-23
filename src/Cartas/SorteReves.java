@@ -28,41 +28,40 @@ public class SorteReves extends Cartas{
 			   System.exit(1);
 			}
 		deck.add(this); 
-		
 	}
 	
 	static void inicializaSorteReves(){
-			new SorteReves(1, "lucro",25); 
-			new SorteReves(2,"lucro",150);
-			new SorteReves(3,"lucro",80);
-			new SorteReves(4,"lucro",200);
-			new SorteReves(5,"lucro",50);
-			new SorteReves(6,"lucro",50);
-			new SorteReves(7,"lucro",100);
-			new SorteReves(8,"lucro",100);
+			new SorteReves(1, "sorte",25); 
+			new SorteReves(2,"sorte",150);
+			new SorteReves(3,"sorte",80);
+			new SorteReves(4,"sorte",200);
+			new SorteReves(5,"sorte",50);
+			new SorteReves(6,"sorte",50);
+			new SorteReves(7,"sorte",100);
+			new SorteReves(8,"sorte",100);
 			new SorteReves(9,"liberdade",0);
 			new SorteReves(10,"ponto de partida",0);
 			new SorteReves(11,"aposta",50);
-			new SorteReves(12,"lucro",45);
-			new SorteReves(13,"lucro",100);
-			new SorteReves(14,"lucro",100);
-			new SorteReves(15,"lucro",20);
+			new SorteReves(12,"sorte",45);
+			new SorteReves(13,"sorte",100);
+			new SorteReves(14,"sorte",100);
+			new SorteReves(15,"sorte",20);
 			
-			new SorteReves(16,"prejuizo", -15);
-			new SorteReves(17,"prejuizo", -25);
-			new SorteReves(18,"prejuizo", -45);
-			new SorteReves(19,"prejuizo", -30);
-			new SorteReves(20,"prejuizo", -100);
-			new SorteReves(21,"prejuizo", -100);
-			new SorteReves(22,"prejuizo", -40);
+			new SorteReves(16,"prejuizo", 15);
+			new SorteReves(17,"prejuizo", 25);
+			new SorteReves(18,"prejuizo", 45);
+			new SorteReves(19,"prejuizo", 30);
+			new SorteReves(20,"prejuizo", 100);
+			new SorteReves(21,"prejuizo", 100);
+			new SorteReves(22,"prejuizo", 40);
 			new SorteReves(23,"prisao", 0);
-			new SorteReves(24,"prejuizo", -30);
-			new SorteReves(25,"prejuizo", -50);
-			new SorteReves(26,"prejuizo", -25);
-			new SorteReves(27,"prejuizo", -30);
-			new SorteReves(28,"prejuizo", -45);
-			new SorteReves(29,"prejuizo", -50);
-			new SorteReves(30,"prejuizo", -50);
+			new SorteReves(24,"prejuizo", 30);
+			new SorteReves(25,"prejuizo", 50);
+			new SorteReves(26,"prejuizo", 25);
+			new SorteReves(27,"prejuizo", 30);
+			new SorteReves(28,"prejuizo", 45);
+			new SorteReves(29,"prejuizo", 50);
+			new SorteReves(30,"prejuizo", 50);
 	}
 
 	public BufferedImage getImage() {

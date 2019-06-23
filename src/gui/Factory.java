@@ -23,6 +23,7 @@ public class Factory {
 	private PNTabuleiro tab; 
 	private PNBotoes bot;
 	private int numJogadores ;
+	private PNHistorico hist; 
 	private Fachada fa; 
 	
 	//Inicializa Novo Jogo
@@ -40,6 +41,7 @@ public class Factory {
 		inicializaJogadores(); 
 		ArrayList<Cartas> cartas = Cartas.getCartas();
 		Queue<SorteReves> deck = Cartas.getSorteReves();
+		hist = PNHistorico.getHist(); 
 		
 		fa = Fachada.getFachada(); 
 	}
@@ -93,9 +95,6 @@ public class Factory {
 		{
 			e1.printStackTrace();
 		}
-		
-		
-		
 	}
 	
 	public static Factory startFactory(File loadJogo) { 
@@ -115,6 +114,13 @@ public class Factory {
 	}
 	public JPanel getBot() { 
 		return bot; 
+	}
+
+	public JPanel getHist() { 
+		return hist; 
+	}
+	public void terminarJogo() {
+		fa.terminarJogo(); 
 	}
 	
 

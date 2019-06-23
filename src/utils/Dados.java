@@ -52,8 +52,25 @@ public class Dados{
 				   System.exit(1);
 			}
 		}
-		
 	}
+	public void sortearDados(int d1, int d2) {  
+		d.ready = true; 
+		 Dnum[0] = d1;
+		 Dnum[1] = d2;
+		
+		if((Dnum[0] > 0 && Dnum[0] < 7) && (Dnum[1] > 0 && Dnum[1] < 7)) {
+			try {
+				Dimages[0] = ImageIO.read(new File("images/dados/die_face_" + Integer.toString(Dnum[0]) + ".png"));
+				Dimages[1] = ImageIO.read(new File("images/dados/die_face_" + Integer.toString(Dnum[1]) + ".png"));
+			}
+			catch(IOException ex){
+				   System.out.println(ex.getMessage());
+				   System.exit(1);
+			}
+		}
+	}
+	
+	
 	public int getSoma() { 
 		return Dnum[0] + Dnum[1]; 
 	}
@@ -70,29 +87,29 @@ public class Dados{
 		return background; 
 	}
 	
-	public void setCorDado(int player) { 
+	public void setCorDado(String cor) { 
 			int r =0, g=0, b =0; 
 			
-			switch(player){ 
-				case 0: 
+			switch(cor){ 
+				case "vermelho": 
 					r = 255;
 					break; 
-				case 1: 
+				case "azul": 
 					b = 255;
 					break ;
-				case 2: 
+				case "laranja": 
 					r = 227; 
 					g = 117; 
 					break; 
-				case 3: 
+				case "amarelo": 
 					r = 255; 
 					g = 255; 
 					break;
-				case 4: 
+				case "roxo": 
 					r = 162; 
 					b = 255; 
 					break; 
-				case 5: 
+				case "cinza": 
 					r = 167;
 					g = 167; 
 					b = 167; 

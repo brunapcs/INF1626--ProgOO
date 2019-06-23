@@ -4,6 +4,8 @@ import utils.Coordenadas;
 import java.io.*;
 import javax.imageio.*;
 
+import Cartas.CartaCompanhia;
+import Cartas.CartaTerreno;
 import Cartas.Cartas;
 
 import java.awt.image.BufferedImage;
@@ -22,10 +24,11 @@ public class Jogador {
 	private ArrayList<Cartas>propriedades = new ArrayList<Cartas>(); 
 	private String cor; 
 	private int arrayPos; 
-	private boolean liberdade =false ; 
+	private boolean liberdade = true ; 
 	private int numTurnPrisao=0; 
 	private int QtdCasasCor[] = {0,0,0,0,0,0,0,0}; //   Rosa - Azul - 
   
+	
 	
 	public Jogador(int num) {		
 		loadImage(num); 
@@ -132,7 +135,7 @@ public class Jogador {
 	}
 
 	public void debita(int p) { 
-		saldo -= p; 
+		saldo -= (p); 
 	}
 	public void recebe(int p) { 
 		saldo += p; 
@@ -150,19 +153,59 @@ public class Jogador {
 		return numTurnPrisao;
 	}
 	
-	public int nullNumTurnPrisao() {
-		return 0;
-	}
 	public ArrayList<Cartas> getPropriedadesCor(String s){
 		ArrayList<Cartas> cartasCor = new ArrayList<Cartas>();
 		int i = 0;
 		while(i < propriedades.size()) {
 			Cartas c = propriedades.get(i);
-			if(c.getCor() == s) {
-				cartasCor.add(c);
+			if (c.getTipo().equals("terreno")) { 
+				if(((CartaTerreno)c).getCor().equals(s)) {
+					cartasCor.add(c);
+				}
 			}
 		}
 		return cartasCor;
+	}
+	
+	public void incQtdCasasCor(int index) {
+		QtdCasasCor[index]++;
+	}
+
+	public int getQtdCasasCor(int index) {
+		return QtdCasasCor[index];
+	}
+
+	public ArrayList<Cartas> getPropriedades() {
+		return propriedades; 
+	}
+
+	public Cartas findPropriedade(String propName) {
+		for(int i =0; i < propriedades.size(); i++) { 
+			if(propriedades.get(i).getNome().equals(propName)) { 
+				return propriedades.get(i); 
+			}
+		}
+		return null; 
+	}
+	
+	public ArrayList<String> getPropList() { 
+		ArrayList<String>nomesProps = new ArrayList<String>(); 
+		 for(int i=0 ; i< propriedades.size(); i++) { 
+				 nomesProps.add(propriedades.get(i).getNome()); 
+		 }
+		return nomesProps; 
+	}
+
+	public void resetNumTurnPrisao() {
+		numTurnPrisao = 0 ; 
+	}
+
+	public void addNumTurnPrisao() {
+		numTurnPrisao++; 
+		
+	}
+	public void cheatSaldo(int i) { 
+		saldo = i; 
 	}
 	
 }

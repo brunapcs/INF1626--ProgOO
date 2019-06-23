@@ -2,7 +2,9 @@ package Cartas;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 public class Cartas {
@@ -11,7 +13,9 @@ public class Cartas {
 	 static Queue<SorteReves>deck = null; 
 	 String tipo; 
 	 String proprietario = new String("-"); 
+	 private int proprietarioIndex; 
 	 BufferedImage i;
+	 String nome = new String(); 
 	 int preco = 0; 
 	 
 	 Cartas() { 	 
@@ -37,6 +41,7 @@ public class Cartas {
 			 deck = new LinkedList<>(); 
 			 SorteReves.inicializaSorteReves(); 
 		 }
+		 Collections.shuffle((List<?>) deck);
 		 return deck; 
 	 }
 	 
@@ -60,6 +65,14 @@ public class Cartas {
 		 proprietario = new String(cor_jogador);  
 	 }
 	 
+	 public void setPropIndex(int i) { 
+		 proprietarioIndex = i; 
+	 }
+	 
+	 public int getProprietarioIndex() { 
+		return proprietarioIndex; 
+	 }
+	 
 	 public String getProprietario() { 
 		 return proprietario; 
 	 }
@@ -70,6 +83,10 @@ public class Cartas {
 	
 	public int getPreco() { 
 		return preco; 
+	}
+
+	public String getNome() {
+		return nome; 
 	}
 		
 }

@@ -17,6 +17,7 @@ public class FRJogo extends JFrame{
 	  static FRJogo frame = null; 
 	  JPanel tab;  
 	  JPanel bot; 
+	  JPanel hist; 
 	  Factory fac; 
 	  
 	  //Cria Novo Jogo
@@ -51,13 +52,17 @@ public class FRJogo extends JFrame{
 	   private void panelsConfig() { 
 		   tab = fac.getTab(); 
 		   bot = fac.getBot(); 
+		   hist = fac.getHist(); 
 		   
 			tab.setPreferredSize(new Dimension(700,700));	
-			bot.setPreferredSize(new Dimension(500,700));	
+			bot.setPreferredSize(new Dimension(350,700));
+			hist.setPreferredSize(new Dimension(200,700));
 			bot.setBorder(BorderFactory.createTitledBorder("Controles"));
+			hist.setBorder(BorderFactory.createTitledBorder("Transacoes Rodada"));
 			
 			getContentPane().add(tab);
 			getContentPane().add(bot);
+			getContentPane().add(hist); 
 			
 			pack(); 
 			setVisible(true); 
@@ -73,8 +78,16 @@ public class FRJogo extends JFrame{
 			JMenu Opcoes = new JMenu("Opcoes");
 	        menu.add(Opcoes);
 	        JMenuItem salvar = new JMenuItem("Salvar Jogo");
+	        JMenuItem terminar = new JMenuItem("Terminar Jogo");
 	        
 	        Opcoes.add(salvar); 
+	        Opcoes.add(terminar); 
+	        
+	        terminar.addActionListener(new ActionListener() {
+	        	public void actionPerformed(ActionEvent e) {
+	        		terminarJogo(); 
+	        	}
+	        });
 	        
 	        salvar.addActionListener(new ActionListener() {
 	        	public void actionPerformed(ActionEvent e) {
@@ -104,6 +117,12 @@ public class FRJogo extends JFrame{
 	      }    
 	          System.out.println("Success...");    
 			
+	  }
+	  
+	  private void terminarJogo() { 
+		  this.setVisible(false);
+		  fac.terminarJogo(); 
+		  this.dispose(); 
 	  }
 	  
 	  public static void main(String args[]) {
