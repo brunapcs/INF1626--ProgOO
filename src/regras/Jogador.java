@@ -22,8 +22,7 @@ public class Jogador {
 	private Random num = new Random();
 	private int offset = num.nextInt(15) +1; 
 	private ArrayList<Cartas>propriedades = new ArrayList<Cartas>(); 
-	private String cor; 
-	private int arrayPos; 
+	private String cor;  
 	private boolean liberdade = true ; 
 	private int numTurnPrisao=0; 
 	private int QtdCasasCor[] = {0,0,0,0,0,0,0,0}; //   Rosa - Azul - 
@@ -33,7 +32,6 @@ public class Jogador {
 	public Jogador(int num) {		
 		loadImage(num); 
 		setCor(num); 
-		arrayPos = num; 
 	}
 	
 	public Jogador(int num, int din, boolean preso, int pos, int turnPrisao, boolean lib, ArrayList<Cartas> props) { 
@@ -44,7 +42,6 @@ public class Jogador {
 		pin_position = pos; 
 		numTurnPrisao = turnPrisao; 
 		liberdade = lib; 
-		arrayPos = num; 
 		propriedades = props;
 	}
 	
@@ -127,8 +124,8 @@ public class Jogador {
 		return propriedades.contains(terreno); 
 	}
 	
-	public void addProp(Cartas terreno_on) {
-		propriedades.add(terreno_on); 
+	public void addProp(Cartas terreno) {
+		propriedades.add(terreno); 
 	}
 	public void remProp(Cartas terreno) { 
 		propriedades.remove(terreno); 

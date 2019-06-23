@@ -64,13 +64,7 @@ public class SorteReves extends Cartas{
 			new SorteReves(30,"prejuizo", 50);
 	}
 
-	public BufferedImage getImage() {
-		return i;
-	}
-
-	public void setImage(BufferedImage i) {
-		this.i = i;
-	}
+	
 	
 	public int getAcao() {
 		return acao;
@@ -80,9 +74,6 @@ public class SorteReves extends Cartas{
 		return tipoAcao;
 	}
 	
-	public void setAcao(int acao) {
-		this.acao = acao;
-	}
 	
 	
 	

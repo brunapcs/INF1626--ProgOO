@@ -1,12 +1,6 @@
 package regras;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.*;
-
-import javax.swing.JButton;
-
 import Cartas.CartaCompanhia;
 import Cartas.CartaTerreno;
 import Cartas.Cartas;
@@ -21,6 +15,7 @@ class CtrlRegras implements Observable {
 	private Dados d = null;
 	private PNTabuleiro tab = null;
 	private PNBotoes bot = null;
+	private PNHistorico hist; 
 	private int numTurn;
 	private int player_on;
 	private int d1Ant;
@@ -35,7 +30,6 @@ class CtrlRegras implements Observable {
 	private Cartas terreno_on;
 	private int player_ant=-1; 
 	private  ArrayList<Jogador>falidos = new ArrayList<Jogador>(); 
-	private PNHistorico hist; 
 	private int divida = 0; 
 	private Jogador prop = null;
 	
@@ -279,7 +273,6 @@ class CtrlRegras implements Observable {
 		
 	//verifica se jogador possui todas propriedades de uma cor e esta habilitado a adc casas
 		public void VerificaPropriedades() {
-			int c= 0; 
 			int aux[] = new int[] {3,3,3,2,2,3,4,2};	//vetor da qtd de todas as cores
 			String[] arrayCor = {"Rosa","Azul","Vinho","Laranja","Vermelho","Amarelo","Verde","Roxo"};
 			ArrayList<Cartas> listAux;
@@ -427,8 +420,6 @@ class CtrlRegras implements Observable {
 	
 	
 	public void rodadaPrisao(){
-		int i;
-		
 		//show turnos na prisao
 		if (jogador_on.getNumTurnPrisao() >= 3) {
 			debita(jogador_on, 50); 

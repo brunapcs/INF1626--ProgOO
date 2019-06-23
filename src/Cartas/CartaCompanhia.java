@@ -72,16 +72,5 @@ public class CartaCompanhia extends Cartas{
 		return multiplicador;
 	}
 
-	public void setMultiplicador(int multiplicador) {
-		this.multiplicador = multiplicador;
-	}
 
-	public int getHipoteca() {
-		return hipoteca;
-	}
-
-	public void setHipoteca(int hipoteca) {
-		this.hipoteca = hipoteca;
-	} 
-	
 }

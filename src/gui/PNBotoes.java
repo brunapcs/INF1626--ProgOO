@@ -29,13 +29,10 @@ public class PNBotoes extends JPanel implements Observer, ActionListener{
 	private JLabel preco = new JLabel(""); 
 	
 	
-	private JButton compar = null;
 	private JButton vender = null;
-	private JButton passar = null; 
 	private JButton rolar_dados = null; 
 	private JButton comprar_terreno = null;
-	private JButton adc_casa = null; 
-	private JButton hipotecar = null; 
+	private JButton adc_casa = null;  
 	private JButton adc_hotel = null; 
 	private JButton encerrar_jogada = null;
 	private ArrayList<JButton> casas = new ArrayList<JButton>(); 
@@ -59,18 +56,15 @@ public class PNBotoes extends JPanel implements Observer, ActionListener{
 		rolar_dados = new JButton("Rolar Dado");
 		comprar_terreno = new JButton("Comprar Terreno"); 
 		adc_casa = new JButton("Adcionar Casa"); 
-		hipotecar = new JButton("Hipotecar"); 
 		adc_hotel = new JButton("Adcionar Hotel"); 
 		encerrar_jogada = new JButton("Encerrar Jogada"); 
 		vender = new JButton("Vender"); 
 		JLabel props = new JLabel("Lista de Propriedades:"); 
 		
-		
 		rolar_dados.setVisible(false);
 		encerrar_jogada.setVisible(false);
 		comprar_terreno.setVisible(false);
 		adc_casa.setVisible(false);
-		hipotecar.setVisible(false);
 		adc_hotel.setVisible(false);
 		vender.setVisible(false);
 		prisao.setVisible(false);
@@ -80,17 +74,13 @@ public class PNBotoes extends JPanel implements Observer, ActionListener{
 		add(player_turn); 
 		add(dinheiro);
 		add(prisao); 
-		 
 		add(props); 
 		add(propList); 
 		add(vender); 
-	 
 		add(status); 
 		add(preco); 
 		add(comprar_terreno); 
-		
 		add(adc_casa); 
-		add(hipotecar); 
 		add(adc_hotel); 
 		add(proprietario); 
 		add(Box.createVerticalGlue());
@@ -98,14 +88,13 @@ public class PNBotoes extends JPanel implements Observer, ActionListener{
 		
 		rodada.setText("Rodada: 0"); 
 		player_turn.setText("Jogador da vez: Vermelho" );
-		
 		propList.addActionListener(this);
 		rolar_dados.addActionListener(this);
 		encerrar_jogada.addActionListener(this);
 		comprar_terreno.addActionListener(this);
 		vender.addActionListener(this);
 		
-		
+		// JFRAME DE TRAPACA
 		JFrame trapaca = new JFrame(); 
         JPanel trap = new JPanel(); 
 		
@@ -114,13 +103,11 @@ public class PNBotoes extends JPanel implements Observer, ActionListener{
 			combo2.addItem(i);
 			setSaldo.addItem(i); 
 		}
-		
 		trap.add(combo1); 
 		trap.add(combo2);  
 		trap.add(cheatDados);
 		trap.add(setSaldo);
 		trap.add(cheatSaldo); 
-		
 		cheatDados.addActionListener(this);
 		cheatSaldo.addActionListener(this);
 		trapaca.setBounds(1100, 500, 300, 100);
@@ -179,6 +166,85 @@ public class PNBotoes extends JPanel implements Observer, ActionListener{
 		proprietario.setVisible(true);
 	}
 	
+	public void setCartaImage(BufferedImage carta) { 
+		i = carta; 
+		ready = true; 
+		repaint(); 
+	}
+
+	public void setReady(boolean b) {
+		ready = b ; 
+	}
+	public void showPreco(String p, boolean b) {
+		preco.setText("Preco:" + p);
+		preco.setVisible(b); 
+	}
+	public void addShowCasa(String nome, int pos, int casa) {
+		JButton b = new JButton("Add casa em " + nome + "por $" + Integer.toString(casa));
+		add(b); 
+		casas.add(b); 
+		b.addActionListener(this);
+		terrenoPosition.add(pos); 	
+	}
+	
+	public void removeBotoesCasas() {
+		for(int i =0 ; i<casas.size(); i++) { 
+			remove(casas.get(i));
+		}
+	}
+	
+	public void showVender(boolean b) {
+		vender.setVisible(b);
+	}
+
+	public void setSaldo(int saldo) {
+		dinheiro.setText("Dinheiro: $ " + Integer.toString(saldo));
+		dinheiro.setVisible(true);
+	}
+
+	public void setJogadorOn(String cor) {
+		player_turn.setText("Jogador da rodada:" + cor );
+		player_turn.setVisible(true);
+	}
+	
+
+	public void showFaliu(String cor) {
+		JOptionPane.showMessageDialog(null, 
+                "Jogador" + cor + "faliu ", 
+                "Fim de Jogo para voce", 
+                JOptionPane.WARNING_MESSAGE);
+		
+	}
+
+	public void showFaltaDin() {
+		JOptionPane.showMessageDialog(null, 
+               "Voce nao possui saldo suficiente", 
+                "Faltou!", 
+                JOptionPane.WARNING_MESSAGE);
+		
+	}
+
+	public void showVencedor() {
+		
+		JOptionPane.showMessageDialog(null, 
+	               "Temos um vencedor!", 
+	                "Fim de Jogo", 
+	                JOptionPane.WARNING_MESSAGE);
+	}
+
+	@Override
+	public void notify(regras.Observable o) {
+		// TODO Auto-generated method stub
+		
+	}
+	protected void paintComponent(Graphics g) {
+	    super.paintComponent(g);
+	    	Graphics2D g2d = (Graphics2D) g;
+	    	if( ready == true) { 
+	    	g2d.drawImage(i, 0 , 450, 130, 200 , null);
+	    	}
+	}
+	
 	public void actionPerformed(ActionEvent e) {
 	    if(e.getSource() == rolar_dados) { 
 	    	Fachada.getFachada().rolarDados();
@@ -218,89 +284,5 @@ public class PNBotoes extends JPanel implements Observer, ActionListener{
 	    
 	    
 	}
-	public void setCartaImage(BufferedImage carta) { 
-		i = carta; 
-		ready = true; 
-		repaint(); 
-	}
-
-	public void setReady(boolean b) {
-		ready = b ; 
-	}
-	public void showPreco(String p, boolean b) {
-		preco.setText("Preco:" + p);
-		preco.setVisible(b); 
-	}
-	public void addShowCasa(String nome, int pos, int casa) {
-		JButton b = new JButton("Add casa em " + nome + "por $" + Integer.toString(casa));
-		add(b); 
-		casas.add(b); 
-		b.addActionListener(this);
-		terrenoPosition.add(pos); 	
-	}
-	
-	
-	
-	public void removeBotoesCasas() {
-		for(int i =0 ; i<casas.size(); i++) { 
-			remove(casas.get(i));
-		}
-	}
-	
-	protected void paintComponent(Graphics g) {
-	    super.paintComponent(g);
-	    	Graphics2D g2d = (Graphics2D) g;
-	    	if( ready == true) { 
-	    	g2d.drawImage(i, 0 , 450, 130, 200 , null);
-	    	}
-	}
-	
-	
-	public void showVender(boolean b) {
-		vender.setVisible(b);
-	}
-
-	public void setSaldo(int saldo) {
-		dinheiro.setText("Dinheiro: $ " + Integer.toString(saldo));
-		dinheiro.setVisible(true);
-	}
-
-	public void setJogadorOn(String cor) {
-		player_turn.setText("Jogador da rodada:" + cor );
-		player_turn.setVisible(true);
-	}
-	
-
-	@Override
-	public void notify(regras.Observable o) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void showFaliu(String cor) {
-		JOptionPane.showMessageDialog(null, 
-                "Jogador" + cor + "faliu ", 
-                "Fim de Jogo para voce", 
-                JOptionPane.WARNING_MESSAGE);
-		
-	}
-
-	public void showFaltaDin() {
-		JOptionPane.showMessageDialog(null, 
-               "Voce nao possui saldo suficiente", 
-                "Faltou!", 
-                JOptionPane.WARNING_MESSAGE);
-		
-	}
-
-	public void showVencedor() {
-		
-		JOptionPane.showMessageDialog(null, 
-	               "Temos um vencedor!", 
-	                "Fim de Jogo", 
-	                JOptionPane.WARNING_MESSAGE);
-	}
-
-
 
 }
