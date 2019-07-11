@@ -17,6 +17,7 @@ public class Cartas {
 	 BufferedImage i;
 	 String nome = new String(); 
 	 int preco = 0; 
+	 int pos; 
 	 
 	 Cartas() { 	 
 	 }
@@ -87,6 +88,10 @@ public class Cartas {
 
 	public String getNome() {
 		return nome; 
+	}
+	
+	public int getPos(){
+		return pos; 
 	}
 		
 }

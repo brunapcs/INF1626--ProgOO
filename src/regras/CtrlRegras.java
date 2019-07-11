@@ -5,8 +5,6 @@ import Cartas.CartaCompanhia;
 import Cartas.CartaTerreno;
 import Cartas.Cartas;
 import Cartas.SorteReves;
-import gui.PNBotoes;
-import gui.PNTabuleiro;
 import utils.Dados;
 import gui.*; 
 
@@ -255,15 +253,17 @@ class CtrlRegras implements Observable {
 	
 	//verifica se jogador possui todas casas de uma cor e esta habilitado a adc hotel
 		private void VerificaHotel() {
-			if(jogador_on.getQtdCasasCor(0) == 3 || jogador_on.getQtdCasasCor(1) == 3 || jogador_on.getQtdCasasCor(2) == 3 || jogador_on.getQtdCasasCor(3) == 2 ||
-					jogador_on.getQtdCasasCor(4) == 2 || jogador_on.getQtdCasasCor(5) == 3 || jogador_on.getQtdCasasCor(6) == 4 || jogador_on.getQtdCasasCor(7) == 2) {
+			int aux[] = new int[] {3,3,3,2,2,3,4,2};
+			for(int j = 0; j < aux.length; j++) {
+				if(jogador_on.getQtdCasasCor(j) == aux[j]) {
 					bot.showAdcCasa(true);
+				}
 			}
-			ArrayList<Cartas> aux = jogador_on.getPropriedades();
+			ArrayList<Cartas> auxList = jogador_on.getPropriedades();
 			
-			for(int i = 0; i < aux.size(); i++) {
-				if( aux.get(i).getTipo().equals("terreno")){
-					CartaTerreno ctAux = (CartaTerreno)aux.get(i);
+			for(int i = 0; i < auxList.size(); i++) {
+				if(auxList.get(i).getTipo().equals("terreno")){
+					CartaTerreno ctAux = (CartaTerreno)auxList.get(i);
 						if(ctAux.getNumCasas() == 4) {
 							bot.showAdcHotel(true);
 					}
@@ -282,7 +282,7 @@ class CtrlRegras implements Observable {
 					for(int j = 0; j < aux[i]; j++) {
 						listAux = jogador_on.getPropriedadesCor(arrayCor[i]);
 						CartaTerreno ct = (CartaTerreno)listAux.get(j);
-						bot.addShowCasa(listAux.get(j).getNome(), ct.getPos(), ct.getCasa()); 
+						bot.addShowCasa(listAux.get(j).getNome(), ct.getPos(), ct.getCasaPreco()); 
 					}
 				}
 			}
@@ -363,8 +363,8 @@ class CtrlRegras implements Observable {
 	public void addCasaInTerreno(Integer pos) {
 		CartaTerreno terreno = ((CartaTerreno)cartas.get(pos)); 
 		terreno.addCasa();
-		debita(jogador_on, terreno.getCasa());
-		banco += terreno.getCasa();
+		debita(jogador_on, terreno.getCasaPreco());
+		banco += terreno.getCasaPreco();
 	}
 	
 	//********* GERENCIAMENTO DE RODADAS ************// 
@@ -393,7 +393,8 @@ class CtrlRegras implements Observable {
 		desativaBotoes();
 		bot.showRolarDados(false);
 		bot.showEncerrarJog(true);
-		VerificaPropriedades(); 
+		VerificaPropriedades();
+		VerificaHotel();
 		d1Ant = d.getDnum()[0];
 		d2Ant = d.getDnum()[1];
 		boolean p = true; 
@@ -467,6 +468,7 @@ class CtrlRegras implements Observable {
 				debita(jogador_on, 200); 
 				banco += 200;
 			} else {
+				
 				jogador_on.recebe(200);
 				banco -= 200;
 			}
@@ -540,29 +542,7 @@ class CtrlRegras implements Observable {
 		prop= null;
 	}
 	
-	// **** SALVAMENTO DO JOGO *******
-	public String salvarJogo() {
-		String jogo = new String(); 
-		
-		jogo += "numPlayers= " + Integer.toString(numPlayers) + "\n"; 
-		jogo += "player_on= " + Integer.toString(player_on)+ "\n"; 
-		
-		return jogo;
-	}
 	
-	// ****** OBSERVER **********
-	@Override
-	public Object get() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public void addObserver(Observer o) {
-		observers.add(o);
-	}
-	public void removeObserver(Observer o) {
-		observers.remove(o);
-	}
 	public void calculaPontuacao() { 
 		ArrayList<Jogador>jog = tab.getJogadoresList(); 
 		
@@ -597,6 +577,79 @@ class CtrlRegras implements Observable {
 	public void cheatSaldo(Integer i) {
 		jogador_on.cheatSaldo(i);	
 		reloadJogadorStats();
+	}
+
+	
+	// **** SALVAMENTO DO JOGO *******
+	public String salvarJogo() {
+		String jogo = new String(); 
+		
+		jogo += "player_on: " + Integer.toString(player_on)+ "\n"; 
+		jogo += "Banco: " + Integer.toString(banco) + "\n";
+		jogo += "Rodada: " + Integer.toString(rodada) + "\n";
+		jogo += "Jogadores:\n\n"; 
+		Jogador j;
+		
+		for(int i = 0; i < tab.getSizeJogadores(); i++) {
+			j = tab.getJogador(i);
+			jogo += "jogador:" + Integer.toString(i) + "\n";
+			jogo += "cor:" + j.getCor() + "\n";
+			jogo += "pin_position:" + Integer.toString(j.getPosition()) + "\n";
+			jogo += "saldo:" + Integer.toString(j.getSaldo()) + "\n";
+			jogo += "prisao: " + j.getPrisao() + "\n";
+			jogo += "passeLivre: " + j.getLiberdade() + "\n"; 
+			jogo += "coordenadasX: " + Integer.toString(j.getPosX()) +"Y: " + Integer.toString(j.getPosY()) + "\n";
+			jogo += "offset: " + Integer.toString(j.getOffset()) + "\n";
+			jogo += "numTurnPrisao: " + Integer.toString(j.getNumTurnPrisao()) + "\n";
+			jogo += "Propriedades: \n"; 
+			
+			ArrayList<Cartas> prop = j.getPropriedades();
+			
+			for(int k = 0; k < prop.size(); k++) {
+				if( prop.get(k).getTipo().equals("terreno")) { 
+					CartaTerreno terr = (CartaTerreno)prop.get(k); 
+					jogo += "Tipo:" + terr.getTipo() + "\n";; 
+					jogo += "Nome: " + terr.getNome() + "\n";
+					jogo += "Cor:" + terr.getCor() + "\n";
+					jogo += "Preco:" + Integer.toString(terr.getPreco()) + "\n";
+					jogo += "Pos:" + Integer.toString(terr.getPos()) + "\n";
+					jogo += "Aluguel:" + "\n";
+					
+					for(int e =0; e<6; e++) { 
+						jogo +=  Integer.toString(terr.getAluguel(e)) + " ";
+					} 
+					jogo +=  "\n";
+					jogo += "CasasConstruidas: " + Integer.toString(terr.getNumCasas()) + "\n";
+					jogo += "PrecoCasa: " + Integer.toString(terr.getCasaPreco()) + "\n";
+					jogo += "PrecoHotel: " + Integer.toString(terr.getHotelPreco()) + "\n";
+				}
+				else { 
+					CartaCompanhia comp = (CartaCompanhia)prop.get(k); 
+					jogo += "Tipo: " + comp.getTipo() + "\n";
+					jogo += "Nome: " + comp.getNome() + "\n";
+					jogo += "Preco:" + Integer.toString(comp.getPreco()) + "\n";
+					jogo += "Pos:" + Integer.toString(comp.getPos()) + "\n"; 
+					jogo += "Multiplicador: " + Integer.toString(comp.getMultiplicador()) + "\n"; 
+				}
+			}
+			jogo += "\n\n"; 
+		}
+		jogo += "fim"; 
+		return jogo;
+	}
+	
+	// ****** OBSERVER **********
+	@Override
+	public Object get() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public void addObserver(Observer o) {
+		observers.add(o);
+	}
+	public void removeObserver(Observer o) {
+		observers.remove(o);
 	}
 
 

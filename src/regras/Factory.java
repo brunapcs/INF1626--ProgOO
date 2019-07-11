@@ -1,4 +1,4 @@
-package gui;
+package regras;
 
 import regras.*; 
 import utils.*;
@@ -16,6 +16,9 @@ import java.util.Queue;
 import javax.swing.JPanel;
 
 import Cartas.*;
+import gui.PNBotoes;
+import gui.PNHistorico;
+import gui.PNTabuleiro;
 
 
 public class Factory {

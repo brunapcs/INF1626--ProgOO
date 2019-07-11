@@ -1,2 +1,78 @@
-numPlayers=4
-player_on=2
+player_on: 0
+Banco: 50000
+Rodada: 0
+Jogadores:
+
+jogador:0
+cor:vermelho
+pin_position:0
+saldo:2458
+prisao: false
+passeLivre: true
+coordenadasX: 640Y: 620
+offset: 15
+numTurnPrisao: 0
+Propriedades: 
+
+
+jogador:1
+cor:azul
+pin_position:0
+saldo:2458
+prisao: false
+passeLivre: true
+coordenadasX: 640Y: 620
+offset: 9
+numTurnPrisao: 0
+Propriedades: 
+
+
+jogador:2
+cor:laranja
+pin_position:0
+saldo:2458
+prisao: false
+passeLivre: true
+coordenadasX: 640Y: 620
+offset: 11
+numTurnPrisao: 0
+Propriedades: 
+
+
+jogador:3
+cor:amarelo
+pin_position:0
+saldo:2458
+prisao: false
+passeLivre: true
+coordenadasX: 640Y: 620
+offset: 15
+numTurnPrisao: 0
+Propriedades: 
+
+
+jogador:4
+cor:roxo
+pin_position:0
+saldo:2458
+prisao: false
+passeLivre: true
+coordenadasX: 640Y: 620
+offset: 1
+numTurnPrisao: 0
+Propriedades: 
+
+
+jogador:5
+cor:cinza
+pin_position:0
+saldo:2458
+prisao: false
+passeLivre: true
+coordenadasX: 640Y: 620
+offset: 6
+numTurnPrisao: 0
+Propriedades: 
+
+
+fim

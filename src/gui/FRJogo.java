@@ -9,7 +9,7 @@ import java.io.*;
 
 import javax.swing.*;
 
-import MenuIni.MenuInicial; 
+import regras.Factory; 
 
 public class FRJogo extends JFrame{
 	  final int LARG_DEFAULT=1200;

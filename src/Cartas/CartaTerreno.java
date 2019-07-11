@@ -14,7 +14,6 @@ public class CartaTerreno extends Cartas{
 	private int hotelPreco; 
 
 	private Vector<Integer> aluguel = new Vector<Integer>(6); 
-	private int pos; 
 	private String cor = new String(); 
 	private int casas =0; 
 	
@@ -70,16 +69,12 @@ public class CartaTerreno extends Cartas{
 		return cor; 
 	}
 	
-	public int getCasa() {
+	public int getCasaPreco() {
 		return casaPreco;
 	}
 
 	public int getHotelPreco() {
 		return hotelPreco;
-	}
-
-	public int getPos(){
-		return pos; 
 	}
 
 

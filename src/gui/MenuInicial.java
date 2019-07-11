@@ -1,8 +1,6 @@
-package MenuIni;
+package gui;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import gui.FRJogo;
-import gui.PNTabuleiro;
 
 import java.awt.Image;
 import java.awt.event.*;
