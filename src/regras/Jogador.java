@@ -12,7 +12,6 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
-
 public class Jogador {
 	private BufferedImage i=null;
 	private int pin_position = 0;
@@ -23,18 +22,20 @@ public class Jogador {
 	private int offset = num.nextInt(15) +1; 
 	private ArrayList<Cartas>propriedades = new ArrayList<Cartas>(); 
 	private String cor;  
-	private boolean liberdade = true ; 
+	private boolean liberdade = false ; 
 	private int numTurnPrisao=0; 
-	private int QtdCasasCor[] = {0,0,0,0,0,0,0,0}; //   Rosa - Azul - 
-  
-	
-	
-	public Jogador(int num) {		
+	private int [][] QtdTerrenosCor= new int[8][2]; 
+
+	/* Construtor para Jogador em um Novo Jogo*/
+	public Jogador(int num) {	
+		int qtdCores[] = {0,0,0,0,0,0,0,0}; 
 		loadImage(num); 
 		setCor(num); 
+		initQtdTerrCor(qtdCores);
 	}
 	
-	public Jogador(int num, int din, boolean preso, int pos, int turnPrisao, boolean lib, ArrayList<Cartas> props) { 
+	/* Construtor para Jogador em um jogo antigo carregado */
+	public Jogador(int num, int din, boolean preso, int pos, int turnPrisao, boolean lib, ArrayList<Cartas> props, int qtdCores[]) { 
 		loadImage(num); 
 		setCor(num); 
 		saldo = din; 
@@ -43,6 +44,7 @@ public class Jogador {
 		numTurnPrisao = turnPrisao; 
 		liberdade = lib; 
 		propriedades = props;
+		initQtdTerrCor(qtdCores); 
 	}
 	
 	void loadImage(int num) { 
@@ -54,7 +56,6 @@ public class Jogador {
 			   System.exit(1);
 			}
 	}
-	
 	private void setCor(int i) { 
 	
 		switch(i){
@@ -79,103 +80,41 @@ public class Jogador {
 			}
 	}
 	
-	public String getCor() { 
-		return cor; 
-	}
-	public BufferedImage getJogadorImage() { 
-		return i; 
-	}
-	
-	public void moveTo(int pos) { 
-		pin_position = pos; 
-	}
-	
-	public int getSaldo() { 
-		return saldo; 
-	}
-	
-	public void setSaldo(int a) { 
-		saldo+=  a; 
-	}
-	
-	public int getPosition() {
-		return pin_position;
-	}
-	
-	public int getPosX() { 
-		return cord.x[pin_position]; 
-	}
-	
-	public int getPosY() { 
-		return cord.y[pin_position]; 
-	}
-	public int getOffset() {
-		return offset;
-	}
-
-	public void setPrisao(boolean p) { 
-		prisao = p; 
-	}
-	public boolean getPrisao() {
-		return prisao;
-	}
-
-	public boolean verificaProp(Cartas terreno) { 
-		return propriedades.contains(terreno); 
+	/*
+	 * Preenche matriz com quantidade de casas de uma cor 
+	 * que o jogador possui. 
+	 * Linha se refere a cor em questao 
+	 * Coluna 0 se refere a quantidade que ele possui
+	 * Coluna 1 se refere a quantidade maximas de casas de uma cor
+	 * max[] representa a qtd de terrenos de uma cor
+	 */
+	private void initQtdTerrCor(int []qtd) { 
+		int max[] = { 3 , 3 , 3 , 4 , 2 , 2 , 2 , 2 } ; 
+		for(int i =0; i <8; i++) {  
+				QtdTerrenosCor[i][0]= qtd[i] ; 
+				QtdTerrenosCor[i][1]= max[i] ; 			
+		}
 	}
 	
 	public void addProp(Cartas terreno) {
 		propriedades.add(terreno); 
+		if (terreno.getTipo().equals("terreno"))
+			addTerrenoCor(((CartaTerreno)terreno).getCorIndex());  
 	}
+	
 	public void remProp(Cartas terreno) { 
-		propriedades.remove(terreno); 
-	}
-
-	public void debita(int p) { 
-		saldo -= (p); 
-	}
-	public void recebe(int p) { 
-		saldo += p; 
+		propriedades.remove(terreno);
+		if (terreno.getTipo().equals("terreno"))
+			removeTerrenoCor(((CartaTerreno)terreno).getCorIndex()); 
 	}
 	
-	public void setLiberdade(boolean b) { 
-		liberdade = b; 
+	private void addTerrenoCor(int i) {
+		QtdTerrenosCor[i][0]++;
 	}
-
-	public boolean getLiberdade() {
-		return liberdade; 
-	}
-	
-	public int getNumTurnPrisao() {
-		return numTurnPrisao;
+	private void removeTerrenoCor(int i) {
+		QtdTerrenosCor[i][0]--;
 	}
 	
-	public ArrayList<Cartas> getPropriedadesCor(String s){
-		ArrayList<Cartas> cartasCor = new ArrayList<Cartas>();
-		int i = 0;
-		while(i < propriedades.size()) {
-			Cartas c = propriedades.get(i);
-			if (c.getTipo().equals("terreno")) { 
-				if(((CartaTerreno)c).getCor().equals(s)) {
-					cartasCor.add(c);
-				}
-			}
-		}
-		return cartasCor;
-	}
-	
-	public void incQtdCasasCor(int index) {
-		QtdCasasCor[index]++;
-	}
-
-	public int getQtdCasasCor(int index) {
-		return QtdCasasCor[index];
-	}
-
-	public ArrayList<Cartas> getPropriedades() {
-		return propriedades; 
-	}
-
 	public Cartas findPropriedade(String propName) {
 		for(int i =0; i < propriedades.size(); i++) { 
 			if(propriedades.get(i).getNome().equals(propName)) { 
@@ -185,6 +124,15 @@ public class Jogador {
 		return null; 
 	}
 	
+	public boolean verificaCasa(int i) { 
+		if( QtdTerrenosCor[i][0] == QtdTerrenosCor[i][1])
+			return true;
+		return false; 
+	}
+	
+	/*
+	 * Retorna array com nome de todas propriedades que jogador possui
+	 */
 	public ArrayList<String> getPropList() { 
 		ArrayList<String>nomesProps = new ArrayList<String>(); 
 		 for(int i=0 ; i< propriedades.size(); i++) { 
@@ -192,17 +140,72 @@ public class Jogador {
 		 }
 		return nomesProps; 
 	}
+	
+	public void moveTo(int pos) { 
+		pin_position = pos; 
+	}
+	
+	public boolean verificaProp(Cartas terreno) { 
+		return propriedades.contains(terreno); 
+	}
 
+	public void debita(int p) { 
+		saldo -= (p); 
+	}
+	public void recebe(int p) { 
+		saldo += p; 
+	}
+	
 	public void resetNumTurnPrisao() {
 		numTurnPrisao = 0 ; 
 	}
 
 	public void addNumTurnPrisao() {
 		numTurnPrisao++; 
-		
 	}
 	public void cheatSaldo(int i) { 
 		saldo = i; 
+	}
+	
+	/**** Setters and Getters ******/
+	
+	public boolean getLiberdade() {
+		return liberdade; 
+	}
+	public void setLiberdade(boolean b) { 
+		liberdade = b; 
+	}
+	public int getNumTurnPrisao() {
+		return numTurnPrisao;
+	}
+	public ArrayList<Cartas> getPropriedades() {
+		return propriedades; 
+	}
+	public int getSaldo() { 
+		return saldo; 
+	}
+	public int getPosition() {
+		return pin_position;
+	}
+	public int getPosX() { 
+		return cord.x[pin_position]; 
+	}
+	public int getPosY() { 
+		return cord.y[pin_position]; 
+	}
+	public int getOffset() {
+		return offset;
+	}	public void setPrisao(boolean p) { 
+		prisao = p; 
+	}
+	public boolean getPrisao() {
+		return prisao;
+	}
+	public String getCor() { 
+		return cor; 
+	}
+	public BufferedImage getJogadorImage() { 
+		return i; 
 	}
 	
 }

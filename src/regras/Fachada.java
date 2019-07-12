@@ -1,6 +1,7 @@
 package regras;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import utils.Dados;
 
@@ -65,10 +66,18 @@ public class Fachada {
 		return ctrl.salvarJogo(); 
 	}
 
-	public void addCasa(Integer pos) {
-		ctrl.addCasaInTerreno(pos); 
+	public ArrayList<String> getPropListCor(String cor) { 
+		return ctrl.getPropListCor(cor); 
 	}
-
+	
+	public void addCasa(String casa) { 
+		ctrl.addCasa(casa);
+	}
+	
+	public void venderCasa(String casa) { 
+		ctrl.venderCasa(casa);
+	}
+	
 	public void showProp(String propName) {
 		ctrl.showPropCard(propName); 
 	}

@@ -13,6 +13,8 @@ import java.util.Observable;
 import javax.swing.*;
 import javax.swing.border.Border;
 
+
+
 import regras.Fachada;
 import regras.Observer;
 
@@ -28,14 +30,14 @@ public class PNBotoes extends JPanel implements Observer, ActionListener{
 	private JLabel proprietario = new JLabel("");
 	private JLabel preco = new JLabel(""); 
 	
-	
 	private JButton vender = null;
 	private JButton rolar_dados = null; 
 	private JButton comprar_terreno = null;
-	private JButton adc_casa = null;  
+	private ArrayList<JButton> adc_casa = new ArrayList<JButton>();
+	private ArrayList<JButton> vender_casa = new ArrayList<JButton>();
 	private JButton adc_hotel = null; 
 	private JButton encerrar_jogada = null;
-	private ArrayList<JButton> casas = new ArrayList<JButton>(); 
+
 	private ArrayList<Integer> terrenoPosition = new ArrayList<Integer>();
 	private boolean ready = false; 
 	private Fachada fac = null; 
@@ -51,20 +53,20 @@ public class PNBotoes extends JPanel implements Observer, ActionListener{
 	
 	private PNBotoes() { 
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        
-        
 		rolar_dados = new JButton("Rolar Dado");
 		comprar_terreno = new JButton("Comprar Terreno"); 
-		adc_casa = new JButton("Adcionar Casa"); 
+		
 		adc_hotel = new JButton("Adcionar Hotel"); 
 		encerrar_jogada = new JButton("Encerrar Jogada"); 
 		vender = new JButton("Vender"); 
 		JLabel props = new JLabel("Lista de Propriedades:"); 
+		JLabel addCasa_lbl = new JLabel ("Adcionar Casa em Cor:");
 		
 		rolar_dados.setVisible(false);
 		encerrar_jogada.setVisible(false);
 		comprar_terreno.setVisible(false);
-		adc_casa.setVisible(false);
+		addCasa_lbl.setVisible(false);
+		
 		adc_hotel.setVisible(false);
 		vender.setVisible(false);
 		prisao.setVisible(false);
@@ -77,50 +79,52 @@ public class PNBotoes extends JPanel implements Observer, ActionListener{
 		add(props); 
 		add(propList); 
 		add(vender); 
+		add(addCasa_lbl); 
+		
+		for(int i=0; i<8; i++) { 
+			JButton b = new JButton();
+			adc_casa.add(b); 
+			adc_casa.get(i).setVisible(false);
+			add(adc_casa.get(i));
+			adc_casa.get(i).addActionListener(this);
+
+			JButton c = new JButton();
+			vender_casa.add(c); 
+			vender_casa.get(i).setVisible(false);
+			add(vender_casa.get(i));
+			vender_casa.get(i).addActionListener(this);
+		}
+
 		add(status); 
 		add(preco); 
 		add(comprar_terreno); 
-		add(adc_casa); 
 		add(adc_hotel); 
 		add(proprietario); 
 		add(Box.createVerticalGlue());
 		add(encerrar_jogada);
 		
-		rodada.setText("Rodada: 0"); 
-		player_turn.setText("Jogador da vez: Vermelho" );
 		propList.addActionListener(this);
 		rolar_dados.addActionListener(this);
 		encerrar_jogada.addActionListener(this);
 		comprar_terreno.addActionListener(this);
 		vender.addActionListener(this);
 		
-		// JFRAME DE TRAPACA
-		JFrame trapaca = new JFrame(); 
-        JPanel trap = new JPanel(); 
-		
-		for(int i=1; i < 7; i++) { 
-			combo1.addItem(i);
-			combo2.addItem(i);
-			setSaldo.addItem(i); 
-		}
-		trap.add(combo1); 
-		trap.add(combo2);  
-		trap.add(cheatDados);
-		trap.add(setSaldo);
-		trap.add(cheatSaldo); 
-		cheatDados.addActionListener(this);
-		cheatSaldo.addActionListener(this);
-		trapaca.setBounds(1100, 500, 300, 100);
-		trapaca.getContentPane().add(trap); 
-		trapaca.setVisible(true);
-		
+		rodada.setText("Rodada:"); 
+		player_turn.setText("Jogador da vez:");
+		cheatFrame(); 
 	}
-	
+
 	public static PNBotoes getPNBotoes() { 
 		if (botoes == null)
 			botoes = new PNBotoes(); 
 		return botoes; 
 	}
+	
+	public void showAdcCasa(boolean v, int i, String cor) {
+		adc_casa.get(i).setVisible(v); 
+		adc_casa.get(i).setText(cor);
+	}
+	
 	public void showLiberdade() { 
 		JOptionPane.showMessageDialog(null, 
                 "LIBERDADE!", 
@@ -153,10 +157,7 @@ public class PNBotoes extends JPanel implements Observer, ActionListener{
 	public void showComprarTerreno(boolean v) { 
 		comprar_terreno.setVisible(v); 
 	}
-	public void showAdcCasa(boolean v) { 
-		adc_casa.setVisible(v);
-		
-	}
+
 	public void showProprietario(boolean v) { 
 		proprietario.setVisible(false);
 	}
@@ -171,26 +172,12 @@ public class PNBotoes extends JPanel implements Observer, ActionListener{
 		ready = true; 
 		repaint(); 
 	}
-
 	public void setReady(boolean b) {
 		ready = b ; 
 	}
 	public void showPreco(String p, boolean b) {
 		preco.setText("Preco:" + p);
 		preco.setVisible(b); 
-	}
-	public void addShowCasa(String nome, int pos, int casa) {
-		JButton b = new JButton("Add casa em " + nome + "por $" + Integer.toString(casa));
-		add(b); 
-		casas.add(b); 
-		b.addActionListener(this);
-		terrenoPosition.add(pos); 	
-	}
-	
-	public void removeBotoesCasas() {
-		for(int i =0 ; i<casas.size(); i++) { 
-			remove(casas.get(i));
-		}
 	}
 	
 	public void showVender(boolean b) {
@@ -212,8 +199,7 @@ public class PNBotoes extends JPanel implements Observer, ActionListener{
 		JOptionPane.showMessageDialog(null, 
                 "Jogador" + cor + "faliu ", 
                 "Fim de Jogo para voce", 
-                JOptionPane.WARNING_MESSAGE);
-		
+                JOptionPane.WARNING_MESSAGE);	
 	}
 
 	public void showFaltaDin() {
@@ -221,17 +207,38 @@ public class PNBotoes extends JPanel implements Observer, ActionListener{
                "Voce nao possui saldo suficiente", 
                 "Faltou!", 
                 JOptionPane.WARNING_MESSAGE);
-		
 	}
 
 	public void showVencedor() {
-		
 		JOptionPane.showMessageDialog(null, 
 	               "Temos um vencedor!", 
 	                "Fim de Jogo", 
 	                JOptionPane.WARNING_MESSAGE);
 	}
-
+	
+	public void showMaxCasa() {
+		JOptionPane.showMessageDialog(null, 
+	               "Esta compra não pode ser efetuada."
+	               + "Você já possui o número máximo de casas neste terreno.", 
+	                "Eita", 
+	                JOptionPane.WARNING_MESSAGE);
+	}
+	
+	public void showNaoHaSaldo() {
+		JOptionPane.showMessageDialog(null, 
+	               "Esta compra não pode ser efetuada."
+	               + "Você não possui saldo o suficiente.", 
+	                "Faltou!", 
+	                JOptionPane.WARNING_MESSAGE);
+		
+	}
+	public void showHotel() {
+		JOptionPane.showMessageDialog(null, 
+	               "Parabéns, você acaba de adcionar um hotel! Você atingiu o número máximo de casas para este terreno.", 
+	                "Hotel!", 
+	                JOptionPane.WARNING_MESSAGE);
+		
+	}
 	@Override
 	public void notify(regras.Observable o) {
 		// TODO Auto-generated method stub
@@ -243,6 +250,68 @@ public class PNBotoes extends JPanel implements Observer, ActionListener{
 	    	if( ready == true) { 
 	    	g2d.drawImage(i, 0 , 450, 130, 200 , null);
 	    	}
+	}
+	public void adcCasa(String cor) { 
+		Fachada.getFachada().getPropListCor(cor); 
+	}
+	public void venderCasa(String cor) { 
+		Fachada.getFachada().getPropListCor(cor); 
+	}
+	
+	public void adcCasaFrame(ArrayList<String> terr) {
+		JFrame jp = new JFrame(); 
+		JPanel p = new JPanel(); 
+		JComboBox<String> terrList = new JComboBox();
+		
+		ActionListener casasActList = new ActionListener(){//add actionlistner to listen for change
+            @Override
+            public void actionPerformed(ActionEvent e){
+            		String parts[];
+            		String s = (String) terrList.getSelectedItem();//get the selected item
+            		parts= ((String) terrList.getSelectedItem()).split(" ");
+            		Fachada.getFachada().addCasa(parts[0]);
+                }
+            };
+		for(int i =0; i<terr.size(); i++) { 
+			terrList.addItem(terr.get(i)); 
+		}
+		
+		JButton addCasa = new JButton("Adcionar Casa"); 
+		addCasa.addActionListener(casasActList);
+		p.add(terrList); 
+		p.add(addCasa); 
+		jp.getContentPane().add(p); 
+		jp.setBounds(500, 500, 300, 100);
+		jp.setVisible(true);
+		jp.setTitle("Adcionar Casa");
+	}
+	
+	public void venderCasaFrame(ArrayList<String> terr) {
+		JFrame jp = new JFrame(); 
+		JPanel p = new JPanel(); 
+		JComboBox<String> terrList = new JComboBox();
+		
+		ActionListener casasActList = new ActionListener(){//add actionlistner to listen for change
+            @Override
+            public void actionPerformed(ActionEvent e){
+            		String parts[];
+            		String s = (String) terrList.getSelectedItem();//get the selected item
+            		parts= ((String) terrList.getSelectedItem()).split(" ");
+
+            		Fachada.getFachada().venderCasa(parts[0]);
+                }
+            };
+		for(int i =0; i<terr.size(); i++) { 
+			terrList.addItem(terr.get(i)); 
+		}
+	
+		JButton vender = new JButton("Vender Casa"); 
+		vender.addActionListener(casasActList);
+		p.add(vender); 
+		p.add(vender); 
+		jp.getContentPane().add(p); 
+		jp.setBounds(500, 500, 300, 100);
+		jp.setVisible(true);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -258,10 +327,8 @@ public class PNBotoes extends JPanel implements Observer, ActionListener{
 	    else if (e.getSource() == comprar_terreno){ 
 	    	Fachada.getFachada().comprarTerreno(); 
 	    }
-	   
 	    else if(e.getSource() == propList ) {
-	        String propName = (String)propList.getSelectedItem();
-	//        Fachada.getFachada().showProp(propName); 
+	        String propName = (String)propList.getSelectedItem(); 
 	    }
 	    else if(e.getSource()== vender){ 
 	    	Fachada.getFachada().venderProp((String)propList.getSelectedItem());
@@ -272,17 +339,51 @@ public class PNBotoes extends JPanel implements Observer, ActionListener{
 	    else if (e.getSource() == cheatSaldo) { 
 	    	Fachada.getFachada().cheatSaldo((Integer)setSaldo.getSelectedItem()); 
 	    }
-	    
-	   /* else {
-		    for (int i=0 ; i< casas.size(); i++) { 
-		    	if (e.getSource() == casas.get(i)) { 
-		    		Fachada.getFachada().addCasa((Integer)terrenoPosition.get(i)); 
-		    	}
-		    }
-		    }
-	    */
-	    
-	    
+	    else {
+	    	for (int i=0; i<8; i++) { 
+	    		if (e.getSource() == adc_casa.get(i)) {  
+	    			adcCasaFrame(Fachada.getFachada().getPropListCor(adc_casa.get(i).getText())); 
+	    		}
+	    		else if (e.getSource() == vender_casa.get(i))
+	    			venderCasaFrame(Fachada.getFachada().getPropListCor(adc_casa.get(i).getText())); 
+	    	}
+	    }
 	}
+	private void cheatFrame() { 
+		// JFRAME DE TRAPACA
+		JFrame trapaca = new JFrame(); 
+        JPanel trap = new JPanel(); 
+		
+		for(int i=1; i < 7; i++) { 
+			combo1.addItem(i);
+			combo2.addItem(i);
+			setSaldo.addItem(i); 
+		}
+		trap.add(combo1); 
+		trap.add(combo2);  
+		trap.add(cheatDados);
+		trap.add(setSaldo);
+		trap.add(cheatSaldo); 
+		cheatDados.addActionListener(this);
+		cheatSaldo.addActionListener(this);
+		trapaca.setBounds(1100, 500, 300, 100);
+		trapaca.getContentPane().add(trap); 
+		trapaca.setVisible(true);
+	}
+
+	public void remAdcCasa(String nome) {
+		for(int i =0; i<adc_casa.size(); i++) { 
+			if(adc_casa.get(i).getText().equals(nome))
+				adc_casa.get(i).setVisible(false);
+		}
+		
+	}
+
+	
+
+	
+	
+
+	
 
 }

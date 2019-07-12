@@ -62,11 +62,8 @@ public class Cartas {
 		 return tipo; 
 	 }
 	 
-	 public void setProprietario(String cor_jogador) { 
+	 public void setProprietario(String cor_jogador, int i ) { 
 		 proprietario = new String(cor_jogador);  
-	 }
-	 
-	 public void setPropIndex(int i) { 
 		 proprietarioIndex = i; 
 	 }
 	 
@@ -93,5 +90,7 @@ public class Cartas {
 	public int getPos(){
 		return pos; 
 	}
+
+
 		
 }

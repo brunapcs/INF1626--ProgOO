@@ -150,8 +150,10 @@ class CtrlRegras implements Observable {
 	}
 	
 	private boolean verificaSaldo(Jogador p, int deb) { 
-		if (p.getSaldo()< deb)
+		if (p.getSaldo()< deb) {
+			bot.showNaoHaSaldo();
 			return false; 
+		}
 		else return true; 
 	}
 	
@@ -181,6 +183,15 @@ class CtrlRegras implements Observable {
 		return false;
 	}
 	
+	private void verificaAdcCasas() { 
+		for(int i =0; i<8; i++) { 
+			if(jogador_on.verificaCasa(i)) { 
+				
+				bot.showAdcCasa(true, i, CartaTerreno.getCasaCor(i)); 
+			}
+		}
+	}
+	
 	private void reloadJogadorStats() { 
 		bot.setSaldo(jogador_on.getSaldo()); 
 		bot.setJogadorOn(jogador_on.getCor()); 
@@ -200,28 +211,7 @@ class CtrlRegras implements Observable {
 		encerraJogada(); 
 	}
 	
-	private void incCorTerreno() { 
-		String corTerreno = ((CartaTerreno)terreno_on).getCor(); 
-		int num=0; 
-		if(corTerreno.equals("Rosa"))
-			num=0; 
-		else if(corTerreno.equals("Azul")) 
-			num =1; 
-		else if(corTerreno.equals("Vinho")) 
-			num=2; 
-		else if(corTerreno.equals("Laranja"))
-			num=3; 
-		else if(corTerreno.equals("Vermelho")) 
-			num=4; 
-		else if(corTerreno.equals("Amarelo")) 
-			num=5;
-		else if(corTerreno.equals("Verde")) 
-			num=6; 
-		else if(corTerreno.equals("Roxo")) 
-			num=7;
-		
-		jogador_on.incQtdCasasCor(num);
-	}
+	
 	//efetua acao de sorte reves 
 	private void efetuaAcao() {
 		String a = ((SorteReves) sorte_on).getTipo();
@@ -251,43 +241,6 @@ class CtrlRegras implements Observable {
 		
 	}
 	
-	//verifica se jogador possui todas casas de uma cor e esta habilitado a adc hotel
-		private void VerificaHotel() {
-			int aux[] = new int[] {3,3,3,2,2,3,4,2};
-			for(int j = 0; j < aux.length; j++) {
-				if(jogador_on.getQtdCasasCor(j) == aux[j]) {
-					bot.showAdcCasa(true);
-				}
-			}
-			ArrayList<Cartas> auxList = jogador_on.getPropriedades();
-			
-			for(int i = 0; i < auxList.size(); i++) {
-				if(auxList.get(i).getTipo().equals("terreno")){
-					CartaTerreno ctAux = (CartaTerreno)auxList.get(i);
-						if(ctAux.getNumCasas() == 4) {
-							bot.showAdcHotel(true);
-					}
-				}
-			}
-		}
-		
-	//verifica se jogador possui todas propriedades de uma cor e esta habilitado a adc casas
-		public void VerificaPropriedades() {
-			int aux[] = new int[] {3,3,3,2,2,3,4,2};	//vetor da qtd de todas as cores
-			String[] arrayCor = {"Rosa","Azul","Vinho","Laranja","Vermelho","Amarelo","Verde","Roxo"};
-			ArrayList<Cartas> listAux;
-			
-			for(int i = 0; i < 8; i++) {
-				if(jogador_on.getQtdCasasCor(i) == aux[i]) {
-					for(int j = 0; j < aux[i]; j++) {
-						listAux = jogador_on.getPropriedadesCor(arrayCor[i]);
-						CartaTerreno ct = (CartaTerreno)listAux.get(j);
-						bot.addShowCasa(listAux.get(j).getNome(), ct.getPos(), ct.getCasaPreco()); 
-					}
-				}
-			}
-		}
-		
 	// ***************************************** // 
 	//********** BUTTON ACTIVATED ***************// 
 		
@@ -303,22 +256,19 @@ class CtrlRegras implements Observable {
 		if (jogador_on.getSaldo()> terreno_on.getPreco()){
 			bot.showComprarTerreno(false);
 			bot.showPreco("", false);
+			
 			jogador_on.addProp(terreno_on);
 			debita(jogador_on, terreno_on.getPreco() );
 			banco += terreno_on.getPreco();
-			terreno_on.setProprietario(jogador_on.getCor());
-			terreno_on.setPropIndex(player_on);
+			terreno_on.setProprietario(jogador_on.getCor(), player_on);
 			bot.showTerrenoStats(terreno_on.getProprietario());
-			
-			if(terreno_on.getTipo().equals("terreno")) { 
-				incCorTerreno(); 
-			}
 		}
 		else { 
 			bot.showFaltaDin();
 		}
 		reloadJogadorStats(); 
 	}
+	
 	public void venderProp(Jogador jogador, String propName) {
 		if (jogador == null )
 			jogador = jogador_on; 
@@ -338,14 +288,55 @@ class CtrlRegras implements Observable {
 		
 		bot.zeraPropList();
 		verificaVender(); 
-		prop.setProprietario("-");
-		prop.setPropIndex(-1);
+		prop.setProprietario("-", -1);
 		if( terreno_on != null)
 			bot.showTerrenoStats(terreno_on.getProprietario());
 		reloadJogadorStats(); 
 		if(divida > 0){
 			verificaFalencia(); 
 		}
+	}
+	
+	ArrayList<String> getPropListCor(String cor) {
+		ArrayList<String>propsCor = new ArrayList<String>() ; 
+		ArrayList<Cartas>props = jogador_on.getPropriedades();
+		int p =0;
+		for(int i =0 ; i< props.size(); i++) 
+		{ 
+			if( props.get(i).getTipo().equals("terreno"))
+			{ 
+				if ( ((CartaTerreno)props.get(i)).getCor().equals(cor)) 
+					p = ((CartaTerreno)props.get(i)).getCasaPreco();
+					propsCor.add(props.get(i).getNome() +" $" + Integer.toString(p));
+			}
+		}
+		return propsCor; 
+	}
+	
+	void addCasa(String s) { 
+		CartaTerreno terr = (CartaTerreno)jogador_on.findPropriedade(s); 
+		if(terr.getNumCasas()==5)
+		{
+			bot.showMaxCasa(); 
+		}
+		else 
+		{
+			terr.addCasa();	
+			if(verificaSaldo(jogador_on,terr.getCasaPreco()))
+			{
+				debita(jogador_on, terr.getCasaPreco()); 
+				if(terr.getNumCasas()== 5) 
+				{ 
+					bot.showHotel(); 
+					bot.remAdcCasa(terr.getNome());
+				}
+			}
+		}
+	}
+	void venderCasa(String s) { 
+		CartaTerreno terr = (CartaTerreno)jogador_on.findPropriedade(s); 
+		terr.remCasa();
+		recebe(jogador_on, terr.getCasaPreco()* 90/100);
 	}
 	
 	public void desativaDados() {
@@ -358,13 +349,6 @@ class CtrlRegras implements Observable {
 	
 	public void showPropCard(String propName) {
 		tab.desenhaCarta(propName); 
-	}
-	
-	public void addCasaInTerreno(Integer pos) {
-		CartaTerreno terreno = ((CartaTerreno)cartas.get(pos)); 
-		terreno.addCasa();
-		debita(jogador_on, terreno.getCasaPreco());
-		banco += terreno.getCasaPreco();
 	}
 	
 	//********* GERENCIAMENTO DE RODADAS ************// 
@@ -393,8 +377,6 @@ class CtrlRegras implements Observable {
 		desativaBotoes();
 		bot.showRolarDados(false);
 		bot.showEncerrarJog(true);
-		VerificaPropriedades();
-		VerificaHotel();
 		d1Ant = d.getDnum()[0];
 		d2Ant = d.getDnum()[1];
 		boolean p = true; 
@@ -445,6 +427,7 @@ class CtrlRegras implements Observable {
 	public void rodadaNormal() {
 		position_on = (jogador_on.getPosition() + (d.getSoma())) % 40;
 		mover(jogador_on, position_on); 
+		verificaAdcCasas(); 
 
 		if (position_on == 30) { 
 			if(verificaLiberdade() == false ){
@@ -529,17 +512,18 @@ class CtrlRegras implements Observable {
 	public void desativaBotoes() {
 		bot.showComprarTerreno(false);
 		bot.showPreco("", false);
-		bot.showAdcCasa(false);
+		
 		terreno_on = null;
 		bot.setReady(false);
 		bot.showProprietario(false);
-		bot.removeBotoesCasas(); 
 		bot.zeraPropList(); 
 		bot.showVender(false);
 		bot.showPrisao(false);
 		hist.limpaHistorico();
 		divida =0; 
 		prop= null;
+		for(int i=0;i<8;i++)
+			bot.showAdcCasa(false, i, " ");
 	}
 	
 	
