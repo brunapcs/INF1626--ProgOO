@@ -1,6 +1,5 @@
 package gui;
 
-import regras.Factory;
 import regras.Jogador;
 import regras.Observable;
 import utils.Dados;
@@ -38,24 +37,6 @@ public class PNTabuleiro extends JPanel implements Observer, MouseListener{
 		addMouseListener(this);
 	}
 	
-	public PNTabuleiro(JPanel tb) {
-		jogadores = Factory.getPlayers();
-	
-		tb = new JPanel() {
-			@Override
-			protected void paintComponent(Graphics g) {
-				super.paintComponent(g);
-				Graphics2D g2d = (Graphics2D) g;
-				for(int j = 0; j < jogadores.size(); j++) {
-					Jogador jog = jogadores.get(j);
-					g2d.drawImage(jog.getJogadorImage(),jog.getPosX() + jog.getOffset(),jog.getPosY() + jog.getOffset(),null);
-				}
-			}	        
-		};
-	}
-
-	
-	
 	public static PNTabuleiro getPNTabuleiro() { 
 		if (tab == null) { 
 			tab = new PNTabuleiro(); 
@@ -64,7 +45,7 @@ public class PNTabuleiro extends JPanel implements Observer, MouseListener{
 	}
 	
 	public void addJogador(Jogador j){ 
-		jogadores.add(j); 
+				jogadores.add(j); 
 	}
 	
 	public void remJogador(Jogador p) {

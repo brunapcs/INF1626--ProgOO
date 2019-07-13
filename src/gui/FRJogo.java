@@ -6,7 +6,6 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import gui.PNTabuleiro;
 
 import javax.swing.*;
 
@@ -20,9 +19,7 @@ public class FRJogo extends JFrame{
 	  JPanel bot; 
 	  JPanel hist; 
 	  Factory fac; 
-	  private PNTabuleiro tb = PNTabuleiro.getPNTabuleiro();
-	  private PNBotoes bt = PNBotoes.getPNBotoes();
-	  private PNHistorico hs = PNHistorico.getHist();
+	  
 	  //Cria Novo Jogo
 	   private FRJogo(int num) {
 		    frameConfig(); 
@@ -37,22 +34,21 @@ public class FRJogo extends JFrame{
 	   }
 	   
 	   //Inicializa Jogo Antigo
-	   private FRJogo(File loadJogo) throws IOException {
+	   private FRJogo(File loadJogo) {
 		   frameConfig(); 
-		   fac = Factory.startFactory(loadJogo);
-		   
+		   fac = Factory.startFactory(loadJogo); 
 		   panelsConfig(); 
-		   new PNTabuleiro(tab);
-		   tab.repaint();
 	   }
 	   
-	   public static FRJogo LoadJogo(File f) throws IOException { 
+	   public static FRJogo LoadJogo(File f) { 
 		   if (frame == null) { 
 			   frame = new FRJogo(f); 
 		   }
 		   return frame; 
 	   }
-	  
+	   
+	   
+	   
 	   private void panelsConfig() { 
 		   tab = fac.getTab(); 
 		   bot = fac.getBot(); 
@@ -67,10 +63,6 @@ public class FRJogo extends JFrame{
 			getContentPane().add(tab);
 			getContentPane().add(bot);
 			getContentPane().add(hist); 
-			
-			tb.repaint();
-			bt.repaint();
-		    hs.repaint();
 			
 			pack(); 
 			setVisible(true); 
