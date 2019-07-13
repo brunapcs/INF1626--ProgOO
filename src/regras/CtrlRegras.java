@@ -53,7 +53,7 @@ class CtrlRegras implements Observable {
 	}
 	
 	//Load Jogo
-	public CtrlRegras(int jog_on ,int pos, int terr_on, int banco_saldo, int d1A, int d2A, int rodadas) {
+	public CtrlRegras(int jog_on ,int pos, int banco_saldo, int d1A, int d2A, int rodadas) {
 		tab = PNTabuleiro.getPNTabuleiro();
 		d = Dados.getDados();
 		player_on = jog_on;
@@ -150,10 +150,8 @@ class CtrlRegras implements Observable {
 	}
 	
 	private boolean verificaSaldo(Jogador p, int deb) { 
-		if (p.getSaldo()< deb) {
-			bot.showNaoHaSaldo();
+		if (p.getSaldo()< deb)
 			return false; 
-		}
 		else return true; 
 	}
 	
@@ -183,15 +181,6 @@ class CtrlRegras implements Observable {
 		return false;
 	}
 	
-	private void verificaAdcCasas() { 
-		for(int i =0; i<8; i++) { 
-			if(jogador_on.verificaCasa(i)) { 
-				
-				bot.showAdcCasa(true, i, CartaTerreno.getCasaCor(i)); 
-			}
-		}
-	}
-	
 	private void reloadJogadorStats() { 
 		bot.setSaldo(jogador_on.getSaldo()); 
 		bot.setJogadorOn(jogador_on.getCor()); 
@@ -211,7 +200,28 @@ class CtrlRegras implements Observable {
 		encerraJogada(); 
 	}
 	
-	
+	private void incCorTerreno() { 
+		String corTerreno = ((CartaTerreno)terreno_on).getCor(); 
+		int num=0; 
+		if(corTerreno.equals("Rosa"))
+			num=0; 
+		else if(corTerreno.equals("Azul")) 
+			num =1; 
+		else if(corTerreno.equals("Vinho")) 
+			num=2; 
+		else if(corTerreno.equals("Laranja"))
+			num=3; 
+		else if(corTerreno.equals("Vermelho")) 
+			num=4; 
+		else if(corTerreno.equals("Amarelo")) 
+			num=5;
+		else if(corTerreno.equals("Verde")) 
+			num=6; 
+		else if(corTerreno.equals("Roxo")) 
+			num=7;
+		
+		jogador_on.incQtdCasasCor(num);
+	}
 	//efetua acao de sorte reves 
 	private void efetuaAcao() {
 		String a = ((SorteReves) sorte_on).getTipo();
@@ -241,6 +251,43 @@ class CtrlRegras implements Observable {
 		
 	}
 	
+	//verifica se jogador possui todas casas de uma cor e esta habilitado a adc hotel
+		private void VerificaHotel() {
+			int aux[] = new int[] {3,3,3,2,2,3,4,2};
+			for(int j = 0; j < aux.length; j++) {
+				if(jogador_on.getQtdCasasCor(j) == aux[j]) {
+					bot.showAdcCasa(true);
+				}
+			}
+			ArrayList<Cartas> auxList = jogador_on.getPropriedades();
+			
+			for(int i = 0; i < auxList.size(); i++) {
+				if(auxList.get(i).getTipo().equals("terreno")){
+					CartaTerreno ctAux = (CartaTerreno)auxList.get(i);
+						if(ctAux.getNumCasas() == 4) {
+							bot.showAdcHotel(true);
+					}
+				}
+			}
+		}
+		
+	//verifica se jogador possui todas propriedades de uma cor e esta habilitado a adc casas
+		public void VerificaPropriedades() {
+			int aux[] = new int[] {3,3,3,2,2,3,4,2};	//vetor da qtd de todas as cores
+			String[] arrayCor = {"Rosa","Azul","Vinho","Laranja","Vermelho","Amarelo","Verde","Roxo"};
+			ArrayList<Cartas> listAux;
+			
+			for(int i = 0; i < 8; i++) {
+				if(jogador_on.getQtdCasasCor(i) == aux[i]) {
+					for(int j = 0; j < aux[i]; j++) {
+						listAux = jogador_on.getPropriedadesCor(arrayCor[i]);
+						CartaTerreno ct = (CartaTerreno)listAux.get(j);
+						bot.addShowCasa(listAux.get(j).getNome(), ct.getPos(), ct.getCasaPreco()); 
+					}
+				}
+			}
+		}
+		
 	// ***************************************** // 
 	//********** BUTTON ACTIVATED ***************// 
 		
@@ -256,19 +303,22 @@ class CtrlRegras implements Observable {
 		if (jogador_on.getSaldo()> terreno_on.getPreco()){
 			bot.showComprarTerreno(false);
 			bot.showPreco("", false);
-			
 			jogador_on.addProp(terreno_on);
 			debita(jogador_on, terreno_on.getPreco() );
 			banco += terreno_on.getPreco();
-			terreno_on.setProprietario(jogador_on.getCor(), player_on);
+			terreno_on.setProprietario(jogador_on.getCor());
+			terreno_on.setPropIndex(player_on);
 			bot.showTerrenoStats(terreno_on.getProprietario());
+			
+			if(terreno_on.getTipo().equals("terreno")) { 
+				incCorTerreno(); 
+			}
 		}
 		else { 
 			bot.showFaltaDin();
 		}
 		reloadJogadorStats(); 
 	}
-	
 	public void venderProp(Jogador jogador, String propName) {
 		if (jogador == null )
 			jogador = jogador_on; 
@@ -288,55 +338,14 @@ class CtrlRegras implements Observable {
 		
 		bot.zeraPropList();
 		verificaVender(); 
-		prop.setProprietario("-", -1);
+		prop.setProprietario("-");
+		prop.setPropIndex(-1);
 		if( terreno_on != null)
 			bot.showTerrenoStats(terreno_on.getProprietario());
 		reloadJogadorStats(); 
 		if(divida > 0){
 			verificaFalencia(); 
 		}
-	}
-	
-	ArrayList<String> getPropListCor(String cor) {
-		ArrayList<String>propsCor = new ArrayList<String>() ; 
-		ArrayList<Cartas>props = jogador_on.getPropriedades();
-		int p =0;
-		for(int i =0 ; i< props.size(); i++) 
-		{ 
-			if( props.get(i).getTipo().equals("terreno"))
-			{ 
-				if ( ((CartaTerreno)props.get(i)).getCor().equals(cor)) 
-					p = ((CartaTerreno)props.get(i)).getCasaPreco();
-					propsCor.add(props.get(i).getNome() +" $" + Integer.toString(p));
-			}
-		}
-		return propsCor; 
-	}
-	
-	void addCasa(String s) { 
-		CartaTerreno terr = (CartaTerreno)jogador_on.findPropriedade(s); 
-		if(terr.getNumCasas()==5)
-		{
-			bot.showMaxCasa(); 
-		}
-		else 
-		{
-			terr.addCasa();	
-			if(verificaSaldo(jogador_on,terr.getCasaPreco()))
-			{
-				debita(jogador_on, terr.getCasaPreco()); 
-				if(terr.getNumCasas()== 5) 
-				{ 
-					bot.showHotel(); 
-					bot.remAdcCasa(terr.getNome());
-				}
-			}
-		}
-	}
-	void venderCasa(String s) { 
-		CartaTerreno terr = (CartaTerreno)jogador_on.findPropriedade(s); 
-		terr.remCasa();
-		recebe(jogador_on, terr.getCasaPreco()* 90/100);
 	}
 	
 	public void desativaDados() {
@@ -349,6 +358,13 @@ class CtrlRegras implements Observable {
 	
 	public void showPropCard(String propName) {
 		tab.desenhaCarta(propName); 
+	}
+	
+	public void addCasaInTerreno(Integer pos) {
+		CartaTerreno terreno = ((CartaTerreno)cartas.get(pos)); 
+		terreno.addCasa();
+		debita(jogador_on, terreno.getCasaPreco());
+		banco += terreno.getCasaPreco();
 	}
 	
 	//********* GERENCIAMENTO DE RODADAS ************// 
@@ -377,6 +393,8 @@ class CtrlRegras implements Observable {
 		desativaBotoes();
 		bot.showRolarDados(false);
 		bot.showEncerrarJog(true);
+		VerificaPropriedades();
+		VerificaHotel();
 		d1Ant = d.getDnum()[0];
 		d2Ant = d.getDnum()[1];
 		boolean p = true; 
@@ -427,7 +445,6 @@ class CtrlRegras implements Observable {
 	public void rodadaNormal() {
 		position_on = (jogador_on.getPosition() + (d.getSoma())) % 40;
 		mover(jogador_on, position_on); 
-		verificaAdcCasas(); 
 
 		if (position_on == 30) { 
 			if(verificaLiberdade() == false ){
@@ -512,18 +529,17 @@ class CtrlRegras implements Observable {
 	public void desativaBotoes() {
 		bot.showComprarTerreno(false);
 		bot.showPreco("", false);
-		
+		bot.showAdcCasa(false);
 		terreno_on = null;
 		bot.setReady(false);
 		bot.showProprietario(false);
+		bot.removeBotoesCasas(); 
 		bot.zeraPropList(); 
 		bot.showVender(false);
 		bot.showPrisao(false);
 		hist.limpaHistorico();
 		divida =0; 
 		prop= null;
-		for(int i=0;i<8;i++)
-			bot.showAdcCasa(false, i, " ");
 	}
 	
 	
@@ -567,11 +583,14 @@ class CtrlRegras implements Observable {
 	// **** SALVAMENTO DO JOGO *******
 	public String salvarJogo() {
 		String jogo = new String(); 
-		
-		jogo += "player_on: " + Integer.toString(player_on)+ "\n"; 
-		jogo += "Banco: " + Integer.toString(banco) + "\n";
-		jogo += "Rodada: " + Integer.toString(rodada) + "\n";
-		jogo += "Jogadores:\n\n"; 
+		jogo += "numPlayers:" + Integer.toString(tab.getSizeJogadores()) + "\n"; 
+		jogo += "player_on:" + Integer.toString(player_on)+ "\n"; 
+		jogo += "posicao:" + Integer.toString(jogador_on.getPosition()) + "\n";
+		jogo += "Banco:" + Integer.toString(banco) + "\n";
+		jogo += "Rodada:" + Integer.toString(rodada) + "\n";
+		jogo += "Primeiro dado:" + Integer.toString(d.getDado(0)) + "\n";
+		jogo += "Segundo dado:" + Integer.toString(d.getDado(1)) + "\n";
+	
 		Jogador j;
 		
 		for(int i = 0; i < tab.getSizeJogadores(); i++) {
@@ -580,45 +599,44 @@ class CtrlRegras implements Observable {
 			jogo += "cor:" + j.getCor() + "\n";
 			jogo += "pin_position:" + Integer.toString(j.getPosition()) + "\n";
 			jogo += "saldo:" + Integer.toString(j.getSaldo()) + "\n";
-			jogo += "prisao: " + j.getPrisao() + "\n";
-			jogo += "passeLivre: " + j.getLiberdade() + "\n"; 
-			jogo += "coordenadasX: " + Integer.toString(j.getPosX()) +"Y: " + Integer.toString(j.getPosY()) + "\n";
-			jogo += "offset: " + Integer.toString(j.getOffset()) + "\n";
-			jogo += "numTurnPrisao: " + Integer.toString(j.getNumTurnPrisao()) + "\n";
-			jogo += "Propriedades: \n"; 
-			
+			jogo += "prisao:" + j.getPrisao() + "\n";
+			jogo += "passeLivre:" + j.getLiberdade() + "\n"; 
+			jogo += "coordenadasX:" + Integer.toString(j.getPosX()) + "\n";
+			jogo += "coordenadaY:" + Integer.toString(j.getPosY()) + "\n";
+			jogo += "offset:" + Integer.toString(j.getOffset()) + "\n";
+			jogo += "numTurnPrisao:" + Integer.toString(j.getNumTurnPrisao()) + "\n"; 
 			ArrayList<Cartas> prop = j.getPropriedades();
+			jogo += "NumPropriedades:" + Integer.toString(prop.size()) + "\n";
 			
 			for(int k = 0; k < prop.size(); k++) {
 				if( prop.get(k).getTipo().equals("terreno")) { 
 					CartaTerreno terr = (CartaTerreno)prop.get(k); 
-					jogo += "Tipo:" + terr.getTipo() + "\n";; 
-					jogo += "Nome: " + terr.getNome() + "\n";
+					jogo += "Tipo:" + terr.getTipo() + "\n"; 
+					jogo += "Nome:" + terr.getNome() + "\n";
 					jogo += "Cor:" + terr.getCor() + "\n";
 					jogo += "Preco:" + Integer.toString(terr.getPreco()) + "\n";
 					jogo += "Pos:" + Integer.toString(terr.getPos()) + "\n";
-					jogo += "Aluguel:" + "\n";
+					jogo += "Aluguel:";
 					
 					for(int e =0; e<6; e++) { 
 						jogo +=  Integer.toString(terr.getAluguel(e)) + " ";
 					} 
 					jogo +=  "\n";
-					jogo += "CasasConstruidas: " + Integer.toString(terr.getNumCasas()) + "\n";
-					jogo += "PrecoCasa: " + Integer.toString(terr.getCasaPreco()) + "\n";
-					jogo += "PrecoHotel: " + Integer.toString(terr.getHotelPreco()) + "\n";
+					jogo += "CasasConstruidas:" + Integer.toString(terr.getNumCasas()) + "\n";
+					jogo += "PrecoCasa:" + Integer.toString(terr.getCasaPreco()) + "\n";
+					jogo += "PrecoHotel:" + Integer.toString(terr.getHotelPreco()) + "\n";
 				}
 				else { 
 					CartaCompanhia comp = (CartaCompanhia)prop.get(k); 
-					jogo += "Tipo: " + comp.getTipo() + "\n";
-					jogo += "Nome: " + comp.getNome() + "\n";
+					jogo += "Tipo:" + comp.getTipo() + "\n";
+					jogo += "Nome:" + comp.getNome() + "\n";
+					jogo += "Indice:" + comp.getCartaNum() + "\n";
 					jogo += "Preco:" + Integer.toString(comp.getPreco()) + "\n";
 					jogo += "Pos:" + Integer.toString(comp.getPos()) + "\n"; 
-					jogo += "Multiplicador: " + Integer.toString(comp.getMultiplicador()) + "\n"; 
+					jogo += "Multiplicador:" + Integer.toString(comp.getMultiplicador()) + "\n"; 
 				}
 			}
-			jogo += "\n\n"; 
 		}
-		jogo += "fim"; 
 		return jogo;
 	}
 	
