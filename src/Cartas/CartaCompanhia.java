@@ -1,22 +1,19 @@
 package Cartas;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
 
 public class CartaCompanhia extends Cartas{
-	private int multiplicador; 
-	private int hipoteca; 
+	private int multiplicador;  
 	private int cartaNum; 
 	private int pos; 
 
-	private CartaCompanhia(int n, int hip, int mult, int p, int vc ) { 
+	public CartaCompanhia(int n, int mult, int p, int vc ) { 
 		super(); 
 		setNome(n); 
 		cartaNum = n; 
-		hipoteca = hip; 
 		multiplicador = mult; 
 		preco = vc;
 		
@@ -33,12 +30,12 @@ public class CartaCompanhia extends Cartas{
 	}
 	
 	public static void inicializaCompanhias() { 
-			new CartaCompanhia(1, 100 , 50, 5, 200);
-			new CartaCompanhia(2, 100 , 50, 7, 200);
-			new CartaCompanhia(3, 75, 40, 15, 150);
-			new CartaCompanhia(4, 75, 40, 25, 150);
-			new CartaCompanhia(5, 100 , 50, 32, 200);
-			new CartaCompanhia(6, 100 , 50, 35, 200);
+			new CartaCompanhia(1, 50, 5, 200);
+			new CartaCompanhia(2, 50, 7, 200);
+			new CartaCompanhia(3, 40, 15, 150);
+			new CartaCompanhia(4, 40, 25, 150);
+			new CartaCompanhia(5, 50, 32, 200);
+			new CartaCompanhia(6, 50, 35, 200);
 	}
 	
 	private void setNome(int n) { 
