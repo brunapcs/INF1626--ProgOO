@@ -21,7 +21,7 @@ import regras.Observer;
 
 
 
-public class PNBotoes extends JPanel implements Observer, ActionListener{
+public class PNBotoes extends JPanel implements  ActionListener{
 	private static PNBotoes botoes = null;
 	private JLabel player_turn = new JLabel();
 	private JLabel rodada = new JLabel(); 
@@ -249,11 +249,8 @@ public class PNBotoes extends JPanel implements Observer, ActionListener{
 	                JOptionPane.WARNING_MESSAGE);
 		
 	}
-	@Override
-	public void notify(regras.Observable o) {
-		// TODO Auto-generated method stub
-		
-	}
+
+	
 	protected void paintComponent(Graphics g) {
 	    super.paintComponent(g);
 	    	Graphics2D g2d = (Graphics2D) g;

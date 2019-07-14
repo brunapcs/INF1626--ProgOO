@@ -6,10 +6,11 @@ import Cartas.CartaTerreno;
 import Cartas.Cartas;
 import Cartas.SorteReves;
 import utils.Dados;
-import gui.*; 
+import gui.*;
+import regras.Observer; 
 
-class CtrlRegras implements Observable {
-	List<Observer> observers = new ArrayList<Observer>();
+class CtrlRegras  {
+	
 	private Dados d = null;
 	private PNTabuleiro tab = null;
 	private PNBotoes bot = null;
@@ -30,6 +31,7 @@ class CtrlRegras implements Observable {
 	private  ArrayList<Jogador>falidos = new ArrayList<Jogador>(); 
 	private int divida = 0; 
 	private Jogador prop = null;
+	
 	
 	//Novo Jogo
 	public CtrlRegras() 
@@ -398,10 +400,6 @@ class CtrlRegras implements Observable {
 		bot.showRolarDados(true);
 	}
 	
-	public void showPropCard(String propName) {
-		tab.desenhaCarta(propName); 
-	}
-	
 	//********* GERENCIAMENTO DE RODADAS ************// 
 	
 	
@@ -701,21 +699,11 @@ class CtrlRegras implements Observable {
 		}
 		return jogo;
 	}
-	
-	
-	// ****** OBSERVER **********
-	@Override
-	public Object get() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
+
 	public void addObserver(Observer o) {
-		observers.add(o);
+		tab.addObserver(o);
 	}
-	public void removeObserver(Observer o) {
-		observers.remove(o);
-	}
+	
 
 
 	

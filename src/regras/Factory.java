@@ -16,9 +16,7 @@ import java.util.Queue;
 import javax.swing.JPanel;
 
 import Cartas.*;
-import gui.PNBotoes;
-import gui.PNHistorico;
-import gui.PNTabuleiro;
+import gui.*;
 
 
 public class Factory {
@@ -32,6 +30,7 @@ public class Factory {
 	private ArrayList<Cartas> cards = Cartas.getCartas();
 	private Queue <SorteReves> listaSR = Cartas.getSorteReves();
 	private static int d1,d2;
+	private FRSelectedCarta selected = null;  
 	
 	//*******   Inicializa Novo Jogo  ********** 
 	public static Factory startFactory(int num) { 
@@ -49,6 +48,7 @@ public class Factory {
 		Queue<SorteReves> deck = Cartas.getSorteReves();
 		hist = PNHistorico.getHist(); 
 		fa = Fachada.getFachada(); 
+		selected = new FRSelectedCarta(); 
 	}
 	private void inicializaJogadores(){ 
 		Jogador j ; 
@@ -202,6 +202,7 @@ public class Factory {
 		}
 		reader.close();
 		fa = Fachada.getFachada(currentPlayer,posCurrentPlayer, saldoBanco, d1, d2, rodada ); 
+		selected = new FRSelectedCarta(); 
 	}
 	
 	public static Factory startFactory(File loadJogo) throws IOException { 

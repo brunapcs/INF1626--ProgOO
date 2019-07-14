@@ -41,10 +41,6 @@ public class Fachada {
 		ctrl.desativaDados();
 		ctrl.ativaRolarDados();
 	}
-	
-	public void register(Observer o) {
-		ctrl.addObserver(o);
-	}
 
 	public void rolarDados() {
 		ctrl.rolarDados();
@@ -79,10 +75,6 @@ public class Fachada {
 	public void venderCasa(String casa) { 
 		ctrl.venderCasa(casa);
 	}
-	
-	public void showProp(String propName) {
-		ctrl.showPropCard(propName); 
-	}
 
 	public void venderProp(String propName) {
 		ctrl.venderProp(null, propName); 
@@ -97,6 +89,10 @@ public class Fachada {
 	public void cheatSaldo(Integer i) {
 		ctrl.cheatSaldo(i); 
 		
+	}
+	
+	public void register(Observer o) {
+		ctrl.addObserver(o);
 	}
 
 	
