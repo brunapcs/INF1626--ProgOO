@@ -36,7 +36,6 @@ public class Cartas {
 		 }
 		return cartas; 
 	 }
-	 
 	 public static Queue<SorteReves> getSorteReves(){ 
 		 if (deck == null) { 
 			 deck = new LinkedList<>(); 

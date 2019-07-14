@@ -23,20 +23,23 @@ import gui.PNTabuleiro;
 
 public class Factory {
 	private static Factory fac = null; 
-	private PNTabuleiro tab; 
-	private PNBotoes bot;
+	private PNTabuleiro tab = PNTabuleiro.getPNTabuleiro(); 
+	private PNBotoes bot = PNBotoes.getPNBotoes();
 	private int numJogadores ;
-	private PNHistorico hist; 
+	private PNHistorico hist = PNHistorico.getHist(); 
 	private Fachada fa; 
+	private static ArrayList<Jogador> players;
+	private ArrayList<Cartas> cards = Cartas.getCartas();
+	private Queue <SorteReves> listaSR = Cartas.getSorteReves();
+	private static int d1,d2;
 	
-	//Inicializa Novo Jogo
+	//*******   Inicializa Novo Jogo  ********** 
 	public static Factory startFactory(int num) { 
 		if( fac == null) { 
 			fac = new Factory(num) ; 
 		}
 		return fac; 
 	}
-	
 	private Factory(int num)  {
 		numJogadores = num; 
 		tab = PNTabuleiro.getPNTabuleiro(); 
@@ -45,10 +48,8 @@ public class Factory {
 		ArrayList<Cartas> cartas = Cartas.getCartas();
 		Queue<SorteReves> deck = Cartas.getSorteReves();
 		hist = PNHistorico.getHist(); 
-		
 		fa = Fachada.getFachada(); 
 	}
-	
 	private void inicializaJogadores(){ 
 		Jogador j ; 
 		for(int i =0; i< numJogadores; i++)
@@ -58,49 +59,152 @@ public class Factory {
 		}
 	} 
 	
-	
-	//Inicializa Jogo Antigo
-	private Factory(File loadJogo) { 
-		BufferedReader reader;
-		try{
-			reader = new BufferedReader(new FileReader(loadJogo));
-			String jogo = "";
-			try 
-			{
-			    StringBuilder sb = new StringBuilder();
-			    String line = reader.readLine();
-			    while (line != null) 
-			    {
-			        sb.append(line);
-			        sb.append("\n");
-			        line = reader.readLine();
-			    }
-			    jogo = sb.toString();
-			} 
-			catch (IOException e) 
-			{
-				e.printStackTrace();
-			} 
-			finally 
-			{
-			    try {
-					reader.close();
-			    }
-			    catch (IOException e) {
-					e.printStackTrace();
+	//*****     Inicializa Jogo Antigo    ********* ;
+	private Factory(File loadJogo) throws IOException { 
+		tab = PNTabuleiro.getPNTabuleiro(); 
+		bot = PNBotoes.getPNBotoes();
+		hist = PNHistorico.getHist(); 
+		
+		//inicializacao de cartas e jogadores
+		BufferedReader reader = new BufferedReader(new FileReader(loadJogo));
+		String line;
+		String[] parts;
+		
+		line = reader.readLine();
+		parts = line.split(":");
+		numJogadores = Integer.parseInt(parts[1]);
+		
+		line = reader.readLine();
+		parts = line.split(":");
+		int currentPlayer = Integer.parseInt(parts[1]);
+		
+		line = reader.readLine();
+		parts = line.split(":");
+		int posCurrentPlayer = Integer.parseInt(parts[1]);
+		
+		line = reader.readLine();
+		parts = line.split(":");
+		int saldoBanco = Integer.parseInt(parts[1]);
+		
+		line = reader.readLine();
+		parts = line.split(":");
+		int rodada = Integer.parseInt(parts[1]);
+		
+		line = reader.readLine();
+		parts = line.split(":");
+		d1 = Integer.parseInt(parts[1]);
+		
+		line = reader.readLine();
+		parts = line.split(":");
+		d2 = Integer.parseInt(parts[1]);
+		
+		for(int i = 0; i < numJogadores; i++) {
+			int saldo, pos, indice, coordX, coordY, numTurnPrisao, offset, numProp;
+			boolean passeLivre, prisao;
+			String cor;
+			
+			line = reader.readLine();
+			parts = line.split(":");
+			indice = Integer.parseInt(parts[1]);
+			
+			line = reader.readLine();
+			parts = line.split(":");
+			cor = parts[1];
+			
+			line = reader.readLine();
+			parts = line.split(":");
+			pos = Integer.parseInt(parts[1]);
+			
+			line = reader.readLine();
+			parts = line.split(":");
+			saldo = Integer.parseInt(parts[1]);
+			
+			line = reader.readLine();
+			parts = line.split(":");
+			prisao = Boolean.parseBoolean(parts[1]);
+			
+			line = reader.readLine();
+			parts = line.split(":");
+			passeLivre = Boolean.parseBoolean(parts[1]);
+			
+			line = reader.readLine();
+			parts = line.split(":");
+			coordX = Integer.parseInt(parts[1]);
+			
+			line = reader.readLine();
+			parts = line.split(":");
+			coordY = Integer.parseInt(parts[1]);
+			
+			line = reader.readLine();
+			parts = line.split(":");
+			offset = Integer.parseInt(parts[1]);
+			
+			line = reader.readLine();
+			parts = line.split(":");
+			numTurnPrisao = Integer.parseInt(parts[1]);
+			
+			line = reader.readLine();
+			parts = line.split(":");
+			numProp = Integer.parseInt(parts[1]);
+			
+			ArrayList<Cartas> cardPlayer = new ArrayList<Cartas>();
+			
+			for(int k = 0; k < numProp; k++) {
+				String tipo, nome, corTer;
+				int posTer, preco, casas, valorCasa, valorHotel, mult, index;
+				int[] aluguel = new int[6];
+				
+				line = reader.readLine();
+				parts = line.split(":");
+				tipo = parts[1];
+				
+				if(tipo.equals("terreno")) {
+					line = reader.readLine();
+					line = reader.readLine();
+					line = reader.readLine();
+					line = reader.readLine();
+					parts = line.split(":");
+					posTer = Integer.parseInt(parts[1]);
+					CartaTerreno c = CartaTerreno.getTerrenoPos(posTer); 
+					c.setProprietario(cor, indice);
+					
+					line = reader.readLine();
+					line = reader.readLine();
+					parts = line.split(":");
+					casas = Integer.parseInt(parts[1]);
+					
+					c.setNumCasas(casas);
+					
+					line = reader.readLine();
+					line = reader.readLine();
+ 
+					cardPlayer.add((Cartas)c);
+				}
+				else if(tipo.equals("companhia")) {
+					CartaCompanhia c; 
+					
+					line = reader.readLine();
+					line = reader.readLine();
+					line = reader.readLine();
+					line = reader.readLine();
+					parts = line.split(":");
+					posTer = Integer.parseInt(parts[1]);
+					
+					c = CartaCompanhia.getCompanhiaInd(posTer);
+					c.setProprietario(cor, indice);
+					
+					line = reader.readLine();
+					cardPlayer.add((Cartas)c);
 				}
 			}
-			
-			System.out.print(jogo);
-			
+			Jogador j = new Jogador(indice, saldo, prisao, pos, numTurnPrisao, coordX, coordY, passeLivre, cardPlayer); 
+			tab.addJogador(j);
 		}
-		catch (FileNotFoundException e1) 
-		{
-			e1.printStackTrace();
-		}
+		reader.close();
+		fa = Fachada.getFachada(currentPlayer,posCurrentPlayer, saldoBanco, d1, d2, rodada ); 
 	}
 	
-	public static Factory startFactory(File loadJogo) { 
+	public static Factory startFactory(File loadJogo) throws IOException { 
 		if (fac ==null) { 
 			fac = new Factory(loadJogo); 
 		}
@@ -125,6 +229,8 @@ public class Factory {
 	public void terminarJogo() {
 		fa.terminarJogo(); 
 	}
-	
+	public static ArrayList<Jogador> getPlayers(){
+		return players;
+	}
 
 }

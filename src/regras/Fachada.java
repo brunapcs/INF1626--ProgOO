@@ -22,16 +22,18 @@ public class Fachada {
 	}
 	
 	//Jogo Antigo 
-	public static Fachada getFachada( int jog_on ,int pos, int terr_on, int banco_saldo, int d1A, int d2A, int rodadas, String status) {
+	public static Fachada getFachada( int jog_on ,int pos, int banco_saldo, int d1A, int d2A, int rodadas) {
 		if(f==null)
-			f=new Fachada(  jog_on , pos,  terr_on,  banco_saldo,  d1A,  d2A,  rodadas);
+			f=new Fachada(jog_on , pos,  banco_saldo,  d1A,  d2A,  rodadas);
 		return f;	
 	}
 
-	private Fachada( int jog_on ,int pos, int terr_on, int banco_saldo, int d1A, int d2A, int rodadas) {
 	
-		ctrl=new CtrlRegras(  jog_on , pos,  terr_on,  banco_saldo,  d1A,  d2A,  rodadas);
+	private Fachada( int jog_on ,int pos, int banco_saldo, int d1A, int d2A, int rodadas) {
+		ctrl=new CtrlRegras(  jog_on , pos,  banco_saldo,  d1A,  d2A,  rodadas);
+		ctrl.reloadJogadorStats();
 		esperaJogada();
+		
 	}
 	
 	public void esperaJogada() { 

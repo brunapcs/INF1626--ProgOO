@@ -1,78 +1,91 @@
-player_on: 0
-Banco: 50000
-Rodada: 0
-Jogadores:
-
+numPlayers:3
+player_on:2
+posição:21
+Banco:50980
+Rodada:0
+Primeiro dado:6
+Segundo dado:6
 jogador:0
 cor:vermelho
-pin_position:0
-saldo:2458
-prisao: false
-passeLivre: true
-coordenadasX: 640Y: 620
-offset: 15
-numTurnPrisao: 0
-Propriedades: 
-
-
+pin_position:13
+saldo:2078
+prisao:false
+passeLivre:false
+coordenadasX:40
+coordenadaY:430
+offset:12
+numTurnPrisao:0
+NumPropriedades:2
+Tipo:companhia
+Nome:Companhia Ferroviaria
+Indice:1
+Preco:200
+Pos:5
+Multiplicador:50
+Tipo:terreno
+Nome:Rua Augusta
+Cor:Vinho
+Preco:180
+Pos:13
+Aluguel:14 70 200 550 750 750 
+CasasConstruidas:0
+PrecoCasa:100
+PrecoHotel:100
 jogador:1
 cor:azul
-pin_position:0
-saldo:2458
-prisao: false
-passeLivre: true
-coordenadasX: 640Y: 620
-offset: 9
-numTurnPrisao: 0
-Propriedades: 
-
-
+pin_position:18
+saldo:2198
+prisao:false
+passeLivre:false
+coordenadasX:40
+coordenadaY:155
+offset:4
+numTurnPrisao:0
+NumPropriedades:2
+Tipo:terreno
+Nome:Av. Brigadero Faria Lima
+Cor:Azul
+Preco:240
+Pos:6
+Aluguel:20 100 300 750 925 925 
+CasasConstruidas:0
+PrecoCasa:150
+PrecoHotel:150
+Tipo:terreno
+Nome:Av. Europa
+Cor:Vinho
+Preco:220
+Pos:11
+Aluguel:16 80 220 600 800 800 
+CasasConstruidas:0
+PrecoCasa:100
+PrecoHotel:100
 jogador:2
 cor:laranja
-pin_position:0
-saldo:2458
-prisao: false
-passeLivre: true
-coordenadasX: 640Y: 620
-offset: 11
-numTurnPrisao: 0
-Propriedades: 
-
-
-jogador:3
-cor:amarelo
-pin_position:0
-saldo:2458
-prisao: false
-passeLivre: true
-coordenadasX: 640Y: 620
-offset: 15
-numTurnPrisao: 0
-Propriedades: 
-
-
-jogador:4
-cor:roxo
-pin_position:0
-saldo:2458
-prisao: false
-passeLivre: true
-coordenadasX: 640Y: 620
-offset: 1
-numTurnPrisao: 0
-Propriedades: 
-
-
-jogador:5
-cor:cinza
-pin_position:0
-saldo:2458
-prisao: false
-passeLivre: true
-coordenadasX: 640Y: 620
-offset: 6
-numTurnPrisao: 0
-Propriedades: 
-
-
-fim
+pin_position:21
+saldo:2118
+prisao:false
+passeLivre:false
+coordenadasX:120
+coordenadaY:20
+offset:13
+numTurnPrisao:0
+NumPropriedades:2
+Tipo:terreno
+Nome:Av. 9 de Julho
+Cor:Azul
+Preco:220
+Pos:9
+Aluguel:18 90 250 700 875 875 
+CasasConstruidas:0
+PrecoCasa:150
+PrecoHotel:150
+Tipo:terreno
+Nome:Flamengo
+Cor:Vermelho
+Preco:120
+Pos:21
+Aluguel:8 40 10 300 450 450 
+CasasConstruidas:0
+PrecoCasa:50
+PrecoHotel:50

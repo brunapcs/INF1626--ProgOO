@@ -20,31 +20,37 @@ public class Jogador {
 	private Coordenadas cord = new Coordenadas(); 
 	private Random num = new Random();
 	private int offset = num.nextInt(15) +1; 
-	private ArrayList<Cartas>propriedades = new ArrayList<Cartas>(); 
+	private ArrayList<Cartas>propriedades ; 
 	private String cor;  
 	private boolean liberdade = false ; 
 	private int numTurnPrisao=0; 
 	private int [][] QtdTerrenosCor= new int[8][2]; 
+	private int index;
 
 	/* Construtor para Jogador em um Novo Jogo*/
 	public Jogador(int num) {	
-		int qtdCores[] = {0,0,0,0,0,0,0,0}; 
-		loadImage(num); 
-		setCor(num); 
-		initQtdTerrCor(qtdCores);
+		index =num;
+		loadImage(index); 
+		setCor(index); 
+		initQtdTerrCor();
+		propriedades = new ArrayList<Cartas>();
 	}
 	
 	/* Construtor para Jogador em um jogo antigo carregado */
-	public Jogador(int num, int din, boolean preso, int pos, int turnPrisao, boolean lib, ArrayList<Cartas> props, int qtdCores[]) { 
-		loadImage(num); 
-		setCor(num); 
+	public Jogador(int num, int din, boolean preso, int pos, int turnPrisao, int coordX, int coordY, boolean lib, ArrayList<Cartas> props) { 
+		index = num;
+		loadImage(index); 
+		setCor(index); 
 		saldo = din; 
 		prisao = preso; 
 		pin_position = pos; 
 		numTurnPrisao = turnPrisao; 
+		coordX = cord.x[pin_position];
+		coordY = cord.y[pin_position];
 		liberdade = lib; 
 		propriedades = props;
-		initQtdTerrCor(qtdCores); 
+		initQtdTerrCor();
+		checaQtdTerrCorr();
 	}
 	
 	void loadImage(int num) { 
@@ -80,6 +86,14 @@ public class Jogador {
 			}
 	}
 	
+	void checaQtdTerrCorr() {
+		for(int i=0; i<propriedades.size(); i++) { 
+			if(propriedades.get(i).getTipo().equals("terreno")) { 
+				addTerrenoCor(((CartaTerreno)propriedades.get(i)).getCorIndex()); 
+			}
+		}
+	}
+	
 	/*
 	 * Preenche matriz com quantidade de casas de uma cor 
 	 * que o jogador possui. 
@@ -88,10 +102,10 @@ public class Jogador {
 	 * Coluna 1 se refere a quantidade maximas de casas de uma cor
 	 * max[] representa a qtd de terrenos de uma cor
 	 */
-	private void initQtdTerrCor(int []qtd) { 
+	private void initQtdTerrCor() { 
 		int max[] = { 3 , 3 , 3 , 4 , 2 , 2 , 2 , 2 } ; 
 		for(int i =0; i <8; i++) {  
-				QtdTerrenosCor[i][0]= qtd[i] ; 
+				QtdTerrenosCor[i][0]= 0 ; 
 				QtdTerrenosCor[i][1]= max[i] ; 			
 		}
 	}
@@ -134,7 +148,9 @@ public class Jogador {
 	 * Retorna array com nome de todas propriedades que jogador possui
 	 */
 	public ArrayList<String> getPropList() { 
+
 		ArrayList<String>nomesProps = new ArrayList<String>(); 
+		 
 		 for(int i=0 ; i< propriedades.size(); i++) { 
 				 nomesProps.add(propriedades.get(i).getNome()); 
 		 }

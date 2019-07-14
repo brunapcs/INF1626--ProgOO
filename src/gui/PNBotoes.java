@@ -28,7 +28,8 @@ public class PNBotoes extends JPanel implements Observer, ActionListener{
 	private JLabel status = new JLabel("---------   Status -----------------------"); 
 	private JLabel dinheiro = new JLabel("Dinheiro:$"); 
 	private JLabel proprietario = new JLabel("");
-	private JLabel preco = new JLabel(""); 
+	private JLabel preco = new JLabel("");
+	private JLabel terreno_onCasa = new JLabel(""); 
 	
 	private JButton vender = null;
 	private JButton rolar_dados = null; 
@@ -100,6 +101,7 @@ public class PNBotoes extends JPanel implements Observer, ActionListener{
 		add(comprar_terreno); 
 		add(adc_hotel); 
 		add(proprietario); 
+		add(terreno_onCasa);
 		add(Box.createVerticalGlue());
 		add(encerrar_jogada);
 		
@@ -162,7 +164,15 @@ public class PNBotoes extends JPanel implements Observer, ActionListener{
 		proprietario.setVisible(false);
 	}
 
-	public void showTerrenoStats(String prop ) { 
+	public void showCasas( int casas ) { 
+		terreno_onCasa.setText("Casas:" + Integer.toString(casas)); 
+		terreno_onCasa.setVisible(true); 
+	}
+	public void hideCasas() {
+		terreno_onCasa.setVisible(false);
+	}
+	
+	public void showProprietario(String prop ) { 
 		proprietario.setText("Proprietario: " + prop); 
 		proprietario.setVisible(true);
 	}

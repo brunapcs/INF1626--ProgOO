@@ -1,5 +1,6 @@
 package gui;
 
+import regras.Factory;
 import regras.Jogador;
 import regras.Observable;
 import utils.Dados;
@@ -25,6 +26,7 @@ public class PNTabuleiro extends JPanel implements Observer, MouseListener{
 	private BufferedImage i=null;	// Imagem do tabuleiro
 	private static ArrayList<Jogador>jogadores = new ArrayList<Jogador>();  
 	private Dados d = null; 
+	private static int numJogadores =0; 
 	
 	private PNTabuleiro() { 
 		try {
@@ -64,22 +66,23 @@ public class PNTabuleiro extends JPanel implements Observer, MouseListener{
 	}
 	
 	@Override
-	  protected void paintComponent(Graphics g) {
+	protected void paintComponent(Graphics g) {
 	    super.paintComponent(g);
-	    	Graphics2D g2d = (Graphics2D) g;
-	        g2d.drawImage(i, 0, 0, null);
-	        d = Dados.getDados(); 
-	      
-	        for( int j=0; j < jogadores.size(); j++) { 
-	        	Jogador jog = jogadores.get(j); 
-	        	g2d.drawImage(jog.getJogadorImage(), jog.getPosX()+jog.getOffset(), jog.getPosY()+jog.getOffset(), null); 
-	        }
-	        if(d.getReady() == true ) { 
-		        g2d.setColor(d.getBackground());
-		        g2d.fillRect(105, 385, 350, 175);
-		        g2d.drawImage(d.getDimages()[0], 110, 400, 150,150, null);
-		        g2d.drawImage(d.getDimages()[1], 280, 400, 150,150, null);
-	        }
+    	Graphics2D g2d = (Graphics2D) g;
+        g2d.drawImage(i, 0, 0, null);
+        d = Dados.getDados(); 
+
+        for( int i=0; i< jogadores.size(); i++) { 
+        	Jogador jog = jogadores.get(i); 
+        	
+        	g2d.drawImage(jog.getJogadorImage(), jog.getPosX()+jog.getOffset(), jog.getPosY()+jog.getOffset(), null); 
+        }
+        if(d.getReady() == true ) { 
+	        g2d.setColor(d.getBackground());
+	        g2d.fillRect(105, 385, 350, 175);
+	        g2d.drawImage(d.getDimages()[0], 110, 400, 150,150, null);
+	        g2d.drawImage(d.getDimages()[1], 280, 400, 150,150, null);
+        }
 	
 	}
 

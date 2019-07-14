@@ -125,6 +125,10 @@ public class Dados{
 	public boolean getReady() { 
 		return ready; 
 	}
+
+	public int getDado(int i) {
+		return Dnum[i];
+	}
 }
 	
 

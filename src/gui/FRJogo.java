@@ -16,8 +16,8 @@ public class FRJogo extends JFrame{
 	  final int ALT_DEFAULT=850;
 	  static FRJogo frame = null; 
 	  JPanel tab;  
-	  JPanel bot; 
-	  JPanel hist; 
+	  JPanel bot;
+	  JPanel hist;
 	  Factory fac; 
 	  
 	  //Cria Novo Jogo
@@ -34,13 +34,14 @@ public class FRJogo extends JFrame{
 	   }
 	   
 	   //Inicializa Jogo Antigo
-	   private FRJogo(File loadJogo) {
+	   private FRJogo(File loadJogo) throws IOException {
 		   frameConfig(); 
 		   fac = Factory.startFactory(loadJogo); 
 		   panelsConfig(); 
+		   tab.repaint();
 	   }
 	   
-	   public static FRJogo LoadJogo(File f) { 
+	   public static FRJogo LoadJogo(File f) throws IOException { 
 		   if (frame == null) { 
 			   frame = new FRJogo(f); 
 		   }
